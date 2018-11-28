@@ -1,7 +1,38 @@
-// with a stqteless component detail the about section as a series of question and answers
 import React, { Component } from 'react';
-// import './css/About.css';
+import './css/About.css';
+// use styled components for the individual elements and Link for routing
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
+const FAQ = styled.ul`
+  max-width: 800px;
+  width: 90vw;
+  margin: 5vh auto;
+  list-style: none;
+`;
+const Question = styled.h3`
+  font-size: 1.7rem;
+  font-weight: 800;
+`;
+const Answer = styled.p`
+  font-size: 1.3rem;
+  opacity: 0.7;
+  margin: 0.5rem 0 2rem;
+  line-height: 2.5;
+`;
+
+const SendOff = styled.blockquote`
+  text-align: center;
+  margin: 1rem 0;
+  font-style: italic;
+
+  a {
+    font-size: inherit;
+  }
+`;
+// render the questions and answers in an unordered list
+// atop this element detail an anchor link forwarding back to the home path
+// below this element add a simple quote-sendoff
 class About extends Component {
 
   render() {
@@ -9,48 +40,46 @@ class About extends Component {
       {
         id: 0,
         question: 'Come again?',
-        answer: 'reactice is a simple attempt at improving React skills, by creating 30+ applications with the library and connected dependency.'
+        answer: 'Simply put, I want to practice with React. The best way is by building as many projects with the library as possible.'
       },
       {
         id: 1,
         question: 'Not much to do here...',
-        answer: 'This page functions as the hub for every coming application. As one gets developed and published online, it\'d be the my highest priority to (include) append the working project.'
+        answer: 'Not yet. Consider this as a hub, in which every future project will be detailed.'
       },
       {
         id: 2,
-        question: 'Coulnd\'t you just create something before the landing page?',
-        answer: 'I sure could have, but publicly commiting to developing these projects is enough of a push to guarantee that something will be done. And sooner rather than later.'
+        question: 'Really nothing to show?',
+        answer: 'Beside this landing page, nope. Hopefully by publicly commiting to 30+ projects I\'ll be back with something neat. And soon.'
       },
       {
         id: 3,
         question: 'How about a hint?',
-        answer: 'I plan to practice with several dependencies in the React family, like react-router and styled-components. I\'d also like to incorporate data from external APIs. That being said, I\'d rather wait a day or two to materialize something useful &| beautiful rather than compulsively jump on the first idea that comes to mind.'
+        answer: 'I plan to practice with several dependencies in the React family, like react-router and styled-components. I\'d also like to incorporate data from public APIs.'
+      },
+      {
+        id: 4,
+        question: 'Can I expect something tomorrow?',
+        answer: 'Not necessarily. I\'d rather wait a day or two to materialize something useful, beautiful, or both rather than compulsively jump on the first idea that comes to mind. That and time is a rare resource these days.'
       },
     ];
 
-    // render a button, allowing to move back to the main path
-    // render a list of items for the questions and answer, atop a small parting element
-    const faqElements = faq.map(pair => {
-      return `
-        <li key=${pair.id}>
-          <h3>${pair - question}</h3>
-          <p>${pair.answer}</p>
-        </li>
-      `;
-    })
+    const aboutElements = faq.map(pair => <li key={pair.id}><Question>{pair.question}</Question><Answer>{pair.answer}</Answer></li>);
 
     return (
-      <div className="About">
-        <button>back</button>
+      <div className="About" >
+        <Link to="/">back</Link>
 
-        {
-          faqElements
-        }
+        <FAQ>
+          {
+            aboutElements
+          }
+        </FAQ>
 
-        <blockquote>
-          Hope you'll be back. I sure will.
-        </blockquote>
-      </div>
+        <SendOff>
+          Hope you'll be <Link to="/">back</Link>. I sure will.
+        </SendOff >
+      </div >
     );
   }
 }

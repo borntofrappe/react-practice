@@ -1,11 +1,11 @@
 /* import font(s) */
-@import url("https://fonts.googleapis.com/css?family=Montserrat:600,800");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,800");
 
 /* detail root variables */
 :root {
   --font: "Montserrat", sans-serif;
   --color-text: #fff;
-  --color-bg: #333;
+  --color-bg: #222;
   --color-bg-s: #4daec8;
   --color-bg-m: #61dafb;
   --color-bg-e: #adebfc;
@@ -23,4 +23,17 @@ body {
   font-family: var(--font);
   color: var(--color-text);
   background: var(--color-bg);
+}
+/* global styles) */
+a {
+  font-size: 1.75rem;
+  font-size: 1.75rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.25s ease-out;
+  font-weight: 800;
+}
+a:hover {
+  opacity: 1;
 }
