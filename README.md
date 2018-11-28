@@ -1,6 +1,8 @@
 # React Practice
 
-<!-- Link to the work-in-progress pen right [here](). -->
+## Index
+
+1. [React Practice Container](https://codepen.io/borntofrappe/full/NELLxG/).
 
 ## Preface
 
