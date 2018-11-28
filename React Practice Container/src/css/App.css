@@ -1,0 +1,17 @@
+.App {
+  padding: 1rem;
+}
+.App header {
+  display: flex;
+  justify-content: space-between;
+}
+.App .AppGrid {
+  max-width: 700px;
+  width: 90vw;
+  height: 90vw;
+  max-height: 700px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+}
