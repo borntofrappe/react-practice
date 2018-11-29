@@ -1,0 +1,43 @@
+/* import font(s) */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300|Catamaran:900");
+
+/* root variables */
+:root {
+  --font-header: "Catamaran", sans-serif;
+  --font-text: "Open Sans", sans-serif;
+  --yellow: #fdbd00;
+  --red: #ee0e33;
+  --red-d: #e41237;
+  --red-l: #ff3b5c;
+  --blue: #47cbce;
+  --blue-d: #08679d;
+  --blue-dd: #06507a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  font-family: var(--font-text);
+  color: #fff;
+  background: linear-gradient(
+    to top right,
+    var(--red),
+    var(--red-l),
+    var(--red-d)
+  );
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-header);
+  color: var(--yellow);
+  text-shadow: -3px 3px var(--blue-d), -5px 5px var(--blue-dd),
+    -5px 6px 20px var(--blue-dd);
+}
