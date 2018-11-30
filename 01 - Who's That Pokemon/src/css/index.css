@@ -6,8 +6,10 @@
   --font-header: "Catamaran", sans-serif;
   --font-text: "Open Sans", sans-serif;
   --yellow: #fdbd00;
+  --green: #9cf4a7;
   --red: #ee0e33;
   --red-d: #e41237;
+  --red-dd: #5c0e0a;
   --red-l: #ff3b5c;
   --blue: #47cbce;
   --blue-d: #08679d;
@@ -20,6 +22,7 @@
   padding: 0;
 }
 
+/* detail a gradient with the tones of red */
 body {
   min-height: 100vh;
   width: 100%;
@@ -33,11 +36,12 @@ body {
   );
 }
 
+/* detail the headers with a stroke (when available) and additional shadows */
 h1,
-h2,
-h3 {
+h2 {
   font-family: var(--font-header);
   color: var(--yellow);
-  text-shadow: -3px 3px var(--blue-d), -5px 5px var(--blue-dd),
-    -5px 6px 20px var(--blue-dd);
+  text-shadow: -3px 3px var(--blue-d), -5px 6px 20px var(--blue-dd);
+  -webkit-text-stroke-width: 2.5px;
+  -webkit-text-stroke-color: var(--blue-dd);
 }
