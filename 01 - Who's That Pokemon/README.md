@@ -1,6 +1,6 @@
 # Who's That Pokemon?
 
-Link to the work-in-progress right [here](https://codepen.io/borntofrappe/pen/GwYLRw).
+Link to the working right [here](https://codepen.io/borntofrappe/full/GwYLRw).
 
 Inspired by [this pen](https://codepen.io/tiffachoo/pen/KGJEba) highlighted in the latest spark on codepen, the first project in the 30+ efforts with React tries to replicate the feature showcased every episode of the Pokemon anime. The quiz is deceptively simple: you are presented with the shadow of a pokemon, you then input your answer and are displayed the correct match.
 
@@ -35,10 +35,7 @@ This last one is a library that allows to achieve simple animation rather smooth
 - detail the CSS properties affected in the animation, in an object passed in `from` and `to` attributes. Much alike with CSS keyframe animation.
 
   ```js
-  <Spring
-    from={{ opacity: 0 }}
-    to={{ opacity: 1 }}
-  >
+  <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
     <h1>Hello World</h1>
   </Spring>
   ```
@@ -46,12 +43,7 @@ This last one is a library that allows to achieve simple animation rather smooth
 - instead of rendering the component (or actually the element in this instance), use a render function passing the style in the element. `style` is an object, detailing property-valye pairs. It is possible to pass the object as a whole or the altered properties only (through destructuring).
 
   ```js
-  <Spring
-    from={{ opacity: 0 }}
-    to={{ opacity: 1 }}
-  >
-    {
-      ({ opacity }) => <h1 style={{ opacity }}>Hello World</h1>
-    }
+  <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+    {({ opacity }) => <h1 style={{ opacity }}>Hello World</h1>}
   </Spring>
   ```
