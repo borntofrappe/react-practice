@@ -34,3 +34,11 @@ A simple application to play a simple game. Inspired by the pokemon anime. Using
 - styled-components;
 
 - react spring.
+
+### React Podcast App
+
+<!-- Live [right here](). -->
+
+A mobile-friendly application to play podcast episodes from the freeCodeCamp RSS feed. Practicing with:
+
+- styled-components.
