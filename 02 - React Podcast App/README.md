@@ -32,6 +32,10 @@ But that ought to be enough of a plan. Going to work.
 
 ## Development
 
+### UI
+
+The react-based project needs to manage information from an RSS Feed. However, this information needs to be showcased somewhere. This is why I decided to spent an entire coding session (and a half) creating a UI for the application. Ultimately I think it'll have to change, to accommodate for more functionalities (speed rate, hello?), but it is a good starting point. Solid foundations.
+
 ## Lessons Learned
 
 In which I detailed those concepts I learned about React which are connected to the library, but not strictly the project at hand.
