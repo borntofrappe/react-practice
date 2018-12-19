@@ -1,5 +1,8 @@
 // target the elements used for the simple play/pause animation
 
+// tooltip for the progress bar
+const tooltip = document.querySelector('.app__tooltip');
+
 // div for the vinyl
 const vinyl = document.querySelector('.player__vinyl');
 
@@ -35,13 +38,14 @@ const episodeDuration = 4152;
 - set up an intervl used to update the current time stamp and the progress bar
 ! audio.currentTime allows to retrieve the number of seconds since the beginning of the audio
 */
+
+// when reaching the end of the audio, clear the interval
 audio.addEventListener('ended', () => clearInterval(intervalID));
 const playAudio = () => {
   audio.play();
 
   intervalID = setInterval(() => {
     const { currentTime } = audio;
-    console.log('hello');
 
     // use three variables for the hours/minutes/seconds, to extract the precise values from the current timestamp
     let currentSeconds = Math.floor(currentTime);
@@ -153,17 +157,22 @@ const stopAudio = () => {
 stopButton.addEventListener('click', stopAudio);
 
 
-// tooltip shown when hovering on the progress bar
-const tooltip = document.querySelector('.app__tooltip');
-
+// function called when hovering on the progress bar
 function showTooltip(e) {
-  const { clientWidth: width } = episodeProgress;
+  // retrieve the width and eight of the tooltip, to position it atop the cursor
   const { clientWidth: tooltipWidth, clientHeight: tooltipHeight } = tooltip;
+  // retrieve the width of the progress bar, alongside the coordinates of the cursor
+  // offsetX for the current progress, compared to the width of the progress bar
+  // pageX, pageY to position the tooltip in the right place
+  const { clientWidth: width } = episodeProgress;
   const { pageX, pageY, offsetX } = e;
+
   tooltip.style.transition = 'all 0.2s ease-out';
   tooltip.style.top = `${pageY - tooltipHeight}px`;
   tooltip.style.left = `${pageX - tooltipWidth / 2}px`;
   tooltip.style.opacity = 1;
+
+  // compute the hours, minutes and seconds based on the total time
   const percentage = Math.round(offsetX / width * 100) / 100;
   let percentageTime = Math.round(percentage * episodeDuration);
   let hours = 0;
@@ -181,25 +190,35 @@ function showTooltip(e) {
     seconds++;
     percentageTime--;
   }
+  // alter the text of the tooltip to fit the new timestamp
   tooltip.textContent = `${(hours) ? (hours >= 10) ? `${hours}:` : `0${hours}:` : ''}${(minutes >= 10) ? minutes : `0${minutes}`}:${(seconds >= 10) ? seconds : `0${seconds}`}`;
 }
 
+// function called when hovering outside of the progress bar
 function hideTooltip() {
+  // remove the tooltip, without transition
   tooltip.style.transition = 'none';
   tooltip.style.opacity = 0;
   tooltip.textContent = '';
 }
-function changeTime(e) {
+
+// function called when clicking on the progress bar
+function changeCurrentTime(e) {
+  // compute the timestamp similarly to the showTooltip function
+  // change the currentTime to match
   const { clientWidth: width } = episodeProgress;
   const { offsetX } = e;
 
   const percentage = Math.round(offsetX / width * 100) / 100;
 
-  episodeProgress.style.background = `linear-gradient(to right, #006400, #006400 ${percentage * 100}%, white ${percentage * 100}%)`;
-  let percentageTime = Math.round(percentage * episodeDuration);
+  const percentageTime = Math.round(percentage * episodeDuration);
   audio.currentTime = percentageTime;
 
+  // update the background of the progress bar to match
+  episodeProgress.style.background = `linear-gradient(to right, #006400, #006400 ${percentage * 100}%, white ${percentage * 100}%)`;
 }
-episodeProgress.addEventListener('click', changeTime);
+
+// add the appropriate event listeners on the progress bar, calling the respective functions
+episodeProgress.addEventListener('click', changeCurrentTime);
 episodeProgress.addEventListener('mousemove', showTooltip);
 episodeProgress.addEventListener('mouseout', hideTooltip);
