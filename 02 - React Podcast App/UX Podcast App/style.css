@@ -48,7 +48,7 @@ body {
 }
 .player .player__episode .episode--progress {
   width: 60%;
-  height: 8px;
+  height: 10px;
   border-radius: 4px;
   background: linear-gradient(to right, #006400, #006400 0%, #fff 0%);
   margin-bottom: 2rem;
@@ -65,12 +65,12 @@ body {
   padding: 0.5rem;
   border-radius: 50%;
   color: #fff;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  margin: 0.5rem;
+  border: 1.2px solid rgba(255, 255, 255, 0.7);
+  margin: 0.75rem;
   transition: all 0.2s ease-out;
 }
 .player .player__episode .episode--controls button:hover {
-  box-shadow: 0 0 0 3px #007e00, 0 0 0 5px #fff;
+  background: #ffffff22;
 }
 .player .player__episode .episode--controls button:nth-of-type(1) {
   grid-column: 1/-1;
@@ -98,5 +98,22 @@ body {
   margin-bottom: 0.5rem;
 }
 .player .player__episode .episode--info p {
+  line-height: 2;
+  margin: 0.5rem 0;
+}
+
+.app__tooltip {
+  padding: 0.4rem 0.6rem;
+  background: #006400;
+  box-shadow: 0 1px 5px -1px #267b26;
+  border-radius: 5px;
+  color: #fff;
+  line-height: 2;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+ul {
+  list-style: inside;
   line-height: 2;
 }

@@ -35,11 +35,13 @@ const episodeDuration = 4152;
 - set up an intervl used to update the current time stamp and the progress bar
 ! audio.currentTime allows to retrieve the number of seconds since the beginning of the audio
 */
+audio.addEventListener('ended', () => clearInterval(intervalID));
 const playAudio = () => {
   audio.play();
 
   intervalID = setInterval(() => {
     const { currentTime } = audio;
+    console.log('hello');
 
     // use three variables for the hours/minutes/seconds, to extract the precise values from the current timestamp
     let currentSeconds = Math.floor(currentTime);
@@ -48,7 +50,7 @@ const playAudio = () => {
     // using the unmodified value for currentSeconds, update the appearance of teh application (the vinyl rotation and the progress bar)
     vinyl.style.transition = 'transform 1s linear';
     vinyl.style.transform = `rotate(${currentSeconds * 6}deg)`;
-    episodeProgress.style.background = `linear-gradient(to right, green, green ${currentSeconds / episodeDuration * 100}%, white ${currentSeconds / episodeDuration * 100}%)`;
+    episodeProgress.style.background = `linear-gradient(to right, #006400, #006400 ${currentSeconds / episodeDuration * 100}%, white ${currentSeconds / episodeDuration * 100}%)`;
     if (currentMinutes > 0) {
       currentSeconds -= 60 * currentMinutes;
     }
@@ -73,14 +75,14 @@ const pauseAudio = () => {
 const toggleEpisode = () => {
   isPlaying = !isPlaying;
   if (isPlaying) {
-    toggleButton.innerHTML = `
-    <svg width="50" height="50">
+    toggleButton.querySelector('svg').innerHTML = `
+    <svg>
       <use href = "#pause" />
     </svg>`;
     playAudio();
   } else {
-    toggleButton.innerHTML = `
-    <svg width="50" height="50">
+    toggleButton.querySelector('svg').innerHTML = `
+    <svg>
       <use href = "#play" />
     </svg>`;
     pauseAudio();
@@ -142,10 +144,62 @@ const stopAudio = () => {
       <use href = "#play" />
     </svg>`;
   vinyl.style.transform = 'rotate(0deg)';
-  episodeProgress.style.background = 'linear-gradient(to right, green, green 0%, white 0%)';
+  episodeProgress.style.background = 'linear-gradient(to right, #006400, #006400 0%, white 0%)';
   timingCurrent.textContent = '00:00:00';
 
   clearInterval(intervalID);
 }
 
 stopButton.addEventListener('click', stopAudio);
+
+
+// tooltip shown when hovering on the progress bar
+const tooltip = document.querySelector('.app__tooltip');
+
+function showTooltip(e) {
+  const { clientWidth: width } = episodeProgress;
+  const { clientWidth: tooltipWidth, clientHeight: tooltipHeight } = tooltip;
+  const { pageX, pageY, offsetX } = e;
+  tooltip.style.transition = 'all 0.2s ease-out';
+  tooltip.style.top = `${pageY - tooltipHeight}px`;
+  tooltip.style.left = `${pageX - tooltipWidth / 2}px`;
+  tooltip.style.opacity = 1;
+  const percentage = Math.round(offsetX / width * 100) / 100;
+  let percentageTime = Math.round(percentage * episodeDuration);
+  let hours = 0;
+  let minutes = 0;
+  let seconds = 0;
+  while (percentageTime >= 3600) {
+    hours++;
+    percentageTime -= 3600;
+  }
+  while (percentageTime >= 60) {
+    minutes++;
+    percentageTime -= 60;
+  }
+  while (percentageTime > 0) {
+    seconds++;
+    percentageTime--;
+  }
+  tooltip.textContent = `${(hours) ? (hours >= 10) ? `${hours}:` : `0${hours}:` : ''}${(minutes >= 10) ? minutes : `0${minutes}`}:${(seconds >= 10) ? seconds : `0${seconds}`}`;
+}
+
+function hideTooltip() {
+  tooltip.style.transition = 'none';
+  tooltip.style.opacity = 0;
+  tooltip.textContent = '';
+}
+function changeTime(e) {
+  const { clientWidth: width } = episodeProgress;
+  const { offsetX } = e;
+
+  const percentage = Math.round(offsetX / width * 100) / 100;
+
+  episodeProgress.style.background = `linear-gradient(to right, #006400, #006400 ${percentage * 100}%, white ${percentage * 100}%)`;
+  let percentageTime = Math.round(percentage * episodeDuration);
+  audio.currentTime = percentageTime;
+
+}
+episodeProgress.addEventListener('click', changeTime);
+episodeProgress.addEventListener('mousemove', showTooltip);
+episodeProgress.addEventListener('mouseout', hideTooltip);
