@@ -1,6 +1,10 @@
 # React Podcast App
 
-<!-- Link to the proud (and live!) result [right here on codepen]() -->
+Link to the proud UI [right here on codepen](https://codepen.io/borntofrappe/pen/YdWpXN).
+
+Link to the proud UX [right here on codepen](https://codepen.io/borntofrappe/pen/YdGwow).
+
+<!-- Link to the proud React Application [right here on codepen](). -->
 
 ## Preface
 
@@ -32,7 +36,7 @@ But that ought to be enough of a plan. Going to work.
 
 ## Development
 
-### UI
+### UI & UX
 
 The react-based project needs to manage information from an RSS Feed. However, this information needs to be showcased somewhere. This is why I decided to spent an entire coding session (and a half) creating a UI for the application. Ultimately I think it'll have to change, to accommodate for more functionalities (speed rate, hello?), but it is a good starting point. Solid foundations.
 
