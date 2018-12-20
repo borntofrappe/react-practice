@@ -20,6 +20,7 @@ body {
   align-items: center;
   padding: 1rem;
   background: #267b26;
+  position: relative;
 }
 .player .player__vinyl {
   margin: 1rem;
@@ -90,111 +91,14 @@ body {
 .player .player__episode .episode--timing {
   margin: 1rem 0 2rem;
 }
-.episode__title {
+.player .player__episode .episode--title {
   text-shadow: 0 2px 3px rgba(0, 126, 0, 0.8);
+  padding: 0 1rem;
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
 }
-
-.app__tooltip {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-  padding: 0.4rem 0.6rem;
-  line-height: 2;
-  background: #006400;
-  box-shadow: 0 1px 5px -1px #007e00;
-  border-radius: 5px;
-  color: #fff;
-}
-.player {
-  position: relative;
-}
-.player__more {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  border-top: 2.5px solid #ffffff44;
-  transition: all 0.25s ease-out;
-}
-.player__more.hidden {
-  height: 0;
-  opacity: 0;
-  visibility: hiddem;
-}
-.more--episodes {
-  overflow-y: auto;
-  height: 100%;
-}
-
-.more--episodes::-webkit-scrollbar {
-  width: 0.25em;
-}
-.more--episodes::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px #004400;
-}
-.more--episodes::-webkit-scrollbar-thumb {
-  border-radius: 15px;
-  background-color: #fff;
-  outline: 1px solid #fff;
-}
-
-.episodes--episode {
-  display: flex;
-  align-items: center;
-  padding: 1.25rem 1rem;
-  background: #267b26;
-  border-top: 2px solid #ffffff44;
-}
-.episodes--episode:nth-child(1) {
-  border-top: none;
-}
-.episodes--episode h3 {
-  font-weight: 900;
-  font-size: 1rem;
-  flex-grow: 1;
-  width: 0;
-  margin-right: 0.75rem;
-}
-.episodes--episode button {
-  width: 40px;
-  height: 40px;
-  border: 1.2px solid rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-  background: none;
-  color: #fff;
-  padding: 0.6rem;
-  transition: all 0.2s ease-out;
-  font-family: inherit;
-}
-.episodes--episode button:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-.episodes--episode button svg {
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-.more--close {
-  padding: 0.75rem 0;
-  background: #004d00;
-  border: none;
-  color: #fff;
-  font-size: 1.1rem;
-  font-family: inherit;
-  transition: all 0.2s ease-out;
-}
-.more--close:hover {
-  color: #ffffffbb;
-}
-
-.episode__more {
+.player .player__episode .episode--more {
   align-self: flex-end;
   margin-right: 0.75rem;
   width: 42px;
@@ -207,11 +111,101 @@ body {
   transition: all 0.2s ease-out;
   font-family: inherit;
 }
-.episode__more:hover {
+.player .player__episode .episode--more:hover {
   background: rgba(255, 255, 255, 0.15);
 }
-.episode__more svg {
+.player .player__episode .episode--more svg {
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+.player .player__more {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-top: 2.5px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease-out;
+}
+.player .player__more.hidden {
+  height: 0;
+  opacity: 0;
+  visibility: none;
+}
+.player .player__more .more--episodes {
+  overflow-y: auto;
+  height: 100%;
+}
+.player .player__more .more--episodes::-webkit-scrollbar {
+  width: 0.2rem;
+}
+.player .player__more .more--episodes::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0.5rem #040;
+}
+.player .player__more .more--episodes::-webkit-scrollbar-thumb {
+  border-radius: 0.8rem;
+  background-color: #fff;
+  outline: 0.08rem solid #fff;
+}
+.player .player__more .more--episodes .episodes--episode {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  background: #267b26;
+  border-top: 2px solid rgba(255, 255, 255, 0.4);
+}
+.player .player__more .more--episodes .episodes--episode:nth-child(1) {
+  border-top: none;
+}
+.player .player__more .more--episodes .episodes--episode h3 {
+  width: 0;
+  flex-grow: 1;
+  font-weight: 900;
+  font-size: 1rem;
+  margin-right: 0.75rem;
+}
+.player .player__more .more--episodes .episodes--episode button {
+  width: 40px;
+  height: 40px;
+  border: 1.2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: none;
+  color: #fff;
+  padding: 0.6rem;
+  transition: all 0.2s ease-out;
+}
+.player .player__more .more--episodes .episodes--episode button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.player .player__more .more--episodes .episodes--episode button svg {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.player .player__more .more--close {
+  padding: 0.75rem 0;
+  background: #040;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  font-family: inherit;
+  transition: all 0.2s ease-out;
+}
+.player .player__more .more--close:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+.app__tooltip {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  padding: 0.4rem 0.6rem;
+  line-height: 2;
+  background: #006400;
+  box-shadow: 0 1px 5px -1px #007e00;
+  border-radius: 5px;
+  color: #fff;
 }

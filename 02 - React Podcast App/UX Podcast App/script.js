@@ -224,29 +224,38 @@ episodeProgress.addEventListener('mousemove', showTooltip);
 episodeProgress.addEventListener('mouseout', hideTooltip);
 
 
-// target the element in which to show more episodes
-const episodeMore = document.querySelector('.episode__more');
-const moreClose = document.querySelector('.more--close');
-const playerMore = document.querySelector('.player__more');
+// target the elements to show / play other episodes
+// button showing the panel
+const openPanelButton = document.querySelector('.episode--more');
+// button hiding the panel
+const closePanelButton = document.querySelector('.more--close');
+// actual panel
+const panel = document.querySelector('.player__more');
+// buttons inside of the panel
+const playPanelButtons = panel.querySelectorAll('.episode--play');
 
-episodeMore.addEventListener('click', () => playerMore.classList.remove('hidden'));
-moreClose.addEventListener('click', () => playerMore.classList.add('hidden'));
+// add event listeners on the open/close button, to show and hide the panel respectively
+openPanelButton.addEventListener('click', () => panel.classList.remove('hidden'));
+closePanelButton.addEventListener('click', () => panel.classList.add('hidden'));
 
-const playMoreButtons = document.querySelectorAll('.episode--play');
-
+// function called when clicking a play button in the panel
 function playAnotherEpisode(e) {
+  // if the audio is currently ongoing, stop it
   if (!audio.paused) {
     audio.pause();
     audio.currentTime = 0;
+    // clear the interval and change the boolean variable used to keep track of the podcast running/not running
     clearInterval(intervalID);
     isPlaying = false;
   }
-  console.log(e.target);
+  // retrieve the **src** attribute from the clicked button and set it into the button element used to play the audio
   const audioSRC = e.target.querySelector('audio').getAttribute('src');
   audio.setAttribute('src', audioSRC);
+  // call the function as if the main button were to be clicked and close the panel
   toggleEpisode();
-  playerMore.classList.add('hidden');
+  panel.classList.add('hidden');
 }
-playMoreButtons.forEach(playMoreButton => playMoreButton.addEventListener('click', playAnotherEpisode));
+// for each button add an event listener and following a click play the selected episode
+playPanelButtons.forEach(playMoreButton => playMoreButton.addEventListener('click', playAnotherEpisode));
 
 

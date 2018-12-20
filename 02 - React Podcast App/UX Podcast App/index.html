@@ -107,17 +107,25 @@
             <span class="timing--total">01:09:12</span>
           </p>
 
-          <h2 class="episode__title">
+          <h2 class="episode--title">
             Ep. 51: Erica Peterson, founder, entrepreneur, and mother
           </h2>
 
-          <button class="episode__more">
+          <button class="episode--more">
             <svg><use href="#more" /></svg>
           </button>
         </div>
         <!-- close player__episode -->
+        <!--
+          the panel showing additional episodes is tucked at the bottom of the application
+          it contains a wrapper for the episodes (with vertical scroll) and a button to close the panel
+         -->
         <div class="player__more hidden">
           <div class="more--episodes">
+            <!--
+                each episode is nested in a container displaying the content in a row
+                inside of a button replicate the same structure (svg-audio) seen in the main part of the application
+              -->
             <div class="episodes--episode">
               <h3>Ep. 51: Erica Peterson, founder, entrepreneur, and mother</h3>
               <button class="episode--play">
@@ -197,6 +205,7 @@
               </button>
             </div>
           </div>
+          <!-- close more--episodes  -->
           <button class="more--close">Close</button>
         </div>
         <!-- close player__more -->
