@@ -235,10 +235,17 @@ moreClose.addEventListener('click', () => playerMore.classList.add('hidden'));
 const playMoreButtons = document.querySelectorAll('.episode--play');
 
 function playAnotherEpisode(e) {
+  if (!audio.paused) {
+    audio.pause();
+    audio.currentTime = 0;
+    clearInterval(intervalID);
+    isPlaying = false;
+  }
   console.log(e.target);
   const audioSRC = e.target.querySelector('audio').getAttribute('src');
   audio.setAttribute('src', audioSRC);
-  playAudio();
+  toggleEpisode();
+  playerMore.classList.add('hidden');
 }
 playMoreButtons.forEach(playMoreButton => playMoreButton.addEventListener('click', playAnotherEpisode));
 
