@@ -222,3 +222,12 @@ function changeCurrentTime(e) {
 episodeProgress.addEventListener('click', changeCurrentTime);
 episodeProgress.addEventListener('mousemove', showTooltip);
 episodeProgress.addEventListener('mouseout', hideTooltip);
+
+
+// target the element in which to show more episodes
+const episodeMore = document.querySelector('.episode__more');
+const moreClose = document.querySelector('.more--close');
+const playerMore = document.querySelector('.player__more');
+
+episodeMore.addEventListener('click', () => playerMore.classList.remove('hidden'));
+moreClose.addEventListener('click', () => playerMore.classList.add('hidden'));

@@ -21,6 +21,7 @@
       - a triangle and two rectangles for the play / pause button
       - a simple drawing for the volume button, overlayed by a bar to create also a mute icon
       - a square for the stop button
+      - a plus sign for more episodes
     -->
     <svg style="display: none;">
       <symbol id="pause" viewBox="0 0 100 100">
@@ -55,6 +56,11 @@
 
       <symbol id="stop" viewBox="0 0 100 100">
         <path d="M 25 25 H 75 V 75 H 25" stroke="none" fill="currentColor" />
+      </symbol>
+
+      <symbol id="more" viewBox="0 0 100 100">
+        <rect x="40" y="10" width="20" height="80" fill="currentColor" />
+        <rect x="10" y="40" width="80" height="20" fill="currentColor" />
       </symbol>
     </svg>
 
@@ -101,24 +107,16 @@
             <span class="timing--total">01:09:12</span>
           </p>
 
-          <!-- <div class="episode--info">
-            <h2 class="info--title">The freeCodeCamp Podcast Player</h2>
-            <p class="info--description">
-              Originally scheduled as a React-Application, naturally evolved
-              with vanilla JavaScript.
-            </p>
-            <p class="info--description">React app soon to follow...</p>
-            <p class="info--description">As soon as I figure out:</p>
-            <ul>
-              <li>how to select other episodes</li>
-              <li>how to provide include the show notes</li>
-            </ul>
-            <p>in an aesthetically pleasing package.</p>
-          </div> -->
-          <!-- close episode--info -->
+          <h2 class="episode__title">
+            Ep. 51: Erica Peterson, founder, entrepreneur, and mother
+          </h2>
+
+          <button class="episode__more">
+            <svg><use href="#more" /></svg>
+          </button>
         </div>
         <!-- close player__episode -->
-        <div class="player__more">
+        <div class="player__more hidden">
           <div class="more--episodes">
             <div class="episodes--episode">
               <h3>
@@ -171,21 +169,8 @@
                 <svg><use href="#play" /></svg>
               </button>
             </div>
-            <!--
-
-
-
-            <div class="episodes--episode">
-              <h3>
-                Ep 50 - Sacha Greif, designer, developer, and open source
-                creator
-              </h3>
-              <button>
-                <svg><use href="#play" /></svg>
-              </button>
-            </div> -->
           </div>
-          <button class="more__close">Close</button>
+          <button class="more--close">Close</button>
         </div>
         <!-- close player__more -->
       </div>
