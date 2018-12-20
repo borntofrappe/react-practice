@@ -68,6 +68,7 @@
             - four button elements (nesting an SVG or simply text, for the speed button)
           - timing (displaying the length of the episode and the current timestamp)
           - info (container for the title and description)
+        - more (container for additional episodes)
     -->
 
     <main class="app">
@@ -100,7 +101,7 @@
             <span class="timing--total">01:09:12</span>
           </p>
 
-          <div class="episode--info">
+          <!-- <div class="episode--info">
             <h2 class="info--title">The freeCodeCamp Podcast Player</h2>
             <p class="info--description">
               Originally scheduled as a React-Application, naturally evolved
@@ -113,10 +114,80 @@
               <li>how to provide include the show notes</li>
             </ul>
             <p>in an aesthetically pleasing package.</p>
-          </div>
+          </div> -->
           <!-- close episode--info -->
         </div>
         <!-- close player__episode -->
+        <div class="player__more">
+          <div class="more--episodes">
+            <div class="episodes--episode">
+              <h3>
+                Ep 50 - Sacha Greif, designer, developer, and open source
+                creator
+              </h3>
+              <button>
+                <svg><use href="#play" /></svg>
+              </button>
+            </div>
+            <div class="episodes--episode">
+              <h3>
+                Ep 49 - Lyle Troxell, software engineer at Netflix and radio
+                show host
+              </h3>
+              <button>
+                <svg><use href="#play" /></svg>
+              </button>
+            </div>
+            <div class="episodes--episode">
+              <h3>Ep 48 - Ali Spittel, creator of Zen of Programming</h3>
+              <button>
+                <svg><use href="#play" /></svg>
+              </button>
+            </div>
+            <div class="episodes--episode">
+              <h3>
+                Ep. 47 - Laurence Bradford - interview with the creator of
+                LearnToCodeWith.me
+              </h3>
+              <button>
+                <svg><use href="#play" /></svg>
+              </button>
+            </div>
+            <div class="episodes--episode">
+              <h3>
+                Ep. 46 - Alexander Kallaway - Interview with the creator of
+                100DaysOfCode
+              </h3>
+              <button>
+                <svg><use href="#play" /></svg>
+              </button>
+            </div>
+            <div class="episodes--episode">
+              <h3>
+                Ep. 45 - Dropout turned Software Engineer Dylan Israel -
+                developer interview
+              </h3>
+              <button>
+                <svg><use href="#play" /></svg>
+              </button>
+            </div>
+            <!--
+
+
+
+            <div class="episodes--episode">
+              <h3>
+                Ep 50 - Sacha Greif, designer, developer, and open source
+                creator
+              </h3>
+              <button>
+                <svg><use href="#play" /></svg>
+              </button>
+            </div> -->
+          </div>
+          <button class="more__close">Close</button>
+        </div>
+        <!-- close player__more -->
       </div>
       <!-- close player -->
     </main>
