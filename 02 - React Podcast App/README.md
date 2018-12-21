@@ -16,8 +16,6 @@ In so doing, I plan to practice with:
 
 - styled components.
 
-In terms of design patterns, I intend to implement a "skeleton" of the content which is to be displayed, before the content is actually displayed. Something which was heavily discussed for one of the codepen challenges of October.
-
 In terms of user stories, as to draw inspiration from freeCodeCamp itself:
 
 - as the page loads, I am welcomed by the podcast application with the latest episodes for freeCodeCamp. I am able to relate to this with a simple image, the title, a brief description and an audio player.
@@ -36,25 +34,37 @@ But that ought to be enough of a plan. Going to work.
 
 ## Development
 
-### UI & UX
+The projects I want to create in this series are centered around React. With this in mind I will create React-powered applications. That holds true, but this does not prevent me from learning and practicing with concepts only tangentially related to the framework. This is clear in the notes which follow, but I just wanted to stress the change in perspective.
 
-The react-based project needs to manage information from an RSS Feed. However, this information needs to be showcased somewhere. This is why I decided to spent an entire coding session (and a half) creating a UI for the application. Ultimately I think it'll have to change, to accommodate for more functionalities (speed rate, hello?), but it is a good starting point. Solid foundations.
+This react series is about learning and improving my React skills, but most importantly is about:
 
-The UI can be found in the **UI Podcast App** folder. Beside this one, **UX Podcast App** contains the same UI, with a bit of JavaScript to use hard coded values in a half-functioning prototype.
+- **learning** something new and captivating;
 
-## Lessons Learned
+- **practicing** something I'm starting to get;
 
-In which I detailed those concepts I learned about React which are connected to the library, but not strictly the project at hand.
+- **mastering** something I think I understand.
 
-### Render Props
+### Pre React
 
-With this new project I want to fix a deficiency I have in my React portfolio: understanding _render props_. I heard the term thrown around here and there, I caught a glimpse of one instance and seemed to grasp the basics, but I want to really dive into the pattern and understand it. Starting with the [docs](https://reactjs.org/), but mostly considering [this series @leveluptuts](https://www.youtube.com/watch?v=x5oiX93DeHA&list=PLLnpHn493BHGTMs2UmaPUG6Lu3dHrqryY&index=2).
+> lessons learned having fun with JavaScript
+
+In approaching the project, I decided to develop one feature at a time, and to start with plain ol' vanilla JavaScript. I took it rather far, and the effort is stored in the **UX Podcast** app folder of this very project. In the same path you find also a **UI Podcast** folder, detailing the design that went into the application, and a **RSS Feed** folder, in which I used the `fetch` method and experimented with a `DOMParser` as to find the information ultimately detailed in the application.
+
+In this last effort, I also discovered how the `http` URL, referenced in the [freeCodeCamp podcast page](https://freecodecamp.libsyn.com/) is unsecure and how freeCodeCamp actually provides a secure option simply changing the prefix to `https`.
+
+### React
+
+> lessons learned developing the React application
+
+#### React Render Props
+
+With this new project I want to fix one of the deficiencies I have with React, namely _render props_. I heard the term thrown around here and there, I caught a glimpse of one instance and seemed to grasp the basics, but I want to really dive into the pattern and understand it. Starting with the [docs](https://reactjs.org/), but mostly considering [this series @leveluptuts](https://www.youtube.com/watch?v=x5oiX93DeHA&list=PLLnpHn493BHGTMs2UmaPUG6Lu3dHrqryY&index=2).
 
 Render props seems to be an efficient way to create _reusable_ components. Like a toggle component which can be used with different content to be toggled.
 
 Scott gives the example of such a toggle component. Starting with the easiest implementation, and progressing in increments.
 
-#### Normal Toggle Component
+##### Normal Toggle Component
 
 1. create a component with its own state and structure:
 
@@ -102,7 +112,7 @@ Scott gives the example of such a toggle component. Starting with the easiest im
    export default App;
    ```
 
-#### props.children
+##### props.children
 
 1. detail the elements inside the imported component:
 
@@ -148,7 +158,7 @@ Scott gives the example of such a toggle component. Starting with the easiest im
    export default App;
    ```
 
-#### Render Props
+##### Render Props
 
 As in: passing a property to the component which details what needs to be included. This practically means passing a function in a property named `render`.
 
@@ -266,7 +276,7 @@ Quite neat, quite reusable:
 />
 ```
 
-### Render Props Children
+##### Render Props Children
 
 Progressing from render props, we can use the `children` special value for more efficient code. (`render` as a prop is chosen for what it does, but there's nothing special behind the meaning).
 
