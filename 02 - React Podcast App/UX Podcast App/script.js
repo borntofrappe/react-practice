@@ -17,6 +17,8 @@ const muteButton = document.querySelector('.controls--mute');
 // button to change the speed rate, alongside an array detailing possible values
 const speedButton = document.querySelector('.controls--speed');
 const speedOptions = [1, 1.5, 1.75, 2, 2.5, 3];
+// to maintain the playback rate when changing episodes, use a variable to keep track of the current selected option
+let speedOption = 0;
 
 // button to stop the audio
 const stopButton = document.querySelector('.controls--stop');
@@ -43,6 +45,7 @@ const episodeDuration = 4152;
 audio.addEventListener('ended', () => clearInterval(intervalID));
 const playAudio = () => {
   audio.play();
+  audio.playbackRate = speedOptions[speedOption];
 
   intervalID = setInterval(() => {
     const { currentTime } = audio;
@@ -125,11 +128,13 @@ const changeSpeedRate = () => {
   const indexSpeed = speedOptions.indexOf(parseFloat(textContent, 10));
   // detail the following speed rate (or the original if the application reaches the last option)
   if (indexSpeed < speedOptions.length - 1) {
-    audio.playbackRate = speedOptions[indexSpeed + 1];
-    speedButton.textContent = speedOptions[indexSpeed + 1];
+    speedOption += 1;
+    audio.playbackRate = speedOptions[speedOption];
+    speedButton.textContent = speedOptions[speedOption];
   } else {
-    audio.playbackRate = speedOptions[0];
-    speedButton.textContent = speedOptions[0];
+    speedOption = 0;
+    audio.playbackRate = speedOptions[speedOption];
+    speedButton.textContent = speedOptions[speedOption];
   }
 }
 
@@ -254,6 +259,10 @@ function playAnotherEpisode(e) {
   // call the function as if the main button were to be clicked and close the panel
   toggleEpisode();
   panel.classList.add('hidden');
+
+  // update the text showing the title with the text of the heading before the button
+  const { textContent } = e.target.previousElementSibling;
+  document.querySelector('.episode--title').textContent = textContent;
 }
 // for each button add an event listener and following a click play the selected episode
 playPanelButtons.forEach(playMoreButton => playMoreButton.addEventListener('click', playAnotherEpisode));
