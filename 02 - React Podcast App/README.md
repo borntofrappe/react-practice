@@ -4,7 +4,7 @@ Link to the proud UI [right here on codepen](https://codepen.io/borntofrappe/pen
 
 Link to the proud UX [right here on codepen](https://codepen.io/borntofrappe/pen/YdGwow).
 
-<!-- Link to the proud React Application [right here on codepen](). -->
+Link to the work-in-progress React Application [right here on codepen](https://codepen.io/borntofrappe/full/yGbpMm).
 
 ## Preface
 
@@ -55,6 +55,18 @@ In this last effort, I also discovered how the `http` URL, referenced in the [fr
 ### React
 
 > lessons learned developing the React application
+
+Update: 23-12-2018
+
+Started the migration from Vanilla JavaScript to the React framework. There's still aplenty to do:
+
+- immediately start playing other episodes as they are selected;
+
+- rotate the vinyl in unison with the audio;
+
+- update the timestamp with the current time.
+
+Not to mention the most pressing matter: _fixing the component structure_. Currently there exist only one giant component, and the codebase is rather unsustainable. As said, much to do.
 
 #### React Render Props
 
