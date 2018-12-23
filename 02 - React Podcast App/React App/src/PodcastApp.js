@@ -193,12 +193,13 @@ class PodcastApp extends Component {
     super(props);
     this.state = {
       podcast: [],
-      speedRate: [1, 1.5, 1.75, 2, 2.5, 3],
+      currentEpisode: 0,
+      speedRate: [1, 1.5, 2, 2.5, 3],
       speedOption: 0,
       intervalID: 0,
       isPlaying: false,
       isMute: false,
-      isHidden: false
+      isHidden: true
     };
     // bind the methods called when clicking the buttons of the application
     this.toggleButton = this.toggleButton.bind(this);
@@ -207,6 +208,7 @@ class PodcastApp extends Component {
     this.speedButton = this.speedButton.bind(this);
     this.moreButton = this.moreButton.bind(this);
     this.closeButton = this.closeButton.bind(this);
+    this.episodeButton = this.episodeButton.bind(this);
   }
 
 
@@ -286,10 +288,9 @@ class PodcastApp extends Component {
 
   // functions called in response to click event
   toggleButton(e) {
-    e.preventDefault();
 
     const { isPlaying } = this.state;
-    const audio = document.querySelector('audio');
+    const audio = document.querySelector('.toggle audio');
 
     if (!isPlaying) {
       this.playAudio(audio);
@@ -304,9 +305,8 @@ class PodcastApp extends Component {
   }
 
   volumeButton(e) {
-    e.preventDefault();
     const { isMute } = this.state;
-    const audio = document.querySelector('audio');
+    const audio = document.querySelector('.toggle audio');
     if (!isMute) {
       this.muteAudio(audio);
     }
@@ -319,10 +319,9 @@ class PodcastApp extends Component {
   }
 
   speedButton(e) {
-    e.preventDefault();
     const { speedOption, speedRate } = this.state;
     const { length } = speedRate;
-    const audio = document.querySelector('audio');
+    const audio = document.querySelector('.toggle audio');
 
     let newOption = speedOption + 1;
 
@@ -337,8 +336,7 @@ class PodcastApp extends Component {
   }
 
   stopButton(e) {
-    e.preventDefault();
-    const audio = document.querySelector('audio');
+    const audio = document.querySelector('.toggle audio');
     this.pauseAudio(audio);
     audio.currentTime = 0;
     this.setState({
@@ -347,7 +345,6 @@ class PodcastApp extends Component {
   }
 
   moreButton(e) {
-    e.preventDefault();
     this.setState({
       isHidden: false
     })
@@ -359,10 +356,29 @@ class PodcastApp extends Component {
     })
   }
 
+  episodeButton(e) {
+
+    const audio = document.querySelector('.toggle audio');
+    if (!audio.paused) {
+      this.pauseAudio(audio);
+    }
+
+    const { podcast } = this.state;
+    const newAudio = e.target.querySelector('audio');
+    const newSrc = newAudio.getAttribute('src');
+    const newEpisode = podcast.findIndex(episode => episode.audio === newSrc);
+
+    this.setState({
+      currentEpisode: newEpisode,
+      isHidden: true,
+      isPlaying: false
+    })
+  }
+
   // when clicking the toggle button
 
   render() {
-    const { podcast, isPlaying, isMute, speedRate, speedOption, isHidden } = this.state;
+    const { podcast, currentEpisode, isPlaying, isMute, speedRate, speedOption, isHidden } = this.state;
     return (
       <Podcast className="PodcastApp">
         <Vinyl progress="0" />
@@ -370,7 +386,7 @@ class PodcastApp extends Component {
           <ProgressBar progress="0" />
 
           <Controls>
-            <ToggleButton onClick={this.toggleButton}>
+            <ToggleButton className="toggle" onClick={this.toggleButton}>
               {
                 isPlaying ?
                   <SVGIcons icon="pause" />
@@ -380,8 +396,8 @@ class PodcastApp extends Component {
                   <SVGIcons icon="play" />
               }
               {
-                podcast[0] &&
-                <audio src={podcast[0].audio} />
+                podcast[currentEpisode] &&
+                <audio src={podcast[currentEpisode].audio} />
               }
             </ToggleButton>
 
@@ -415,9 +431,9 @@ class PodcastApp extends Component {
           </Time>
 
           {
-            podcast[0] ?
+            podcast[currentEpisode] ?
               <Title>
-                {podcast[0].title}
+                {podcast[currentEpisode].title}
               </Title>
               :
               <Title>
@@ -442,7 +458,7 @@ class PodcastApp extends Component {
                     <EpisodeTitle>{title}</EpisodeTitle>
                     <EpisodeDate>{date}</EpisodeDate>
                     <EpisodeDuration>{duration} mins</EpisodeDuration>
-                    <EpisodeButton>
+                    <EpisodeButton onClick={this.episodeButton}>
                       <SVGIcons icon="play" />
                       <audio src={audio} />
                     </EpisodeButton>
