@@ -32,6 +32,7 @@ const Vinyl = styled.div`
   background-size: 100%, 50%, 100%;
   background-position: 0%, 50% 50%, 100%;
   box-shadow: 0 1px 5px rgba(0, 100, 0, 0.7);
+  transform: ${props => `rotate(${props.progress}deg)`};
 `;
 
 const CurrentEpisode = styled.div`
@@ -45,7 +46,8 @@ const ProgressBar = styled.div`
   width: 60%;
   height: 10px;
   border-radius: 4px;
-  background: linear-gradient(to right, #006400, #006400 0%, #fff 0%);
+  background: ${props => `linear-gradient(to right, #006400, #006400 ${props.progress}%, #fff ${props.progress}%)`};
+  // background: linear-gradient(to right, #006400, #006400 0%, #fff 0%);
   margin-bottom: 2rem;
 `;
 const Controls = styled.div`
@@ -96,8 +98,81 @@ const Time = styled.p`
 const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: 500;
-
 `;
+
+
+const MoreEpisodes = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-top: 2.5px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease-out;
+
+  &.hidden {
+    height: 0;
+    opacity: 0;
+    visibility: none;
+  }
+`;
+
+const Episodes = styled.div`
+  overflow-y: auto;
+  height: 100%;
+  background: #267b26;
+
+
+  &::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0.5rem #040;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.8rem;
+  background-color: #fff;
+  outline: 0.08rem solid #fff;
+  }
+`;
+const Episode = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.4);
+
+  &:nth-of-type(1) {
+    border-top: none;
+  }
+`;
+const EpisodeTitle = styled.h3`
+  width: 0;
+  flex-grow: 1;
+  font-weight: 900;
+  font-size: 1rem;
+  margin-right: 0.75rem;
+`;
+const EpisodeButton = styled(Button)`
+  width: 40px;
+  height: 40px;
+`;
+const CloseButton = styled.button`
+  padding: 0.75rem 0;
+  background: #040;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  font-family: inherit;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+  }
+`;
+
 // in a wrapping container detail a div just for aesthetics
 // below this empty div, add the  components responsible for the application
 class PodcastApp extends Component {
@@ -110,13 +185,16 @@ class PodcastApp extends Component {
       speedOption: 0,
       intervalID: 0,
       isPlaying: false,
-      isMute: false
+      isMute: false,
+      isHidden: true
     };
     // bind the methods called when clicking the buttons of the application
     this.toggleButton = this.toggleButton.bind(this);
     this.stopButton = this.stopButton.bind(this);
     this.volumeButton = this.volumeButton.bind(this);
     this.speedButton = this.speedButton.bind(this);
+    this.moreButton = this.moreButton.bind(this);
+    this.closeButton = this.closeButton.bind(this);
   }
 
 
@@ -256,15 +334,28 @@ class PodcastApp extends Component {
     })
   }
 
+  moreButton(e) {
+    e.preventDefault();
+    this.setState({
+      isHidden: false
+    })
+  }
+
+  closeButton(e) {
+    this.setState({
+      isHidden: true
+    })
+  }
+
   // when clicking the toggle button
 
   render() {
-    const { podcast, isPlaying, isMute, speedRate, speedOption } = this.state;
+    const { podcast, isPlaying, isMute, speedRate, speedOption, isHidden } = this.state;
     return (
       <Podcast className="PodcastApp">
-        <Vinyl />
+        <Vinyl progress="0" />
         <CurrentEpisode>
-          <ProgressBar />
+          <ProgressBar progress="0" />
 
           <Controls>
             <ToggleButton onClick={this.toggleButton}>
@@ -323,9 +414,31 @@ class PodcastApp extends Component {
           }
         </CurrentEpisode>
 
-        <MoreButton>
+        <MoreButton onClick={this.moreButton}>
           <SVGIcons icon="more" />
         </MoreButton>
+
+        <MoreEpisodes className={isHidden ? 'hidden' : ''}>
+          <Episodes>
+            {
+              podcast &&
+              podcast.map(episode => {
+                const { title } = episode;
+
+                return (
+                  <Episode key={title}>
+                    <EpisodeTitle>{title}</EpisodeTitle>
+                    <EpisodeButton><SVGIcons icon="play" /></EpisodeButton>
+                  </Episode>
+                );
+              })
+            }
+          </Episodes>
+          <CloseButton onClick={this.closeButton}>
+            Close
+          </CloseButton>
+        </MoreEpisodes>
+
       </Podcast>
     );
   }
