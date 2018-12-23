@@ -139,25 +139,37 @@ const Episodes = styled.div`
   }
 `;
 const Episode = styled.div`
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
   padding: 1.25rem 1rem;
   border-top: 2px solid rgba(255, 255, 255, 0.4);
+  grid-gap: 0.5rem 1rem;
 
   &:nth-of-type(1) {
     border-top: none;
   }
 `;
 const EpisodeTitle = styled.h3`
-  width: 0;
-  flex-grow: 1;
   font-weight: 900;
   font-size: 1rem;
-  margin-right: 0.75rem;
+  grid-row: 1/2;
+  grid-column: 1/3;
+
+`;
+const EpisodeDate = styled.p`
+  grid-row: 2/3;
+  grid-column: 1/2;
+`;
+
+const EpisodeDuration = styled.p`
+  grid-row: 2/3;
+  grid-column: 2/3;
 `;
 const EpisodeButton = styled(Button)`
   width: 40px;
   height: 40px;
+  grid-row: 1/span 2;
+  grid-column: 3/4;
 `;
 const CloseButton = styled.button`
   padding: 0.75rem 0;
@@ -186,7 +198,7 @@ class PodcastApp extends Component {
       intervalID: 0,
       isPlaying: false,
       isMute: false,
-      isHidden: true
+      isHidden: false
     };
     // bind the methods called when clicking the buttons of the application
     this.toggleButton = this.toggleButton.bind(this);
@@ -231,7 +243,7 @@ class PodcastApp extends Component {
         title,
         audio,
         date: date.toDateString(),
-        totalMinutes
+        duration: totalMinutes
       });
     }
 
@@ -423,12 +435,17 @@ class PodcastApp extends Component {
             {
               podcast &&
               podcast.map(episode => {
-                const { title } = episode;
+                const { title, date, duration, audio } = episode;
 
                 return (
                   <Episode key={title}>
                     <EpisodeTitle>{title}</EpisodeTitle>
-                    <EpisodeButton><SVGIcons icon="play" /></EpisodeButton>
+                    <EpisodeDate>{date}</EpisodeDate>
+                    <EpisodeDuration>{duration} mins</EpisodeDuration>
+                    <EpisodeButton>
+                      <SVGIcons icon="play" />
+                      <audio src={audio} />
+                    </EpisodeButton>
                   </Episode>
                 );
               })
