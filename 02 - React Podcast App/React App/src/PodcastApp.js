@@ -105,12 +105,22 @@ class PodcastApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      audio: 'https://traffic.libsyn.com/freecodecamp/Abbey_and_Erica_interview_.mp3?dest-id=603849',
       podcast: [],
-
+      speedRate: [1, 1.5, 1.75, 2, 2.5, 3],
+      speedOption: 0,
+      intervalID: 0,
+      isPlaying: false,
+      isMute: false
     };
+    // bind the methods called when clicking the buttons of the application
+    this.toggleButton = this.toggleButton.bind(this);
+    this.stopButton = this.stopButton.bind(this);
+    this.volumeButton = this.volumeButton.bind(this);
+    this.speedButton = this.speedButton.bind(this);
   }
 
+
+  // function parsing the RSS feed, called as the components mount
   parseFeed(text) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, 'application/xml');
@@ -150,8 +160,10 @@ class PodcastApp extends Component {
     this.setState({
       podcast
     })
-    console.log(podcast);
   }
+
+  // when the components are mount(ed) retrieve the information from the RSS feed
+  // using the parseFeed function
   componentDidMount() {
     const URL = 'https://podcast.freecodecamp.org/rss';
 
@@ -159,8 +171,95 @@ class PodcastApp extends Component {
       .then(response => response.text())
       .then(text => this.parseFeed(text));
   }
+
+  // utility functions called to enable the functionalities behind the buttons
+  playAudio(audio) {
+    const { speedOption, speedRate } = this.state;
+    audio.play();
+    audio.playbackRate = speedRate[speedOption];
+  }
+  pauseAudio(audio) {
+    audio.pause();
+  }
+
+  muteAudio(audio) {
+    audio.volume = 0;
+  }
+
+  volumeAudio(audio) {
+    audio.volume = 1;
+  }
+
+  speedAudio(audio, playbackRate) {
+    audio.playbackRate = playbackRate;
+  }
+
+  // functions called in response to click event
+  toggleButton(e) {
+    e.preventDefault();
+
+    const { isPlaying } = this.state;
+    const audio = document.querySelector('audio');
+
+    if (!isPlaying) {
+      this.playAudio(audio);
+    }
+    else {
+      this.pauseAudio(audio);
+    }
+
+    this.setState({
+      isPlaying: !isPlaying
+    })
+  }
+
+  volumeButton(e) {
+    e.preventDefault();
+    const { isMute } = this.state;
+    const audio = document.querySelector('audio');
+    if (!isMute) {
+      this.muteAudio(audio);
+    }
+    else {
+      this.volumeAudio(audio);
+    }
+    this.setState({
+      isMute: !isMute
+    })
+  }
+
+  speedButton(e) {
+    e.preventDefault();
+    const { speedOption, speedRate } = this.state;
+    const { length } = speedRate;
+    const audio = document.querySelector('audio');
+
+    let newOption = speedOption + 1;
+
+    if (newOption >= length) {
+      newOption = 0;
+    }
+
+    this.speedAudio(audio, speedRate[newOption]);
+    this.setState({
+      speedOption: newOption
+    })
+  }
+
+  stopButton(e) {
+    e.preventDefault();
+    const audio = document.querySelector('audio');
+    this.pauseAudio(audio);
+    audio.currentTime = 0;
+    this.setState({
+      isPlaying: false
+    })
+  }
+
+  // when clicking the toggle button
+
   render() {
-    const { podcast } = this.state;
+    const { podcast, isPlaying, isMute, speedRate, speedOption } = this.state;
     return (
       <Podcast className="PodcastApp">
         <Vinyl />
@@ -168,21 +267,40 @@ class PodcastApp extends Component {
           <ProgressBar />
 
           <Controls>
-            <ToggleButton>
-              <SVGIcons icon="play" />
+            <ToggleButton onClick={this.toggleButton}>
+              {
+                isPlaying ?
+                  <SVGIcons icon="pause" />
+
+                  :
+
+                  <SVGIcons icon="play" />
+              }
               {
                 podcast[0] &&
                 <audio src={podcast[0].audio} />
               }
             </ToggleButton>
 
-            <Button>
-              <SVGIcons icon="volume" />
+            <Button onClick={this.volumeButton}>
+              {
+                isMute ?
+                  <SVGIcons icon="mute" />
+
+                  :
+
+                  <SVGIcons icon="volume" />
+
+              }
             </Button>
 
-            <SpeedButton>1</SpeedButton>
+            <SpeedButton onClick={this.speedButton}>
+              {
+                speedRate[speedOption]
+              }
+            </SpeedButton>
 
-            <Button>
+            <Button onClick={this.stopButton}>
               <SVGIcons icon="stop" />
             </Button>
           </Controls>
