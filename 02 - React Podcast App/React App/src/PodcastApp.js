@@ -111,18 +111,56 @@ class PodcastApp extends Component {
     };
   }
 
-  parseText(text) {
-    console.log(text);
+  parseFeed(text) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'application/xml');
+
+    const items = doc.querySelectorAll('item');
+
+    /* this.state.podcast ought to be an array of objects with the following structure
+      {
+        title,
+        audio,
+        pubdate,
+        duration
+      }
+    */
+    const podcast = [];
+    for (let i = 0; i < items.length; i += 1) {
+      const { textContent: title } = items[i].querySelector('title');
+      const audio = items[i].querySelector('enclosure').getAttribute('url');
+      const { textContent: pubDate } = items[i].querySelector('pubDate');
+      const date = new Date(pubDate);
+
+      const { textContent: time } = items[i].querySelector('enclosure').nextElementSibling;
+
+      const timeComponents = time.split(':');
+      const [, minutes, hours] = timeComponents.reverse();
+
+      const totalMinutes = (hours) ? parseInt(hours, 10) * 60 + parseInt(minutes, 10) : parseInt(minutes, 10);
+
+      podcast.push({
+        title,
+        audio,
+        date: date.toDateString(),
+        totalMinutes
+      });
+    }
+
+    this.setState({
+      podcast
+    })
+    console.log(podcast);
   }
   componentDidMount() {
     const URL = 'https://podcast.freecodecamp.org/rss';
 
     fetch(URL)
       .then(response => response.text())
-      .then(text => this.parseText(text));
+      .then(text => this.parseFeed(text));
   }
   render() {
-    const { audio } = this.state;
+    const { podcast } = this.state;
     return (
       <Podcast className="PodcastApp">
         <Vinyl />
@@ -132,7 +170,10 @@ class PodcastApp extends Component {
           <Controls>
             <ToggleButton>
               <SVGIcons icon="play" />
-              <audio src={audio} />
+              {
+                podcast[0] &&
+                <audio src={podcast[0].audio} />
+              }
             </ToggleButton>
 
             <Button>
@@ -152,9 +193,16 @@ class PodcastApp extends Component {
             <span>01:09:12</span>
           </Time>
 
-          <Title>
-            Ep. 51: Erica Peterson, founder, entrepreneur, and mother
-          </Title>
+          {
+            podcast[0] ?
+              <Title>
+                {podcast[0].title}
+              </Title>
+              :
+              <Title>
+                Fetching latest episode
+              </Title>
+          }
         </CurrentEpisode>
 
         <MoreButton>
