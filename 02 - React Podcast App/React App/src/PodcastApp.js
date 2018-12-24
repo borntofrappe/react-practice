@@ -35,6 +35,8 @@ const Vinyl = styled.div`
   background-size: 100%, 50%, 100%;
   background-position: 0%, 50% 50%, 100%;
   box-shadow: 0 1px 5px rgba(0, 100, 0, 0.7);
+  // transition: transform 1s linear;
+  transform: ${props => `rotate(${props.progress * 6}deg)`};
   transition: transform 1s linear;
 `;
 
@@ -45,6 +47,7 @@ const ProgressBar = styled.div`
   border-radius: 4px;
   background: ${props => `linear-gradient(to right, #006400, #006400 ${props.progress}%, #fff ${props.progress}%)`};
   margin-bottom: 2rem;
+  transition: background 1s linear;
 `;
 
 // wrapping container for the buttons
@@ -307,14 +310,18 @@ class PodcastApp extends Component {
     audio.play();
     audio.playbackRate = speedRate[speedOption];
 
-    setInterval(() => {
+    let intervalID;
+    intervalID = setInterval(() => {
       const { currentTime } = audio;
-      const vinyl = document.querySelector('.vinyl');
-      vinyl.style.transform = `rotate(${Math.round(currentTime) * 6}deg)`;
+
       this.setState({
         currentTime: Math.round(currentTime)
       })
     }, 1000);
+
+    this.setState({
+      intervalID
+    })
   }
   pauseAudio(audio) {
     audio.pause();
@@ -390,6 +397,7 @@ class PodcastApp extends Component {
     audio.currentTime = 0;
     this.setState({
       isPlaying: false,
+      currentTime: 0
     })
   }
 
@@ -419,10 +427,15 @@ class PodcastApp extends Component {
     this.setState({
       currentEpisode: newEpisode,
       isHidden: true,
-      isPlaying: false
+      isPlaying: false,
+      currentTime: 0
     })
   }
 
+
+  formatTime(time) {
+    return (time >= 10) ? time : `0${time}`;
+  }
   // when clicking the toggle button
 
   /*
@@ -457,7 +470,7 @@ class PodcastApp extends Component {
     const timeStamp = {
       hours: 0,
       minutes: 0,
-      seconds: currentTime
+      seconds: Math.round(currentTime)
     }
     while (timeStamp.seconds >= 60) {
       timeStamp.seconds -= 60;
@@ -468,9 +481,11 @@ class PodcastApp extends Component {
       timeStamp.hours += 1;
     }
 
+    const { hours, minutes, seconds } = timeStamp;
+
     return (
       <Podcast className="PodcastApp">
-        <Vinyl className="vinyl" />
+        <Vinyl progress={Math.round(currentTime)} />
         {
           podcast[currentEpisode] ?
             <ProgressBar progress={Math.round(currentTime / podcast[currentEpisode].duration * 100)} />
@@ -517,7 +532,13 @@ class PodcastApp extends Component {
         </Controls>
 
         <Time>
-          <span>{Object.values(timeStamp).map(time => time >= 10 ? time : `0${time}`).join(':')}</span>
+          {
+            podcast[currentEpisode] ?
+              <span>{podcast[currentEpisode].duration >= 3600 ? `${this.formatTime(hours)}:${this.formatTime(minutes)}:${this.formatTime(seconds)}` : `${this.formatTime(minutes)}:${this.formatTime(seconds)}`}</span>
+              :
+              <span>00:00:00</span>
+          }
+          {/* <span>{Object.values(timeStamp).map(time => time >= 10 ? time : `0${time}`).join(':')}</span> */}
           /
           {
             podcast[currentEpisode] ?
