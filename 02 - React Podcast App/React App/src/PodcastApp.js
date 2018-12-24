@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import SVGIcons from './SVGIcons.js';
 
+// wrapping container for the entire application
+// single column layout, horizontally centered
 const Podcast = styled.div`
   max-width: 400px;
   width: 90vw;
@@ -15,6 +17,7 @@ const Podcast = styled.div`
   position: relative;
 `;
 
+// visual displaying a makeshift vinyl, rotated as the audio progresses to match the number of seconds (0-60)
 const Vinyl = styled.div`
   margin: 1rem;
   width: calc(10rem + 2.5vw);
@@ -32,30 +35,29 @@ const Vinyl = styled.div`
   background-size: 100%, 50%, 100%;
   background-position: 0%, 50% 50%, 100%;
   box-shadow: 0 1px 5px rgba(0, 100, 0, 0.7);
-  transform: ${props => `rotate(${props.progress}deg)`};
+  transition: transform 1s linear;
 `;
 
-const CurrentEpisode = styled.div`
-  padding: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
+// visual displaying the current progress vis-a-vis the toal duration of the podcast
 const ProgressBar = styled.div`
   width: 60%;
   height: 10px;
   border-radius: 4px;
   background: ${props => `linear-gradient(to right, #006400, #006400 ${props.progress}%, #fff ${props.progress}%)`};
-  // background: linear-gradient(to right, #006400, #006400 0%, #fff 0%);
   margin-bottom: 2rem;
 `;
+
+// wrapping container for the buttons
 const Controls = styled.div`
   display: grid;
   justify-items: center;
   grid-gap: 1.5rem 2rem;
   grid-template-columns: 1fr 1fr 1fr;
 `;
+
+// buttons starting from a common set of property value pairs
+// buttons positioned with the first button centered in the first row and the rest laid below it
+
 const Button = styled.button`
   width: 48px;
   height: 48px;
@@ -75,32 +77,34 @@ const ToggleButton = styled(Button)`
   width: 56px;
   height: 56px;
 `;
-
+// speed button with an x after the speed option
 const SpeedButton = styled(Button)`
   font-family: inherit;
   &:after {
   content: 'x';
   }
 `;
-
+// last button laid to the right of the application
 const MoreButton = styled(Button)`
   align-self: flex-end;
-  margin-top: -1rem;
 `;
 
+// paragraph displaying the timestamp
 const Time = styled.p`
   margin: 1rem 0 2rem;
   span {
     margin: 0 0.3rem;
   }
 `;
-
+// heading dusplaying the title of the current episode
 const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: 500;
 `;
 
-
+// wrapping container for more episodes
+// absolute positioned to cover a section of the podcast app container
+// with a .hidden class toggling its appearance
 const MoreEpisodes = styled.div`
   position: absolute;
   bottom: 0;
@@ -120,6 +124,9 @@ const MoreEpisodes = styled.div`
   }
 `;
 
+// wrapping container for the episodes
+// with vertical overflow to allow for the scroll
+// with pseudo selectors for the scroll bar
 const Episodes = styled.div`
   overflow-y: auto;
   height: 100%;
@@ -138,6 +145,13 @@ const Episodes = styled.div`
   outline: 0.08rem solid #fff;
   }
 `;
+
+// wrapping container for each episode
+/* displaying the content in a grid, as follows
+| heading   | heading     | button|
+| date      | duration    |       |
+
+*/
 const Episode = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr auto;
@@ -149,6 +163,8 @@ const Episode = styled.div`
     border-top: none;
   }
 `;
+
+// properties for the separate heading / paragraph / button elements of each episode
 const EpisodeTitle = styled.h3`
   font-weight: 900;
   font-size: 1rem;
@@ -171,6 +187,8 @@ const EpisodeButton = styled(Button)`
   grid-row: 1/span 2;
   grid-column: 3/4;
 `;
+
+// final button positioned below the Episodes container, to close the MoreEpisode container
 const CloseButton = styled.button`
   padding: 0.75rem 0;
   background: #040;
@@ -181,25 +199,29 @@ const CloseButton = styled.button`
   transition: all 0.2s ease-out;
 
   &:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.8);
   }
 `;
 
-// in a wrapping container detail a div just for aesthetics
-// below this empty div, add the  components responsible for the application
 class PodcastApp extends Component {
-  // in the state detail the audio file
+  /* in the state detail
+    URL, storing the information of the RSS feed
+    podcast, array tobe filled with one object for each episode
+
+  */
   constructor(props) {
     super(props);
     this.state = {
+      URL: 'https://podcast.freecodecamp.org/rss',
       podcast: [],
       currentEpisode: 0,
+      currentTime: 0,
       speedRate: [1, 1.5, 2, 2.5, 3],
       speedOption: 0,
-      intervalID: 0,
       isPlaying: false,
       isMute: false,
-      isHidden: true
+      isHidden: true,
+      intervalID: 0
     };
     // bind the methods called when clicking the buttons of the application
     this.toggleButton = this.toggleButton.bind(this);
@@ -207,57 +229,72 @@ class PodcastApp extends Component {
     this.volumeButton = this.volumeButton.bind(this);
     this.speedButton = this.speedButton.bind(this);
     this.moreButton = this.moreButton.bind(this);
+    this.selectButton = this.selectButton.bind(this);
     this.closeButton = this.closeButton.bind(this);
-    this.episodeButton = this.episodeButton.bind(this);
   }
 
 
   // function parsing the RSS feed, called as the components mount
+  // input: the text of the page with the RSS feed information
+  // behavior: update this.state.podcast with one object for each episode
   parseFeed(text) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, 'application/xml');
 
-    const items = doc.querySelectorAll('item');
-
-    /* this.state.podcast ought to be an array of objects with the following structure
+    /* each episode is structured with the following format
       {
-        title,
-        audio,
-        pubdate,
-        duration
+        title, title
+        audio, url redirecting toward the actual sound file
+        pubdate, date object matching the episode's
+        duration, seconds the episode lasts
       }
     */
+
+    // find all the episodes in <item> elements
+    const items = doc.querySelectorAll('item');
+
     const podcast = [];
-    for (let i = 0; i < items.length; i += 1) {
-      const { textContent: title } = items[i].querySelector('title');
-      const audio = items[i].querySelector('enclosure').getAttribute('url');
-      const { textContent: pubDate } = items[i].querySelector('pubDate');
+    // loop through each item and add to the podcast array the necessary information
+    [...items].forEach(item => {
+      // title found in <title> element
+      const { textContent: title } = item.querySelector('title');
+
+      // audio found in the url attribute of the <enclosure> element
+      const audio = item.querySelector('enclosure').getAttribute('url');
+
+      // date found in the <pubDate> element
+      const { textContent: pubDate } = item.querySelector('pubDate');
       const date = new Date(pubDate);
 
-      const { textContent: time } = items[i].querySelector('enclosure').nextElementSibling;
-
+      // duration (in hh:mm:ss) in the element following the <enclosure> element
+      const { textContent: time } = item.querySelector('enclosure').nextElementSibling;
       const timeComponents = time.split(':');
-      const [, minutes, hours] = timeComponents.reverse();
+      const [seconds, minutes, hours] = timeComponents.reverse();
+      let duration = parseInt(seconds, 10) + parseInt(minutes, 10) * 60;
+      if (hours) {
+        duration += parseInt(hours, 10) * 60 * 60;
+      }
 
-      const totalMinutes = (hours) ? parseInt(hours, 10) * 60 + parseInt(minutes, 10) : parseInt(minutes, 10);
-
+      // append the information in the podcast array
       podcast.push({
         title,
         audio,
         date: date.toDateString(),
-        duration: totalMinutes
+        time,
+        duration
       });
-    }
+    });
 
+    // update the state with the retrieved information
     this.setState({
       podcast
     })
   }
 
-  // when the components are mount(ed) retrieve the information from the RSS feed
-  // using the parseFeed function
+  // retrieve the information from the RSS feed as the components mount
+  // calling the parseFeed function and passing as argument the text retrieved from the described URL
   componentDidMount() {
-    const URL = 'https://podcast.freecodecamp.org/rss';
+    const { URL } = this.state;
 
     fetch(URL)
       .then(response => response.text())
@@ -269,9 +306,21 @@ class PodcastApp extends Component {
     const { speedOption, speedRate } = this.state;
     audio.play();
     audio.playbackRate = speedRate[speedOption];
+
+    setInterval(() => {
+      const { currentTime } = audio;
+      const vinyl = document.querySelector('.vinyl');
+      vinyl.style.transform = `rotate(${Math.round(currentTime) * 6}deg)`;
+      this.setState({
+        currentTime: Math.round(currentTime)
+      })
+    }, 1000);
   }
   pauseAudio(audio) {
     audio.pause();
+
+    const { intervalID } = this.state;
+    clearInterval(intervalID);
   }
 
   muteAudio(audio) {
@@ -340,7 +389,7 @@ class PodcastApp extends Component {
     this.pauseAudio(audio);
     audio.currentTime = 0;
     this.setState({
-      isPlaying: false
+      isPlaying: false,
     })
   }
 
@@ -356,8 +405,7 @@ class PodcastApp extends Component {
     })
   }
 
-  episodeButton(e) {
-
+  selectButton(e) {
     const audio = document.querySelector('.toggle audio');
     if (!audio.paused) {
       this.pauseAudio(audio);
@@ -377,70 +425,118 @@ class PodcastApp extends Component {
 
   // when clicking the toggle button
 
+  /*
+  PodcastApp structure
+  <Podcast> wrapping container (for the entire application)
+    <Vinyl> visual to display the current number of seconds (0-60) into degrees (0-360)
+    <ProgressBar> visual to display the current timestamp vis-a-vis the episode's timestamp (00:00:00 / 01:09:21)
+
+    <Controls> wrapping container (for the main buttons)
+      <Button> four buttons for the play/pause, mute/volume, change speed rate, stop functionalities
+
+    <Time> paragraph nesting two pan elements, and displaying the current timestamp vis-a-vis the episode's timestamp
+    <Title> with the title of the episode currently being played
+
+    <Button> for the more episodes functionality
+
+    <MoreEpisodes> wrapping container for more episodes
+      <Episodes> wrapping container for the actual episodes
+        <Episode> wrapping container for each episode
+          <Title> of the episode
+          <Date> of the episode
+          <Duration> of the episode
+          <Button> selecting the episode
+
+      <Button> to close the more episodes panel
+
+  */
   render() {
-    const { podcast, currentEpisode, isPlaying, isMute, speedRate, speedOption, isHidden } = this.state;
+    const { podcast, currentEpisode, currentTime, speedRate, speedOption, isPlaying, isMute, isHidden } = this.state;
+
+    // for the vinyl, detail the rotation according to the number of seconds (0-60)
+    const timeStamp = {
+      hours: 0,
+      minutes: 0,
+      seconds: currentTime
+    }
+    while (timeStamp.seconds >= 60) {
+      timeStamp.seconds -= 60;
+      timeStamp.minutes += 1;
+    }
+    while (timeStamp.minutes >= 60) {
+      timeStamp.minutes -= 60;
+      timeStamp.hours += 1;
+    }
+
     return (
       <Podcast className="PodcastApp">
-        <Vinyl progress="0" />
-        <CurrentEpisode>
-          <ProgressBar progress="0" />
+        <Vinyl className="vinyl" />
+        {
+          podcast[currentEpisode] ?
+            <ProgressBar progress={Math.round(currentTime / podcast[currentEpisode].duration * 100)} />
+            :
+            <ProgressBar progress={0} />
+        }
 
-          <Controls>
-            <ToggleButton className="toggle" onClick={this.toggleButton}>
-              {
-                isPlaying ?
-                  <SVGIcons icon="pause" />
+        <Controls>
+          <ToggleButton className="toggle" onClick={this.toggleButton}>
+            {
+              isPlaying ?
+                <SVGIcons icon="pause" />
 
-                  :
+                :
 
-                  <SVGIcons icon="play" />
-              }
-              {
-                podcast[currentEpisode] &&
-                <audio src={podcast[currentEpisode].audio} />
-              }
-            </ToggleButton>
+                <SVGIcons icon="play" />
+            }
+            {
+              podcast[currentEpisode] &&
+              <audio src={podcast[currentEpisode].audio} />
+            }
+          </ToggleButton>
 
-            <Button onClick={this.volumeButton}>
-              {
-                isMute ?
-                  <SVGIcons icon="mute" />
+          <Button onClick={this.volumeButton}>
+            {
+              isMute ?
+                <SVGIcons icon="mute" />
 
-                  :
+                :
 
-                  <SVGIcons icon="volume" />
+                <SVGIcons icon="volume" />
+            }
+          </Button>
 
-              }
-            </Button>
+          <SpeedButton onClick={this.speedButton}>
+            {
+              speedRate[speedOption]
+            }
+          </SpeedButton>
 
-            <SpeedButton onClick={this.speedButton}>
-              {
-                speedRate[speedOption]
-              }
-            </SpeedButton>
+          <Button onClick={this.stopButton}>
+            <SVGIcons icon="stop" />
+          </Button>
+        </Controls>
 
-            <Button onClick={this.stopButton}>
-              <SVGIcons icon="stop" />
-            </Button>
-          </Controls>
-
-          <Time>
-            <span>00:00:00</span>
-            /
-            <span>01:09:12</span>
-          </Time>
-
+        <Time>
+          <span>{Object.values(timeStamp).map(time => time >= 10 ? time : `0${time}`).join(':')}</span>
+          /
           {
             podcast[currentEpisode] ?
-              <Title>
-                {podcast[currentEpisode].title}
-              </Title>
+              <span>{podcast[currentEpisode].time}</span>
               :
-              <Title>
-                Fetching latest episode
-              </Title>
+              <span>00:00:00</span>
           }
-        </CurrentEpisode>
+        </Time>
+
+        {
+          podcast[currentEpisode] ?
+            <Title>
+              {podcast[currentEpisode].title}
+            </Title>
+            :
+            <Title>
+              Fetching latest episode
+            </Title>
+        }
 
         <MoreButton onClick={this.moreButton}>
           <SVGIcons icon="more" />
@@ -457,8 +553,8 @@ class PodcastApp extends Component {
                   <Episode key={title}>
                     <EpisodeTitle>{title}</EpisodeTitle>
                     <EpisodeDate>{date}</EpisodeDate>
-                    <EpisodeDuration>{duration} mins</EpisodeDuration>
-                    <EpisodeButton onClick={this.episodeButton}>
+                    <EpisodeDuration>{Math.floor(duration / 60)} mins</EpisodeDuration>
+                    <EpisodeButton onClick={this.selectButton}>
                       <SVGIcons icon="play" />
                       <audio src={audio} />
                     </EpisodeButton>
