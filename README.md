@@ -1,8 +1,5 @@
 # Reactice
 
-> Simply put, react practice
->
-> as in
 > (react, practice) => reactice
 
 ## Brief
@@ -25,20 +22,24 @@ A stylish container in which to reference every single future react application 
 
 - react-router.
 
-### Who's That Pokemon?
+### 01 - Who's That Pokemon?
 
-Live [right here](https://codepen.io/borntofrappe/pen/GwYLRw).
+Live [right here](https://codepen.io/borntofrappe/full/GwYLRw).
 
 A simple application to play a simple game. Inspired by the pokemon anime. Using the following:
 
 - styled-components;
 
-- react spring.
+- react spring;
 
-### React Podcast App
+- a public API.
 
-<!-- Live [right here](). -->
+### 02 - FreeCodeCamp Podcast App
+
+Live [right here](https://codepen.io/borntofrappe/pen/yGbpMm). It is a working progress.
 
 A mobile-friendly application to play podcast episodes from the freeCodeCamp RSS feed. Practicing with:
 
-- styled-components.
+- styled-components;
+
+- RSS Feed.
