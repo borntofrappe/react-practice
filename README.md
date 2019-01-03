@@ -51,3 +51,13 @@ Live [right here](https://codepen.io/borntofrappe/full/ebRVJd).
 An analog watch, highlighting the current time with a few vector-based niceties. Leveraging:
 
 - SVG syntax.
+
+### 04 - React Timer
+
+Live [right here](https://codepen.io/borntofrappe/full/dwVZRQ).
+
+A two-steps application to start a timer with style. Making use of:
+
+- styled-components;
+
+- react-spring.
