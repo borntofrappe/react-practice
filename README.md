@@ -2,6 +2,14 @@
 
 > (react, practice) => reactice
 
+## TODO
+
+- complete project 02, the unofficial freeCodeCamp podcast app;
+
+- review project 03 & 04, checking the component structure and removing unnecessary libraries.
+
+- begin project 05, a rich text editor allowing to write in markdown syntax, and download the text in markdown format.
+
 ## Brief
 
 Inspired by many, but mostly [codevember](http://codevember.xyz/) and Wes Bos's course [javascript 30](https://javascript30.com/), I set out to create 30 applications with React.js. 31 for good measure.
