@@ -36,10 +36,18 @@ A simple application to play a simple game. Inspired by the pokemon anime. Using
 
 ### 02 - FreeCodeCamp Podcast App
 
-Live [right here](https://codepen.io/borntofrappe/pen/yGbpMm). It is a working progress.
+Live [right here](https://codepen.io/borntofrappe/full/yGbpMm). It is a working progress.
 
 A mobile-friendly application to play podcast episodes from the freeCodeCamp RSS feed. Practicing with:
 
 - styled-components;
 
 - RSS Feed.
+
+### 03 - React SVG Watch
+
+Live [right here](https://codepen.io/borntofrappe/full/ebRVJd).
+
+An analog watch, highlighting the current time with a few vector-based niceties. Leveraging:
+
+- SVG syntax.
