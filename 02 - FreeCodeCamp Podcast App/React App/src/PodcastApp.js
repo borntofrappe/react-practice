@@ -380,9 +380,11 @@ class PodcastApp extends Component {
         />
 
 
+        {/*
+        for the heading displaying the title, this one requires simply the title of the current episode, if existing
+        */}
         <PodcastTitle
-          episodes={episodes}
-          currentEpisode={currentEpisode}
+          title={episodes[currentEpisode] ? episodes[currentEpisode].title : 'Fetching the latest episode'}
         />
 
         <MoreButton onClick={this.moreButton}>
