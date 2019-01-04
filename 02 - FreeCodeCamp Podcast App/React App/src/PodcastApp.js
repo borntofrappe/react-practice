@@ -43,11 +43,9 @@ const PodcastVinyl = styled.div`
   background-size: 100%, 50%, 100%;
   background-position: 0%, 50% 50%, 100%;
   box-shadow: 0 1px 5px rgba(0, 100, 0, 0.7);
-  // transition: transform 1s linear;
   transform: ${props => `rotate(${props.progress * 6}deg)`};
   transition: transform 1s linear;
 `;
-
 
 
 // all buttons share a common set of property-value pairs
@@ -72,7 +70,6 @@ const MoreButton = styled(Button)`
 `;
 
 
-
 class PodcastApp extends Component {
   /* in the state detail
     URL, forwarding toward the page storing the information of the RSS feed
@@ -81,7 +78,6 @@ class PodcastApp extends Component {
     currentTime, to keep track of the time and highlight it throughout the application
     speedRate and speedOption, allowing a change in the speed rate of the audio
     isPlaying, isMute, isHidden, bollean values to toggle the buttons and the panel nesting more episodes
-
   */
   constructor(props) {
     super(props);
@@ -126,10 +122,9 @@ class PodcastApp extends Component {
     // find all the episodes in <item> elements
     const items = doc.querySelectorAll('item');
 
-    const episodes = [];
-    // loop through each item and add to the podcast array the necessary information
-    [...items].forEach(item => {
-      // title found in <title> element
+    // create the desired data structure looping through each item and destructuring the required information
+    const episodes = [...items].map(item => {
+      // title found in a <title> element
       const { textContent: title } = item.querySelector('title');
 
       // audio found in the url attribute of the <enclosure> element
@@ -148,12 +143,10 @@ class PodcastApp extends Component {
         duration += parseInt(hours, 10) * 60 * 60;
       }
 
-      // append the information in the podcast array
-      episodes.push({
+      return ({
         title,
         audio,
         date: date.toDateString(),
-        time,
         duration
       });
     });
@@ -175,11 +168,14 @@ class PodcastApp extends Component {
   }
 
   // utility functions called to enable the functionalities behind the buttons
+
+  // function accepting an audio element and playing it at the desired speed rate
   playAudio(audio) {
     const { speedOption, speedRate } = this.state;
     audio.play();
     audio.playbackRate = speedRate[speedOption];
 
+    // update the UI changing the `current` time value every second
     this.intervalID = setInterval(() => {
       const { currentTime } = audio;
 
@@ -190,27 +186,36 @@ class PodcastApp extends Component {
 
 
   }
+
+  // function accepting an audio element and pausing it
   pauseAudio(audio) {
     audio.pause();
-
+    // clear the ongoing interval to stop the UI from updating
     clearInterval(this.intervalID);
   }
 
+  // function accepting an audio element and setting its volume to 0
   muteAudio(audio) {
     audio.volume = 0;
   }
 
+  // function accepting an audio element and setting its volume back to 1
   volumeAudio(audio) {
     audio.volume = 1;
   }
 
+  // function accepting an audio element, a rate at which to run the audio and changing the audio's speed accordingly
   speedAudio(audio, playbackRate) {
     audio.playbackRate = playbackRate;
   }
 
-  // functions called in response to click event
-  toggleButton(e) {
 
+
+  // functions called in response to click event
+
+  // toggleButton allowing to play/pause the audio
+  toggleButton(e) {
+    // select the audio element in the .toggle button, play/pause it according to the starting boolean
     const { isPlaying } = this.state;
     const audio = document.querySelector('.toggle audio');
 
@@ -221,14 +226,18 @@ class PodcastApp extends Component {
       this.pauseAudio(audio);
     }
 
+    // update the state altering the boolean's value
     this.setState({
       isPlaying: !isPlaying
     })
   }
 
+  // volume button allowing to mute/unmute the audio
   volumeButton(e) {
+    // select the audio element and change its volume acording to the original boolean
     const { isMute } = this.state;
     const audio = document.querySelector('.toggle audio');
+    // call the functions to mute or unmute the audio
     if (!isMute) {
       this.muteAudio(audio);
     }
@@ -240,7 +249,9 @@ class PodcastApp extends Component {
     })
   }
 
+  // speed button allowing to change the playback rate
   speedButton(e) {
+    // from the array detailing the different options select the one right after the current one (or the first one if the method reaches the array's end)
     const { speedOption, speedRate } = this.state;
     const { length } = speedRate;
     const audio = document.querySelector('.toggle audio');
@@ -251,22 +262,30 @@ class PodcastApp extends Component {
       newOption = 0;
     }
 
+    // call the function to change the speed
     this.speedAudio(audio, speedRate[newOption]);
+    // update the state with the new option
     this.setState({
       speedOption: newOption
     })
   }
 
+  // stop button pausing the audio and setting it back to the beginning
   stopButton(e) {
     const audio = document.querySelector('.toggle audio');
+    // call the function to pause the audio
     this.pauseAudio(audio);
+    // change the current time to 0
     audio.currentTime = 0;
+
+    // update the UI showing the play button
     this.setState({
       isPlaying: false,
       currentTime: 0
     })
   }
 
+  // functions opening and closing the panel, by way of adding and removing a class on the basis of the boolean's value
   moreButton(e) {
     this.setState({
       isHidden: false
@@ -279,17 +298,21 @@ class PodcastApp extends Component {
     })
   }
 
+  // select button changing the src attribute of the audio in the .toggle button to the newly selected episode
   selectButton(e) {
     const audio = document.querySelector('.toggle audio');
+    // pause the audio if ongoing
     if (!audio.paused) {
       this.pauseAudio(audio);
     }
 
+    // find the url of the new audio under the .audio property of the selected element
     const { episodes } = this.state;
     const newAudio = e.target.querySelector('audio');
     const newSrc = newAudio.getAttribute('src');
     const newEpisode = episodes.findIndex(episode => episode.audio === newSrc);
 
+    // update the UI and add the new episode in the .toggle button
     this.setState({
       currentEpisode: newEpisode,
       isHidden: true,
@@ -298,7 +321,6 @@ class PodcastApp extends Component {
     })
   }
 
-
   formatTime(time) {
     return (time >= 10) ? time : `0${time}`;
   }
@@ -306,11 +328,16 @@ class PodcastApp extends Component {
   render() {
     /*
     PodcastApp structure
-
+    Vinyl (an empty div styled with styled-components)
+    PodcastProgress (bar to highlight the progress)
+    PodcastControls (allowing the pause/play/mute/unmute/speed up/down/stop the audio)
+    PodcastTime (current point in the podcast vs the length of the same)
+    PodcastTitle
+    MoreButton (toggling the PodcastEpisodes visibility)
+    PodcastEpisodes (additional episodes)
     */
     const { episodes, currentEpisode, currentTime, speedRate, speedOption, isPlaying, isMute, isHidden } = this.state;
 
-    // for the vinyl, detail the rotation according to the number of seconds (0-60)
     const timeStamp = {
       hours: 0,
       minutes: 0,
@@ -344,8 +371,8 @@ class PodcastApp extends Component {
           volumeButton={this.volumeButton}
           speedButton={this.speedButton}
           stopButton={this.stopButton}
-          isPlaying={this.isPlaying}
-          isMute={this.isMute}
+          isPlaying={isPlaying}
+          isMute={isMute}
           speedRate={speedRate}
           speedOption={speedOption}
         />
