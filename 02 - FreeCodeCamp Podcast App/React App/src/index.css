@@ -1,4 +1,24 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,600");
+/* design choices
+- Lato, in 400 & 600 weights
+- #006400 for primary color
+- #267b26 for lighter hue
+- #054205 for a darker hue
+- #fff for text color,
+- #ffffffxx with increasing transparency for hover states and such
+*/
+:root {
+  --color-primary: #006400;
+  --color-primary-l: #267b26;
+  --color-primary-d: #054205;
+  --color-text: #fff;
+  --color-text-t: #ffffffb3;
+  --colot-text-tt: #ffffff66;
+  --color-text-ttt: #ffffff26;
+  --font: "Lato", sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-heavy: 600;
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,6 +27,6 @@
 body {
   width: 100%;
   font-family: "Lato", sans-serif;
-  color: #fff;
-  background: #006400;
+  color: var(--color-text);
+  background: var(--color-primary);
 }

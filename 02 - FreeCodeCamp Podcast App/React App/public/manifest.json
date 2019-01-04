@@ -1,6 +1,6 @@
 {
   "short_name": "freeCodeCamp Podcast",
-  "name": "Listen to the freeCodeCamp podcast, in this aesthetically pleasing, full fledged application.",
+  "name": "Listen to the freeCodeCamp podcast, in this aesthetically pleasing, full fledged, React based application.",
   "icons": [
     {
       "src": "favicon.ico",

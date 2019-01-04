@@ -356,3 +356,52 @@ Files available in the **Lessons learned** folder:
 - Toggle RPC.
 
 Respectively detailing the simple component-based example, the one using render props, the one using render props children.
+
+## Update
+
+After perhaps too long a hiatus, I am back working on the unofficial podcast application for freeCodeCamp. I decided to immediately tackle the inconsistecies present in the font and color choices.
+
+- two weights for Lato, for normal and bold text respectively
+
+- a primary color matching the freeCodeCamp theme, accompanied by a lighter and darker variation
+
+- a series of whites, with varying transparency. I acknowledge that it is actually better to use solid colors for most of the UI, but for hover states especially, this first choice is more than enough.
+
+This upfront choice must be enforced in the entirety of the project, but for the time being will reside in the `root` selector of the stylesheet. As I find values throughout the project I will update them to match the custom CSS properties and perhaps detail additional choices.
+
+Following this immediate input, I decided to also restructure the entire application. Indeed, as it stands the application makes use of a single component, `PodcastApp.js`, for the rendering of the correct and styled elements. Breaking up this monolith of a component might aid comprehension.
+
+Here's a slight improvement on the existing structure:
+
+```text
+Podcast
+
+  Vinyl
+  ProgressBar
+  Controls
+    ToggleButton
+    VolumeButton
+    SpeedButton
+    StopButton
+  Time
+  Title
+
+  MoreButton
+
+  MoreEpisodes
+    Episodes
+      Episode * ??
+        Title
+        Date
+        Duration
+        Button
+    CloseButton
+```
+
+With each indented line explaining nested child components. For the time being I choose not to create a `CurrentEpisode`, but I might section off this section as I wise up.
+
+The idea is to have the application immediately display the current episode and a button allowing to retrieve more episodes. More episodes are displayed only when this button is clicked. As the `MoreEpisodes` component is overlaid on top of the UI, it make sense to extract it into its own separate JavaScript file.
+
+Minor update, I decided to label this last component `PodcastMore`, but the name is not set in stone.
+
+In the end I decided for a major restructuring and create a component for each subset of the application, minor the vinyl (this component is a simple empty div).
