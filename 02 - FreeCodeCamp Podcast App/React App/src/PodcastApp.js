@@ -365,12 +365,16 @@ class PodcastApp extends Component {
         */}
         <PodcastProgress
           currentTime={currentTime}
-          totalTime={episodes[currentTime] ? episodes[currentTime].duration : 0}
+          totalTime={episodes[currentEpisode] ? episodes[currentEpisode].duration : 0}
         />
 
+        {/*
+        for the panel of controls, this needs the elements necessary to enable the applications functionalities
+        pass the methods of the buttons, in addition to the booleans and the speedRate variables
+        pass also an src value from the current episode's audio (if existing)
+        */}
         <PodcastControls
-          episodes={episodes}
-          currentEpisode={currentEpisode}
+          src={episodes[currentEpisode] ? episodes[currentEpisode].audio : ''}
           toggleButton={this.toggleButton}
           volumeButton={this.volumeButton}
           speedButton={this.speedButton}

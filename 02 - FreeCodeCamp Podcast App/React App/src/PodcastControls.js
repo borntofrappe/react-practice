@@ -39,7 +39,7 @@ const SpeedButton = styled(Button)`
   }
 `;
 
-const PodcastControls = ({ episodes, currentEpisode, toggleButton, volumeButton, speedButton, stopButton, isPlaying, isMute, speedRate, speedOption }) => {
+const PodcastControls = ({ src, toggleButton, volumeButton, speedButton, stopButton, isPlaying, isMute, speedRate, speedOption }) => {
   return (
     <Controls>
       <ToggleButton className="toggle" onClick={toggleButton}>
@@ -51,10 +51,7 @@ const PodcastControls = ({ episodes, currentEpisode, toggleButton, volumeButton,
 
             <SVGIcons icon="play" />
         }
-        {
-          episodes[currentEpisode] &&
-          <audio src={episodes[currentEpisode].audio} />
-        }
+        <audio src={src} />
       </ToggleButton>
 
       <Button onClick={volumeButton}>
