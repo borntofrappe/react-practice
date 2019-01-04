@@ -9,7 +9,7 @@ const Title = styled.h2`
 `;
 
 // display the title passed through props
-const PodcastControls = ({ title }) => {
+const PodcastTitle = ({ title }) => {
   return (
     <Title>
       {title}
@@ -17,5 +17,5 @@ const PodcastControls = ({ title }) => {
   );
 }
 
-export default PodcastControls;
+export default PodcastTitle;
 

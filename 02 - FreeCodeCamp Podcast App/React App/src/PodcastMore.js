@@ -18,7 +18,6 @@ const Button = styled.button`
 }
 `;
 
-
 // wrapping container for more episodes
 // absolute positioned to cover a section of the podcast app container
 // with a .hidden class toggling its appearance
