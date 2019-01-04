@@ -387,11 +387,16 @@ class PodcastApp extends Component {
           title={episodes[currentEpisode] ? episodes[currentEpisode].title : 'Fetching the latest episode'}
         />
 
+        {/* button referring to a styled component */}
         <MoreButton onClick={this.moreButton}>
           <SVGIcons icon="more" />
         </MoreButton>
 
-
+        {/*
+        for the panel including more episodes, pass the boolean to show/hide it
+        additionally pass the episodes array, to show all the fetched episodes
+        additionally pass the methods to select a new episode and to close the panel
+        */}
         <PodcastMore
           isHidden={isHidden}
           episodes={episodes}

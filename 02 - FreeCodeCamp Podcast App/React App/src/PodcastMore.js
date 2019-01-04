@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SVGIcons from './SVGIcons.js';
 
+// button from which to extend the design of more specific buttons
 const Button = styled.button`
   width: 48px;
   height: 48px;
@@ -16,6 +17,8 @@ const Button = styled.button`
   background: var(--color-text-ttt);
 }
 `;
+
+
 // wrapping container for more episodes
 // absolute positioned to cover a section of the podcast app container
 // with a .hidden class toggling its appearance
@@ -71,7 +74,7 @@ const Episode = styled.div`
   grid-template-columns: 1fr 1fr auto;
   padding: 1.25rem 1rem;
   border-top: 2px solid var(--color-text-ttt);
-  grid-gap: 0.5rem 1rem;
+  grid-gap: 0.5rem 1.5rem;
 
   &:nth-of-type(1) {
     border-top: none;
@@ -80,18 +83,21 @@ const Episode = styled.div`
 
 // properties for the separate heading / paragraph / button elements of each episode
 const EpisodeTitle = styled.h3`
-  font-weight: 900;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
   grid-row: 1/2;
   grid-column: 1/3;
-
 `;
-const EpisodeDate = styled.p`
+
+const EpisodeInfo = styled.p`
+  font-size: 0.9rem;
+`;
+const EpisodeDate = styled(EpisodeInfo)`
   grid-row: 2/3;
   grid-column: 1/2;
 `;
 
-const EpisodeDuration = styled.p`
+const EpisodeDuration = styled(EpisodeInfo)`
   grid-row: 2/3;
   grid-column: 2/3;
 `;
@@ -117,9 +123,12 @@ const CloseButton = styled.button`
   }
 `;
 
+// based on the array of episodes add one container with the necessary information00
+// the panel is shown on the basis of the boolean hidden
 const PodcastMore = ({ isHidden, episodes, selectButton, closeButton }) => {
   return (
     <MoreEpisodes className={isHidden ? 'hidden' : ''}>
+
       <Episodes>
         {
           episodes &&
@@ -140,9 +149,12 @@ const PodcastMore = ({ isHidden, episodes, selectButton, closeButton }) => {
           })
         }
       </Episodes>
+
+      {/* following the list of episodes show the button to close the panel */}
       <CloseButton onClick={closeButton}>
         Close
-          </CloseButton>
+      </CloseButton>
+
     </MoreEpisodes>
   );
 }
