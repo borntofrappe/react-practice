@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,600");
+@import url("https://fonts.googleapis.com/css?family=Lato");
 /* design choices
 - Lato, in 400 & 600 weights
 - #006400 for primary color
@@ -16,8 +16,6 @@
   --colot-text-tt: #ffffff66;
   --color-text-ttt: #ffffff26;
   --font: "Lato", sans-serif;
-  --font-weight-normal: 400;
-  --font-weight-heavy: 600;
 }
 * {
   box-sizing: border-box;
