@@ -338,6 +338,7 @@ class PodcastApp extends Component {
     */
     const { episodes, currentEpisode, currentTime, speedRate, speedOption, isPlaying, isMute, isHidden } = this.state;
 
+    // starting from currentTime, which describes the number of seconds elapsed in the audio, compute the hours, minutes and seconds the episode has been running
     const timeStamp = {
       hours: 0,
       minutes: 0,
@@ -356,12 +357,15 @@ class PodcastApp extends Component {
 
     return (
       <Podcast className="PodcastApp">
-        <PodcastVinyl progress={currentTime} />
+        <PodcastVinyl progress={Math.round(currentTime)} />
 
+        {/*
+        for the progress bar, this needs the current number of seconds and the total number of seconds
+        as the episode might not initially exist, use a ternary operator to provide a fallback value
+        */}
         <PodcastProgress
-          episodes={episodes}
-          currentEpisode={currentEpisode}
           currentTime={currentTime}
+          totalTime={episodes[currentTime] ? episodes[currentTime].duration : 0}
         />
 
         <PodcastControls

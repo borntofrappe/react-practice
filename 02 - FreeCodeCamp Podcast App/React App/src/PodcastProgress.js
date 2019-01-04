@@ -11,16 +11,10 @@ const ProgressBar = styled.div`
   transition: background 1s linear;
 `;
 
-const PodcastProgress = ({ episodes, currentEpisode, currentTime }) => {
+// stateless component simply returning an empty div with a linear-gradient based on the current progress in the episode
+const PodcastProgress = ({ currentTime, totalTime }) => {
   return (
-    <>
-      {
-        episodes[currentEpisode] ?
-          <ProgressBar progress={Math.round(currentTime / episodes[currentEpisode].duration * 100)} />
-          :
-          <ProgressBar progress={0} />
-      }
-    </>
+    <ProgressBar progress={Math.round(currentTime / totalTime * 100)} />
   );
 }
 
