@@ -68,7 +68,8 @@ const PodcastTime = ({ currentTime, totalTime, formatTime }) => {
           current.substring(currentLength - totalLength)
         }
       </span>
-      :
+
+      |
 
       <span>
         {

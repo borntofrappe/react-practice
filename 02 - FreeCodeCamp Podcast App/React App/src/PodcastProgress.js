@@ -17,8 +17,8 @@ const Progress = styled.div`
   background: var(--color-primary);
   transition: transform 1s linear;
 `;
-
-// stateless component simply returning an empty div with a linear-gradient based on the current progress in the episode
+// stateless component simply returning an div nesting another, overlayed div showing the progress with a colored bar
+// use the transform property to change highlight the progress rather smoothly
 const PodcastProgress = ({ currentTime, totalTime }) => {
   return (
     <ProgressBar>
