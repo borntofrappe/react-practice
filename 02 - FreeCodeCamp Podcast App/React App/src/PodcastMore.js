@@ -13,7 +13,7 @@ const Button = styled.button`
   border: 1.2px solid var(--color-text-t);
   transition: all 0.2s ease-out;
 
-  &: hover {
+  &:hover {
   background: var(--color-text-ttt);
 }
 `;
@@ -50,7 +50,7 @@ const Episodes = styled.div`
 
 
   &::-webkit-scrollbar {
-    width: 0.2rem;
+    width: 0.32rem;
   }
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 0.5rem var(--color-primary-d);

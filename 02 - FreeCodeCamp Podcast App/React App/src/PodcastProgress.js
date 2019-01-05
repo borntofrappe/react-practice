@@ -6,15 +6,24 @@ const ProgressBar = styled.div`
   width: 60%;
   height: 10px;
   border-radius: 4px;
-  background: ${props => `linear-gradient(to right, var(--color-primary), var(--color-primary) ${props.progress}%, var(--color-text) ${props.progress}%)`};
+  background: var(--color-text);
   margin-bottom: 2rem;
-  transition: background 1s linear;
+  overflow: hidden;
+`;
+const Progress = styled.div`
+  width: 100%;
+  height: 100%;
+  transform: ${props => `translate(${-100 + props.progress}%, 0)`};
+  background: var(--color-primary);
+  transition: transform 1s linear;
 `;
 
 // stateless component simply returning an empty div with a linear-gradient based on the current progress in the episode
 const PodcastProgress = ({ currentTime, totalTime }) => {
   return (
-    <ProgressBar progress={Math.round(currentTime / totalTime * 100)} />
+    <ProgressBar>
+      <Progress progress={Math.round(currentTime / totalTime * 100)} />
+    </ProgressBar>
   );
 }
 
