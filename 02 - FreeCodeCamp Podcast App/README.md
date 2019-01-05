@@ -1,14 +1,14 @@
 # React Podcast App
 
-Link to the proud UI [right here on codepen](https://codepen.io/borntofrappe/pen/YdWpXN).
+Link to the proud UI [right here on codepen](https://codepen.io/borntofrappe/pen/YdWpXN). Starting point for the application.
 
-Link to the proud UX [right here on codepen](https://codepen.io/borntofrappe/pen/YdGwow).
+Link to the proud UX [right here on codepen](https://codepen.io/borntofrappe/pen/YdGwow). Got carried away with JavaScript, adding functionalities here and there.
 
-Link to the work-in-progress React Application [right here on codepen](https://codepen.io/borntofrappe/full/yGbpMm).
+Link to the work-in-progress React Application [right here on codepen](https://codepen.io/borntofrappe/full/yGbpMm). Soon to be full-fledged application.
 
 ## Preface
 
-For the second project in my practice-with-react series, I want to create a simple podcast application, drawing data in from an RSS feed to display information regarding the freeCodeCamp podcast and allow visitors to listen to a specific episode.
+For the second project in my **reactice** series, I want to create a simple podcast application, drawing data in from an RSS feed to display information regarding the freeCodeCamp podcast and allow visitors to listen to a specific episode.
 
 In so doing, I plan to practice with:
 
@@ -16,7 +16,7 @@ In so doing, I plan to practice with:
 
 - styled components.
 
-In terms of user stories, as to draw inspiration from freeCodeCamp itself:
+In terms of user stories, as to draw inspiration from freeCodeCamp itself, here's what the application should achieve:
 
 - as the page loads, I am welcomed by the podcast application with the latest episodes for freeCodeCamp. I am able to relate to this with a simple image, the title, a brief description and an audio player.
 
@@ -34,7 +34,7 @@ But that ought to be enough of a plan. Going to work.
 
 ## Development
 
-The projects I want to create in this series are centered around React. With this in mind I will create React-powered applications. That holds true, but this does not prevent me from learning and practicing with concepts only tangentially related to the framework. This is clear in the notes which follow, but I just wanted to stress the change in perspective.
+The projects I want to create in the **reactice** series are centered around React, and with this in mind I will create React-powered applications only. That holds true, but this does not prevent me from learning and practicing with concepts outside of the framework's scope. This is clear by the notes which follow, but I just wanted to stress the change in perspective.
 
 This react series is about learning and improving my React skills, but most importantly is about:
 
@@ -48,25 +48,13 @@ This react series is about learning and improving my React skills, but most impo
 
 > lessons learned having fun with JavaScript
 
-In approaching the project, I decided to develop one feature at a time, and to start with plain ol' vanilla JavaScript. I took it rather far, and the effort is stored in the **UX Podcast** app folder of this very project. In the same path you find also a **UI Podcast** folder, detailing the design that went into the application, and a **RSS Feed** folder, in which I used the `fetch` method and experimented with a `DOMParser` as to find the information ultimately detailed in the application.
+In approaching the project, I decided to develop one feature at a time, and to start with plain ol' vanilla JavaScript. I took it rather far, and the effort is stored in the **UX Podcast** app folder of this very project. In the same path you find also a **UI Podcast** folder, detailing the design that went into the application, and a **RSS Feed** folder, in which I used the `fetch` method and experimented with a `DOMParser` as to find the information ultimately to-be-framed in the application.
 
 In this last effort, I also discovered how the `http` URL, referenced in the [freeCodeCamp podcast page](https://freecodecamp.libsyn.com/) is unsecure and how freeCodeCamp actually provides a secure option simply changing the prefix to `https`.
 
 ### React
 
 > lessons learned developing the React application
-
-Update: 23-12-2018
-
-Started the migration from Vanilla JavaScript to the React framework. There's still aplenty to do:
-
-- immediately start playing other episodes as they are selected;
-
-- rotate the vinyl in unison with the audio;
-
-- update the timestamp with the current time.
-
-Not to mention the most pressing matter: _fixing the component structure_. Currently there exist only one giant component, and the codebase is rather unsustainable. As said, much to do.
 
 #### React Render Props
 
@@ -357,7 +345,19 @@ Files available in the **Lessons learned** folder:
 
 Respectively detailing the simple component-based example, the one using render props, the one using render props children.
 
-## Update
+### Update 23-12-2018
+
+Started the migration from Vanilla JavaScript to the React framework. There's still aplenty to do:
+
+- immediately start playing other episodes as they are selected;
+
+- rotate the vinyl in unison with the audio;
+
+- update the timestamp with the current time.
+
+Not to mention the most pressing matter: _fixing the component structure_. Currently there exist only one giant component, and the codebase is rather unsustainable. As said, much to do.
+
+### Update 04-01-2019
 
 After perhaps too long a hiatus, I am back working on the unofficial podcast application for freeCodeCamp. I decided to immediately tackle the inconsistecies present in the font and color choices.
 
