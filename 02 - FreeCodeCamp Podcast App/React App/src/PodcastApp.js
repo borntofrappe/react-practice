@@ -31,14 +31,15 @@ const PodcastVinyl = styled.div`
   width: calc(10rem + 2.5vw);
   height: calc(10rem + 2.5vw);
   border-radius: 50%;
-  background: linear-gradient(
+  background: ${props => (
+    `linear-gradient(
       to bottom right,
       transparent,
       var(--colot-text-tt),
       transparent
     ),
-    url("https://d33wubrfki0l68.cloudfront.net/cce87b74a290f321f582cb56a12007343ff2d77e/bb9e6/img/glyph.png"),
-    repeating-radial-gradient(var(--color-primary) 0, var(--color-primary) 3px, #007e00 4px);
+    url("${props.url}"),
+    repeating-radial-gradient(var(--color-primary) 0, var(--color-primary) 3px, #007e00 4px)`)};
   background-repeat: no-repeat;
   background-size: 100%, 50%, 100%;
   background-position: 0%, 50% 50%, 100%;
@@ -82,7 +83,8 @@ class PodcastApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      URL: 'https://podcast.freecodecamp.org/rss',
+      URL: 'http://podcast.freecodecamp.org/rss',
+      imageURL: 'https://d33wubrfki0l68.cloudfront.net/cce87b74a290f321f582cb56a12007343ff2d77e/bb9e6/img/glyph.png',
       episodes: [],
       currentEpisode: 0,
       currentTime: 0,
@@ -336,11 +338,11 @@ class PodcastApp extends Component {
     MoreButton (toggling the PodcastEpisodes visibility)
     PodcastEpisodes (additional episodes)
     */
-    const { episodes, currentEpisode, currentTime, speedRate, speedOption, isPlaying, isMute, isHidden } = this.state;
+    const { episodes, imageURL, currentEpisode, currentTime, speedRate, speedOption, isPlaying, isMute, isHidden } = this.state;
 
     return (
       <Podcast className="PodcastApp">
-        <PodcastVinyl progress={Math.round(currentTime)} />
+        <PodcastVinyl progress={Math.round(currentTime)} url={imageURL} />
 
         {/*
         for the progress bar, this needs the current number of seconds and the total number of seconds
