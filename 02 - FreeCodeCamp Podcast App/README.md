@@ -404,4 +404,21 @@ The idea is to have the application immediately display the current episode and 
 
 Minor update, I decided to label this last component `PodcastMore`, but the name is not set in stone.
 
-In the end I decided for a major restructuring and create a component for each subset of the application, minor the vinyl (this component is a simple empty div).
+In the end I decided for a major restructuring and create a component for each subset of the application, minor the vinyl (this component is a simple empty div). From 1 component, I currently have 6, which should make further development much easier.
+
+The application is structured as follows:
+
+```text
+Podcast
+  Vinyl
+  Progress
+  Controls
+  Time
+  Title
+
+  Button
+
+  More
+```
+
+The application is also much better documented and passes through `props` only values which are necessary for the components to function. Previously, I used to pass a plethora of variables without much consideration. Great, not-so-visible step forward.
