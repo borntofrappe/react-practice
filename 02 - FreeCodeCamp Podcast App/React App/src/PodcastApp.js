@@ -74,9 +74,11 @@ const MoreButton = styled(Button)`
 class PodcastApp extends Component {
   /* in the state detail
     URL, forwarding toward the page storing the information of the RSS feed
+    imageURL, detailing the png art to be overlaid on the vinyl component
     episodes, array tobe filled with one object for each episode
     currentEpisode, in order to highlight the currently selected/playing episode
     currentTime, to keep track of the time and highlight it throughout the application
+    tooltipTime, to keep track of the number of seconds on the point where the cursor hovers on the progress bar
     speedRate and speedOption, allowing a change in the speed rate of the audio
     isPlaying, isMute, isHidden, bollean values to toggle the buttons and the panel nesting more episodes
   */
@@ -88,6 +90,7 @@ class PodcastApp extends Component {
       episodes: [],
       currentEpisode: 0,
       currentTime: 0,
+      tooltipTime: 0,
       speedRate: [1, 1.5, 2, 2.5, 3],
       speedOption: 0,
       isPlaying: false,
@@ -102,8 +105,54 @@ class PodcastApp extends Component {
     this.moreButton = this.moreButton.bind(this);
     this.selectButton = this.selectButton.bind(this);
     this.closeButton = this.closeButton.bind(this);
+    this.showTooltip = this.showTooltip.bind(this);
+    this.hideTooltip = this.hideTooltip.bind(this);
+    this.changeCurrentTime = this.changeCurrentTime.bind(this);
   }
 
+  // function changing the current time, in accordance to the value assumed by tooltipTime
+  changeCurrentTime() {
+    const { tooltipTime: currentTime } = this.state;
+
+    const audio = document.querySelector('.toggle audio');
+    this.timeAudio(audio, currentTime);
+
+    this.setState({
+      currentTime
+    })
+  }
+  // function showing the tooltip, targeting the paragraph and adding a class to it
+  showTooltip(e) {
+    const { target: progressBar } = e;
+    const { clientWidth: width, offsetLeft: left } = progressBar;
+    const { offsetLeft: leftParent } = progressBar.parentElement;
+
+    const offsetLeft = left + leftParent;
+    const { pageX: x } = e;
+    const location = x - offsetLeft;
+
+    const progress = Math.round(location / width * 100) / 100;
+
+    const tooltip = progressBar.querySelector('p');
+    tooltip.classList.add('isTooltip');
+    tooltip.style.left = `${progress * 100}%`;
+
+    const { duration } = this.state.episodes[this.state.currentEpisode];
+
+    const tooltipTime = Math.round(duration * progress);
+
+    console.log(progress);
+    this.setState({
+      tooltipTime,
+    })
+  }
+
+  // function hiding the tooltip, removing the class which shows the paragraph
+  hideTooltip(e) {
+    const { target: progressBar } = e;
+    const tooltip = progressBar.querySelector('p');
+    tooltip.classList.remove('isTooltip');
+  }
 
   // function parsing the RSS feed, called as the components mounts
   // input: the text of the page with the RSS feed information
@@ -211,6 +260,10 @@ class PodcastApp extends Component {
     audio.playbackRate = playbackRate;
   }
 
+  // function accepting an audio element, a number of seconds and changing the current time to that measure
+  timeAudio(audio, currentTime) {
+    audio.currentTime = currentTime;
+  }
 
 
   // functions called in response to click event
@@ -338,19 +391,30 @@ class PodcastApp extends Component {
     MoreButton (toggling the PodcastEpisodes visibility)
     PodcastEpisodes (additional episodes)
     */
-    const { episodes, imageURL, currentEpisode, currentTime, speedRate, speedOption, isPlaying, isMute, isHidden } = this.state;
+    const { episodes, imageURL, currentEpisode, currentTime, tooltipTime, speedRate, speedOption, isPlaying, isMute, isHidden } = this.state;
 
     return (
       <Podcast className="PodcastApp">
         <PodcastVinyl progress={Math.round(currentTime)} url={imageURL} />
 
+
+
         {/*
         for the progress bar, this needs the current number of seconds and the total number of seconds
         as the episode might not initially exist, use a ternary operator to provide a fallback value
+
+        in addition to show the progress, this component
+        - allows to show the tooltip on hover
+        - allows to change the current time when clicking on the progress bar
         */}
         <PodcastProgress
           currentTime={currentTime}
           totalTime={episodes[currentEpisode] ? episodes[currentEpisode].duration : 0}
+          tooltipTime={tooltipTime}
+          formatTime={this.formatTime}
+          showTooltip={this.showTooltip}
+          hideTooltip={this.hideTooltip}
+          changeCurrentTime={this.changeCurrentTime}
         />
 
         {/*
