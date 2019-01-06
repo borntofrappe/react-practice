@@ -110,49 +110,6 @@ class PodcastApp extends Component {
     this.changeCurrentTime = this.changeCurrentTime.bind(this);
   }
 
-  // function changing the current time, in accordance to the value assumed by tooltipTime
-  changeCurrentTime() {
-    const { tooltipTime: currentTime } = this.state;
-
-    const audio = document.querySelector('.toggle audio');
-    this.timeAudio(audio, currentTime);
-
-    this.setState({
-      currentTime
-    })
-  }
-  // function showing the tooltip, targeting the paragraph and adding a class to it
-  showTooltip(e) {
-    const { target: progressBar } = e;
-    const { clientWidth: width, offsetLeft: left } = progressBar;
-    const { offsetLeft: leftParent } = progressBar.parentElement;
-
-    const offsetLeft = left + leftParent;
-    const { pageX: x } = e;
-    const location = x - offsetLeft;
-
-    const progress = Math.round(location / width * 100) / 100;
-
-    const tooltip = progressBar.querySelector('p');
-    tooltip.classList.add('isTooltip');
-    tooltip.style.left = `${progress * 100}%`;
-
-    const { duration } = this.state.episodes[this.state.currentEpisode];
-
-    const tooltipTime = Math.round(duration * progress);
-
-    this.setState({
-      tooltipTime,
-    })
-  }
-
-  // function hiding the tooltip, removing the class which shows the paragraph
-  hideTooltip(e) {
-    const { target: progressBar } = e;
-    const tooltip = progressBar.querySelector('p');
-    tooltip.classList.remove('isTooltip');
-  }
-
   // function parsing the RSS feed, called as the components mounts
   // input: the text of the page with the RSS feed information
   // behavior: update this.state.episodes with one object for each episode
@@ -374,6 +331,75 @@ class PodcastApp extends Component {
     })
   }
 
+  // function changing the current time, in accordance to the value assumed by tooltipTime
+  changeCurrentTime() {
+    // retrieve the value of the tooltipTime (updated as per the progress bar)
+    const { tooltipTime: currentTime } = this.state;
+
+    // change the time of the audio through the timeAudio() function
+    const audio = document.querySelector('.toggle audio');
+    this.timeAudio(audio, currentTime);
+
+    // update the UI
+    this.setState({
+      currentTime
+    })
+  }
+
+  // function showing the tooltip, targeting the paragraph and adding a class to it
+  showTooltip(e) {
+    /* here's the gist
+    - retrieve the position from the beginning of the progress bar
+    - compute the relative distance in the space of the progress bar
+    - use this relative distance to find the correct time
+    - update tooltipTime with this value
+    */
+    const { target: progressBar } = e;
+
+    /* offsetLeft finds
+    the space between the progress bar and its container
+    the space between the container and the very outer edge of the page
+
+    */
+    const { clientWidth: width, offsetLeft: left } = progressBar;
+    const { offsetLeft: leftParent } = progressBar.parentElement;
+    const offsetLeft = left + leftParent;
+
+    // pageX gives the coordinate of the cursor
+    const { pageX: x } = e;
+    // the difference between the cursor's horizontal coordinate and the horizontal offset gives the exact space from the beginning of the bar
+    const location = x - offsetLeft;
+
+    // progress computed relative to the width of the progress bar (rounding to 2 numbers after the decimal)
+    const progress = Math.round(location / width * 100) / 100;
+
+    // find the tooltip, show it by adding the appropriate class and position it according to the relative progress
+    const tooltip = progressBar.querySelector('p');
+    tooltip.classList.add('isTooltip');
+    tooltip.style.left = `${progress * 100}%`;
+
+    // for the tooltipTime, compute its value based on the total time, multiplied by the relative progress
+    // ! do this if there is an episode in the state
+    const episode = this.state.episodes[this.state.currentEpisode];
+    if (episode) {
+      const { duration } = episode;
+      const tooltipTime = Math.round(duration * progress);
+
+      this.setState({
+        tooltipTime
+      })
+    }
+
+  }
+
+  // function hiding the tooltip, removing the class which shows the paragraph
+  hideTooltip(e) {
+    const { target: progressBar } = e;
+    const tooltip = progressBar.querySelector('p');
+    tooltip.classList.remove('isTooltip');
+  }
+
+  // function zero-padding the number of hours, minutes, seconds
   formatTime(time) {
     return (time >= 10) ? time : `0${time}`;
   }

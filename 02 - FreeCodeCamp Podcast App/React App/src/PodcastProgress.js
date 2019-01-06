@@ -46,10 +46,12 @@ const Tooltip = styled.p`
   }
 
 `;
-// stateless component simply returning an div nesting another, overlayed div showing the progress with a colored bar
+// within a wrapping div, make use of another empty container to show the progress in a colored bar
+// add a tooltip, absolutely positioned relative to the progress bar
 const PodcastProgress = ({ currentTime, totalTime, tooltipTime, formatTime, showTooltip, hideTooltip, changeCurrentTime }) => {
   const progress = Math.round(currentTime / totalTime * 100);
 
+  // compute the number of hours, minutes, seconds to show in the tooltip
   const time = {
     hours: 0,
     minutes: 0,
@@ -66,6 +68,7 @@ const PodcastProgress = ({ currentTime, totalTime, tooltipTime, formatTime, show
     time.hours += 1;
   }
 
+  // show the progress bar with the two nested divs and a paragraph element showing the relative time through the tooltip
   return (
     <ProgressBar
       onMouseMove={showTooltip}
@@ -76,6 +79,7 @@ const PodcastProgress = ({ currentTime, totalTime, tooltipTime, formatTime, show
         progress={progress} />
 
       <Tooltip>
+        {/* display the time separating the number of hours, minutes and seconds with a colon */}
         {
           Object.values(time).map(time => formatTime(time)).join(':')
         }
