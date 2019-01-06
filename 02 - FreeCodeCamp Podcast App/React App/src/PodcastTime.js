@@ -7,6 +7,7 @@ const Time = styled.p`
   margin: 1rem 0 2rem;
   span {
     margin: 0 0.3rem;
+    letter-spacing: 0.05rem;
   }
 `;
 
@@ -57,15 +58,24 @@ const PodcastTime = ({ currentTime, totalTime, formatTime }) => {
     currentTimestamp.hours += 1;
   }
 
-  const total = Object.values(totalTimestamp).map(stamp => formatTime(stamp)).join(':');
-  const current = Object.values(currentTimestamp).map(stamp => formatTime(stamp)).join(':');
-  const { length: totalLength } = total;
-  const { length: currentLength } = current;
+  const totalValues = Object.values(totalTimestamp);
+  // remove the first and second sets of numbers if the total number of seconds doesn't exceed the appropriate time
+  if (totalTime < 3600) {
+    totalValues.shift();
+  }
+  if (totalTime < 60) {
+    totalValues.shift();
+  }
+
+  const currentValues = Object.values(currentTimestamp);
+
+  const { length: totalLength } = totalValues;
+  const { length: currentLength } = currentValues;
   return (
     <Time>
       <span>
         {
-          current.substring(currentLength - totalLength)
+          currentValues.slice(currentLength - totalLength).map(stamp => formatTime(stamp)).join(':')
         }
       </span>
 
@@ -73,7 +83,7 @@ const PodcastTime = ({ currentTime, totalTime, formatTime }) => {
 
       <span>
         {
-          total
+          totalValues.map(stamp => formatTime(stamp)).join(':')
         }
       </span>
     </Time>
