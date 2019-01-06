@@ -18,7 +18,7 @@ const Progress = styled.div`
   top: 0;
   width: ${props => `${props.progress}%`};
   height: 100%;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px;
   background: var(--color-primary);
   transition: width 1s linear;
 `;

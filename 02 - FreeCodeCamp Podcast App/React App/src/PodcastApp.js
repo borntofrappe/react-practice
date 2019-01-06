@@ -85,7 +85,7 @@ class PodcastApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      URL: 'http://podcast.freecodecamp.org/rss',
+      URL: 'https://podcast.freecodecamp.org/rss',
       imageURL: 'https://d33wubrfki0l68.cloudfront.net/cce87b74a290f321f582cb56a12007343ff2d77e/bb9e6/img/glyph.png',
       episodes: [],
       currentEpisode: 0,
