@@ -422,3 +422,19 @@ Podcast
 ```
 
 The application is also much better documented and passes through `props` only values which are necessary for the components to function. Previously, I used to pass a plethora of variables without much consideration. Great, not-so-visible step forward.
+
+### Update 06-01-2019
+
+Once I managed to divide the application into components, adding the tooltip and the possibility to change the current time became immensely easier. Not easy, but definitely a more approachable problem.
+
+I solved this user story by calling the functions on appropriate event listeners:
+
+- `onMouseMove`;
+
+- `onMouseLeave`;
+
+- `onClick`.
+
+I set these event listeners on the progress bar, as the tooltip is positioned relative to this element (through the mouse events) and by clicking on this very element the current time ought to be changed.
+
+In the process, I also decided to show the hours, minutes and seconds in the tooltip and in the `PodcastTime` component in full. At a later stage, I really want to improve this by showing only seconds, minutes or hours, whichever measure of time is greater than zero. For the time being however, I find this measure to the be quickest route to a functioning application.
