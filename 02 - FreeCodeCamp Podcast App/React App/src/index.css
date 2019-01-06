@@ -28,3 +28,9 @@ body {
   color: var(--color-text);
   background: var(--color-primary);
 }
+/* below a certain width remove the difference between backgrounds */
+@media (max-width: 500px) {
+  body {
+    background: var(--color-primary-l);
+  }
+}
