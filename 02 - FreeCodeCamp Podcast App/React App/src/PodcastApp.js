@@ -13,7 +13,7 @@ import SVGIcons from './SVGIcons.js';
 // wrapping container for the entire application
 // single column layout, horizontally centered
 const Podcast = styled.div`
-  max-width: 400px;
+  max-width: 380px;
   width: 90vw;
   margin: 1rem auto;
   display: flex;
@@ -23,6 +23,14 @@ const Podcast = styled.div`
   padding: 1rem;
   background: var(--color-primary-l);
   position: relative;
+
+  @media (max-width: 450px) {
+    overflow: hidden;
+    max-width: initial;
+    width: 100vw;
+    margin: 0;
+    height: 100vh;
+  }
 `;
 
 // visual displaying a makeshift vinyl, rotated as the audio progresses to match the number of seconds (0-60)
@@ -419,7 +427,7 @@ class PodcastApp extends Component {
 
     return (
       <Podcast className="PodcastApp">
-        <PodcastVinyl progress={Math.round(currentTime)} url={imageURL} />
+        <PodcastVinyl progress={Math.floor(currentTime)} url={imageURL} />
 
 
 
