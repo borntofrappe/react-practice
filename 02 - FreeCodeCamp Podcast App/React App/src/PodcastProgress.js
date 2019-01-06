@@ -68,6 +68,17 @@ const PodcastProgress = ({ currentTime, totalTime, tooltipTime, formatTime, show
     time.hours += 1;
   }
 
+  // retrieve the number of hours, minutes and seconds
+  const timeValues = Object.values(time);
+
+  // remove the first or even the second set of numbers if the number of seconds doesn't exceed the appropriate values
+  if (tooltipTime < 3600) {
+    timeValues.shift();
+  }
+  if (tooltipTime < 60) {
+    timeValues.shift();
+  }
+
   // show the progress bar with the two nested divs and a paragraph element showing the relative time through the tooltip
   return (
     <ProgressBar
@@ -79,9 +90,9 @@ const PodcastProgress = ({ currentTime, totalTime, tooltipTime, formatTime, show
         progress={progress} />
 
       <Tooltip>
-        {/* display the time separating the number of hours, minutes and seconds with a colon */}
+        {/* display the appropriate units of time separating them with a colon */}
         {
-          Object.values(time).map(time => formatTime(time)).join(':')
+          timeValues.map(time => formatTime(time)).join(':')
         }
       </Tooltip>
     </ProgressBar>
