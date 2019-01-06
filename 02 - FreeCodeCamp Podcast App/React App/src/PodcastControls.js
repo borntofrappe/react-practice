@@ -51,7 +51,8 @@ const PodcastControls = ({ src, toggleButton, volumeButton, speedButton, stopBut
 
             <SVGIcons icon="play" />
         }
-        <audio src={src} />
+        {/* when the audio reaches its end, call the toggleButton to pause and clear the interval */}
+        <audio src={src} onEnded={toggleButton} />
       </ToggleButton>
 
       <Button onClick={volumeButton}>

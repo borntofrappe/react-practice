@@ -57,7 +57,7 @@ const PodcastTime = ({ currentTime, totalTime, formatTime }) => {
     currentTimestamp.hours += 1;
   }
 
-  const total = Object.values(totalTimestamp).filter(stamp => stamp > 0).map(stamp => formatTime(stamp)).join(':');
+  const total = Object.values(totalTimestamp).map(stamp => formatTime(stamp)).join(':');
   const current = Object.values(currentTimestamp).map(stamp => formatTime(stamp)).join(':');
   const { length: totalLength } = total;
   const { length: currentLength } = current;

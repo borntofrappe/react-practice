@@ -141,7 +141,6 @@ class PodcastApp extends Component {
 
     const tooltipTime = Math.round(duration * progress);
 
-    console.log(progress);
     this.setState({
       tooltipTime,
     })
@@ -234,13 +233,12 @@ class PodcastApp extends Component {
         currentTime: Math.round(currentTime)
       })
     }, 1000);
-
-
   }
 
   // function accepting an audio element and pausing it
   pauseAudio(audio) {
     audio.pause();
+
     // clear the ongoing interval to stop the UI from updating
     clearInterval(this.intervalID);
   }

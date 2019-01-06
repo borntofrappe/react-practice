@@ -38,7 +38,7 @@ const Tooltip = styled.p`
   transform: translate(-50%, 0);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.2s ease-out;
+  transition: all 0.15s ease-out;
 
   &.isTooltip {
     opacity: 1;
@@ -47,7 +47,6 @@ const Tooltip = styled.p`
 
 `;
 // stateless component simply returning an div nesting another, overlayed div showing the progress with a colored bar
-// use the transform property to change highlight the progress rather smoothly
 const PodcastProgress = ({ currentTime, totalTime, tooltipTime, formatTime, showTooltip, hideTooltip, changeCurrentTime }) => {
   const progress = Math.round(currentTime / totalTime * 100);
 
