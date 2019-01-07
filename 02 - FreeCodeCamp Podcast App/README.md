@@ -4,7 +4,7 @@ Link to the proud UI [right here on codepen](https://codepen.io/borntofrappe/pen
 
 Link to the proud UX [right here on codepen](https://codepen.io/borntofrappe/pen/YdGwow). Got carried away with JavaScript, adding functionalities here and there.
 
-Link to the work-in-progress React Application [right here on codepen](https://codepen.io/borntofrappe/full/yGbpMm). Soon to be full-fledged application.
+Link to the proud React Application [right here on codepen](https://codepen.io/borntofrappe/full/yGbpMm).
 
 ## Preface
 
@@ -438,3 +438,7 @@ I solved this user story by calling the functions on appropriate event listeners
 I set these event listeners on the progress bar, as the tooltip is positioned relative to this element (through the mouse events) and by clicking on this very element the current time ought to be changed.
 
 In the process, I also decided to show the hours, minutes and seconds in the tooltip and in the `PodcastTime` component in full. At a later stage, I really want to improve this by showing only seconds, minutes or hours, whichever measure of time is greater than zero. For the time being however, I find this measure to the be quickest route to a functioning application.
+
+### Uupdate 06-01-2019 Part Two
+
+Concluded the application, showing also and only the number of minutes and seconds if the episode is less than an hour long. It'd be incredibly interesting to expand this application as to consider multiple podcasts, but for the time being, I am more than grateful having all the episodes @freecodecamp available.
