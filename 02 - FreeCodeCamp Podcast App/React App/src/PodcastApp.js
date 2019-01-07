@@ -52,8 +52,8 @@ const PodcastVinyl = styled.div`
   background-size: 100%, 50%, 100%;
   background-position: 0%, 50% 50%, 100%;
   box-shadow: 0 1px 5px rgba(0, 100, 0, 0.7);
-  transform: ${props => `rotate(${props.progress * 6}deg)`};
   transition: transform 1s linear;
+  transform: ${props => `rotate(${props.progress * 6}deg)`};
 `;
 
 
