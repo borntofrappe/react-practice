@@ -1,0 +1,20 @@
+.ActionPanel {
+  /* background and color using the theme */
+  background: var(--theme);
+  color: var(--theme-two);
+  padding: 2rem;
+  flex-grow: 1;
+  /* remove the border radius for the corners matching the container */
+  border-radius: inherit;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/*
+on smaller viewports remove the border radius
+*/
+@media (max-width: 650px) {
+  .ActionPanel {
+    border-radius: 0;
+  }
+}

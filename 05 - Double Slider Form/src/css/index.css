@@ -1,0 +1,44 @@
+/* font and color palette */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
+:root {
+  --bg: #F0F4F3;
+  --theme: #3AB19B;
+  --theme-two: #FFFFFF;
+  --text: #697a79;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  /* include a circle and a triangle elements through SVG shapes, and at either end of the page */
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8 0.8) translate(5 5)"><circle cx="50" cy="50" r="50" fill="%23FBCD44"/></g></svg>'), url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8 0.8) translate(5 5)"><path d="M 0 80 l 100 -80 v 100 z" fill="%23E35E6A"/></g></svg>'), var(--bg);
+  background-repeat: no-repeat;
+  background-position: bottom -150px left -70px, top -120px right -100px;
+  background-size: 300px, 380px, 100%;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  /* center the main element in the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* include the same shapes included in the background atop the content of the page, with a semi-translucent white
+this softens the color of the shapes, but most prominently shows the shapes as if continuing on the underlying content
+*/
+body:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8 0.8) translate(5 5)"><circle cx="50" cy="50" r="50" fill="%23ffffff22"/></g></svg>'), url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8 0.8) translate(5 5)"><path d="M 0 80 l 100 -80 v 100 z" fill="%23ffffff22"/></g></svg>');
+  background-repeat: no-repeat;
+  background-position: bottom -150px left -70px, top -120px right -100px;
+  background-size: 300px, 380px;
+}
