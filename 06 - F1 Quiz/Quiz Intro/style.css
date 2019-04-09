@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  /* include a repeated linear gradient sort of matching the car theme */
+  background: repeating-linear-gradient(-45deg, #1A1A1A09 0px, #1A1A1A09 8px, #fff 8px, #fff 16px), #fff;
+  background-repeat: no-repeat;
+  /* center in the viewport */
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: 'Open Sans', sans-serif;
+}
+/* cap the width of the container */
+main {
+  max-width: 600px;
+  width: 90vw;
+  /* background showing for the button, as the image occupies the first portion of the container */
+  background: #1A1A1A;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px #1A1A1A66;
+  /* display the figure and button element in a flex column */
+  display: flex;
+  flex-direction: column;
+}
+/* position relative to have the SVG absolute positioned in its center */
+main figure {
+  position: relative;
+}
+/* image matching the radius of the container for the top corners */
+main figure img {
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  /* saturate the image, but edcrease the brightness to slightly offset the change in color */
+  filter: saturate(180%) brightness(0.8);
+}
+/* absolute position the question-mark svg in the center of the figure element */
+main figure svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  color: #fff;
+  /* include a semi transparent background */
+  background: #1A1A1A55;
+  border-radius: 20px;
+}
+/* include noticeable whitespace around the button as to highlight the background color of the container */
+main button {
+  margin: 2rem 0.25rem;
+  /* horizontally centered */
+  align-self: center;
+  color: #fff;
+  background: #D31411;
+  padding: 1rem 4.25rem;
+  border: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+  font-family: inherit;
+  transition: transform 0.2s cubic-bezier(0.34,.86,0.58,1.27);
+}
+/* on hover noticeably scale the button up */
+main button:hover {
+  transform: scale(1.15);
+}
