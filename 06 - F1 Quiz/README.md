@@ -13,3 +13,5 @@ The application is immediately designed in vanilla HTML and CSS.
 - in **Quiz Intro** the first page introducing the quiz is crafted with a sample image and a giant bold button;
 
 - in **Quiz Query** the structure highlighting the actual quiz is designed. I tried to add comments to the different portions, but the overlap between the two must be carefully considered).
+
+- in **Quiz Outro** the application is completed with the layout used to share a particular score.
