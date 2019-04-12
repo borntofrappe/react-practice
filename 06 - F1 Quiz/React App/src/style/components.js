@@ -87,34 +87,75 @@ export const Answers = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
+  width: 100%;
 `;
 
 /* Answer
 button making up the actual answer
+add a pseudo element which darkens the portion not covered by the percentage
 */
 export const Answer = styled.button`
   text-align: left;
   color: inherit;
-  background: ${props => props.isCorrect ? '#5BC20F' : 'rgba(255, 255, 255, 0.25)'};
-  padding: 0.75rem 1rem;
+  background: ${props => props.isCorrect ? '#5BC20F' : 'rgba(255, 255, 255, 0.2)'};
+  padding: 0.75rem 2.5rem 0.75rem 0.9rem;
   margin: 0.2rem 0;
   border: none;
-  border-left: ${props => props.isGiven ? '4px solid #D31411' : 'none'};
-  border-radius: ${props => props.isGiven ? '0px' : '2px'};
+  border-left: ${props => props.choice ? '4px solid #D31411' : 'none'};
+  border-radius: ${props => props.choice ? '0px' : '2px'};
   font-family: inherit;
   font-weight: ${props => props.isCorrect ? '700' : '500'};
   text-transform: capitalize;
   font-size: 1rem;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.07rem;
   transition: all 0.1s ease-out;
   position: relative;
+  z-index: 10;
 
   &:hover {
     transform: ${props => !props.showResult && 'scale(1.02)'};
     background: ${props => !props.showResult && '#D31411'};
   }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.2s ease-in-out;
+    transition-delay: 0.3s;
+    transform: scaleX(${props => (100 - props.percentage) / 100});
+    transform-origin: 100% 50%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -5;
+  }
 `;
 
+/* Percentage
+span nested in the button element to show the percentage of fans who selected the option
+*/
+export const Percentage = styled.span`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translate(0%, -50%);
+  background: #fff;
+  color: #1A1A1A;
+  border-radius: 30px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    margin: 0 6px;
+    color: #5BC20F;
+  }
+`;
 
 /* Results
 container describing whether the answer is correct and motivating the answer

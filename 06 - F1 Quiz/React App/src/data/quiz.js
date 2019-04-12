@@ -70,7 +70,7 @@ export const quiz = [
     details: 'Schumacher’s 68th and final pole position came at the French Grand Prix at Magny-Cours in 2006.'
   },
   {
-    question: 'Daniil Kvyat earned his ‘Torpedo’ nickname at the 2016 Chinese Grand Prix. But who coined the moniker? ',
+    question: 'Daniil Kvyat earned his ‘Torpedo’ nickname at the 2016 Chinese Grand Prix. But who coined the moniker?   ',
     answers: [
       {
         answer: 'Mark Webber',
@@ -91,5 +91,28 @@ export const quiz = [
     ],
     correct: 2,
     details: 'It was Sebastian Vettel, who\'d been left displeased with Kvyat’s aggressive pass in Turn 1.'
+  },
+  {
+    question: 'Jenson Button endured an embarrassing moment at the 2011 Chinese Grand Prix. What did he do?',
+    answers: [
+      {
+        answer: 'Got beached in the gravel at the pit entry',
+        percentage: 6
+      },
+      {
+        answer: 'Spun under the Safety Car, brought out after he’d clashed with his team mate and left debris on the track',
+        percentage: 25
+      },
+      {
+        answer: 'Parked in the wrong place after winning, forcing him to run down the pit lane',
+        percentage: 21
+      },
+      {
+        answer: 'Drove into the Red Bull pit box',
+        percentage: 48
+      }
+    ],
+    correct: 3,
+    details: 'In a moment that left him a tad red-faced, Button pulled into Red Bull’s pit box, before being frantically waved on by the team’s mechanics so that they could service Sebastian Vettel.'
   }
 ];
