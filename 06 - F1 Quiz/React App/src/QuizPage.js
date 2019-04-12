@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import the svg component and the necessary styled components
 import SVGIcon from './SVGIcon';
-import { Question, Answers, Answer, Button, Results, Result, Details } from './style/components';
+import { Question, Answers, Answer, Percentage, Button, Results, Result, Details } from './style/components';
 
 // in the component extract the necessary information and display the question/buttons/answer according to the quiz logic
 class QuizPage extends Component {
