@@ -24,8 +24,4 @@ The application is immediately designed in vanilla HTML and CSS.
 
 With the provided UI elements, the application is made interactive through the React framework. In the **React App** folder you find all the files created for such an occasion.
 
-The code makes use of the **styled-components** librarym and rather heavily.
-
-It can be definitely improved in terms of code, but in terms of missing features the application misses one important aspect: animation. This will be the topic of a possibly future update.
-
-On its own, the react based application is able to provide a quiz with the given input data. The data can be expanded and modified to consider a topic more thoroughly, or to question on different subjects, and the project succeeds at implementing a rather challenging component struture, to practice with the framework.
+It makes heavy use of the **styled components** library, for the style of most elements and also to animate the buttons, as they are hovered and selected. I am still discovering how to properly use the styling library, but it allows to include different property-value pairs based on the props passed to the different components. This allows to rapidly customize the elements as needed.
