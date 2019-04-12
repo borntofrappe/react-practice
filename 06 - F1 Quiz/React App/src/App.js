@@ -9,14 +9,16 @@ import { Main } from './style/components';
 import { quiz } from './data/quiz';
 
 // app component, managing the entire application and its state
-class App extends Component {
+class App extends React.Component {
   // in the state bind the methods updating the state and set up the necessary stateful variables
   constructor() {
     super();
     /*
     beside the quiz,
-    round to show each successive question
-    score to keep track of the achievement
+    - round, to show each successive question
+    - score, to keep track of the achievement
+    - isCorrect, to include the appropriate response to the given answer
+    - choice, to keep track of the fan's choice
     showQuiz, showResult, showScore, to toggle the different components making up the application
     */
     this.state = {
@@ -24,14 +26,22 @@ class App extends Component {
       round: 0,
       score: 0,
       isCorrect: false,
-      isGiven: 0,
+      choice: 0,
       showQuiz: false,
       showResult: false,
       showScore: false
     }
+    /* functions updating the state and allowing to
+    1. move to the quiz page,
+    1. show the correct option
+    1. move to the next round of the quiz
+    1. move to the score page
+
+    */
     this.goToQuiz = this.goToQuiz.bind(this);
-    this.goToNextQuestion = this.goToNextQuestion.bind(this);
     this.giveResult = this.giveResult.bind(this);
+    this.goToNextQuestion = this.goToNextQuestion.bind(this);
+    this.goToScore = this.goToScore.bind(this);
   }
 
   // with the goToQuiz function switch the matching boolean to true
@@ -40,8 +50,9 @@ class App extends Component {
       showQuiz: true
     })
   }
+
   // with the goToNextQuestion function update the round to go to the following query
-  // if round reaches the end of the quiz, toggle the score component
+  // if round reaches the end of the quiz, call the goToScore function
   goToNextQuestion() {
     const { round, quiz } = this.state;
     if (round < quiz.length - 1) {
@@ -50,30 +61,39 @@ class App extends Component {
         showResult: false
       })
     } else {
-      this.setState({
-        showResult: false,
-        showScore: true
-      })
+      this.goToScore()
     }
   }
 
+  // with the goToScore function switch the matching boolean to true
+  goToScore() {
+    this.setState({
+      showScore: true
+    })
+  }
+
   // with the giveResult function set showResult to true as to show the correct option
-  // the function is called passing a boolean describing whether the given answer matches the correct option
-  // ! in addition to the boolean, the second argument identifies the given answer, through the index
-  giveResult(isCorrect, isGiven) {
+  /* the function is called with two integer values
+  - correct, describing the correct option
+  - choice, describing the given option
+
+  */
+  giveResult(correct, choice) {
     // destructure the score out of the state
     const { score } = this.state;
+    // determine whether the given answer is correct (to show the appropriate heading/icon in the result section)
+    const isCorrect = correct === choice;
 
     /* update the state to
       1. show the result
-      1. update the isCorrect boolean to show the appropriate heading/icon
-      1. update isGiven to style the given answer differently
-      1. update the score,
+      1. describe the correct/wrong nature of the guess
+      1. describe the given answer
+      1. update the score if need be
     */
     this.setState({
       showResult: true,
       isCorrect,
-      isGiven,
+      choice,
       score: isCorrect ? score + 1 : score
     })
   }
@@ -84,7 +104,8 @@ class App extends Component {
   - the score page when the quiz is compoleted
   */
   render() {
-    const { quiz, round, isCorrect, isGiven, score, showQuiz, showResult, showScore } = this.state;
+    const { quiz, round, isCorrect, choice, score, showQuiz, showResult, showScore } = this.state;
+
     return (
       <Main>
         {
@@ -96,14 +117,14 @@ class App extends Component {
             :
             showQuiz
               ?
-              <QuizPage
-                quiz={quiz[round]}
-                giveResult={this.giveResult}
-                isCorrect={isCorrect}
-                isGiven={isGiven}
-                showResult={showResult}
-                goToNextQuestion={this.goToNextQuestion}
-              />
+                <QuizPage
+                  quiz={quiz[round]}
+                  giveResult={this.giveResult}
+                  isCorrect={isCorrect}
+                  choice={choice}
+                  showResult={showResult}
+                  goToNextQuestion={this.goToNextQuestion}
+                />
               :
               <LandingPage
                 goToQuiz={this.goToQuiz}

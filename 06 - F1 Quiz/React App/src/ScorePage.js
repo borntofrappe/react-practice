@@ -22,7 +22,7 @@ const ScorePage = ({ score, max }) => {
         }
       </Score>
 
-      <ShareLink href={href}>
+      <ShareLink href={href} target="_blank">
         Share your score
         <SVGIcon icon="share" size="52px" />
       </ShareLink>

@@ -5,9 +5,10 @@ import { Question, Answers, Answer, Button, Results, Result, Details } from './s
 
 // in the component extract the necessary information and display the question/buttons/answer according to the quiz logic
 class QuizPage extends Component {
-
   render() {
-    const { showResult, isCorrect, isGiven } = this.props;
+    // destructure the function to show the result and the values modifying the result section
+    const { showResult, isCorrect, choice } = this.props;
+    // destructure the necessary information from the quiz's round
     const { question, answers, correct, details } = this.props.quiz;
     return (
       <>
@@ -23,13 +24,28 @@ class QuizPage extends Component {
             // when the result **is** shown pass properties to highlight the correct/wrong/given nature of the options
             answers.map((answer, index) => <Answer
               key={answer.answer}
-              onClick={() => !showResult && this.props.giveResult(correct === index, index)}
+              onClick={() => !showResult && this.props.giveResult(correct, index)}
               isCorrect={showResult && correct === index}
-              isGiven={showResult && isGiven === index}
+              choice={showResult && choice === index}
               showResult={showResult}
-              >
+              percentage={showResult ? answer.percentage : 0}
+            >
               {
                 answer.answer
+              }
+              {/* when showing the result add a span element detailing the actual percentage */}
+              {
+                showResult &&
+                <Percentage>
+                  {/* for the correct option add the appropriate icon */}
+                  {
+                    correct === index
+                      ?
+                      <SVGIcon icon="v" size="18" />
+                      :
+                      `${answer.percentage}%`
+                  }
+                </Percentage>
               }
             </Answer>)
           }
