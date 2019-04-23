@@ -19,7 +19,6 @@ class App extends Component {
         name: '',
         sprite: ''
       },
-      url: 'https://pokeapi.co/api/v2/pokemon/',
       input: '',
       result: false
     };
@@ -62,7 +61,7 @@ class App extends Component {
   // when the components are mounted fetch a value from the specified URL, and call a function to update the UI
   componentDidMount() {
     const randomInt = Math.ceil(Math.random() * 150);
-    fetch(`${this.state.url}/${randomInt}/`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${randomInt}/`, { method: 'GET', mode: 'cors' })
       .then(promise => promise.json())
       .then(json => this.updatePokemon(json));
   }
@@ -126,7 +125,7 @@ class App extends Component {
 
     // call to the API matching the one specified in the componentDidMount function
     const randomInt = Math.ceil(Math.random() * 150);
-    fetch(`${this.state.url}/${randomInt}/`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${randomInt}/`, { method: 'GET', mode: 'cors' })
       .then(promise => promise.json())
       .then(json => this.updatePokemon(json));
   }

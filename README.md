@@ -1,9 +1,5 @@
 # React Practice
 
-## TODO
-
-- [ ] revisit project **#01 - Who's That Pokemon** to cover the existing bug
-
 ## Preface
 
 Inspired by many, but mostly [codevember](http://codevember.xyz/) and Wes Bos's course [javascript 30](https://javascript30.com/), I set out to create 30 applications with React.js. 31 for good measure.
@@ -29,8 +25,6 @@ A simple application to play a simple game inspired by the pokemon anime. Using 
 - react spring;
 
 - a public API.
-
-Update: there seems to be an issue with the public API. This warrants further investigation. See TODOs above.
 
 ### 02 - FreeCodeCamp Podcast App
 
