@@ -68,3 +68,9 @@ An incredibly popular design replicated with React, to allow visitors to alterna
 Testing trivia [right here](https://codepen.io/borntofrappe/full/pBeMzz).
 
 Replicating the quiz proposed on the official F1 website every racing week.
+
+### 07 - Tickets Booking App
+
+With a light and dark theme [right here](https://codepen.io/borntofrappe/full/byqqKY).
+
+Creating a frame of a mobile application allowing to book seats for a hypothetical movie.
