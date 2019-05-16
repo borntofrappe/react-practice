@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>UI Tickets Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--
+        icons for the available, reserved, selected buttons,
+        for the legend items
+    -->
+    <svg display="none" viewBox="0 0 100 100">
+        <symbol id="available" viewBox="0 0 100 100" >
+            <g
+                fill="currentColor">
+                <circle
+                    cx="50"
+                    cy="50"
+                    r="50">
+                </circle>
+                <circle
+                    cx="50"
+                    cy="50"
+                    r="4"
+                    fill="#fff">
+                </circle>
+            </g>
+        </symbol>
+        <symbol id="reserved" viewBox="0 0 100 100">
+            <defs>
+                <clipPath
+                    id="clip">
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="50">
+                    </circle>
+                </clipPath>
+            </defs>
+            <g
+                fill="currentColor">
+                <circle
+                    cx="50"
+                    cy="50"
+                    r="50">
+                </circle>
+                <g clip-path="url(#clip)"
+                    fill="#000"
+                    opacity="0.12">
+                    <circle
+                        cx="50"
+                        cy="42"
+                        r="15">
+                    </circle>
+                    <circle
+                        cx="50"
+                        cy="110"
+                        r="40">
+                    </circle>
+                </g>
+            </g>
+        </symbol>
+        <symbol id="selected" viewBox="0 0 100 100">
+            <g
+                fill="currentColor">
+                <circle
+                    cx="50"
+                    cy="50"
+                    r="50">
+                </circle>
+                <text
+                    x="50"
+                    y="65"
+                    font-size="2.7rem"
+                    text-anchor="middle"
+                    fill="#fff">
+                    1
+                </text>
+            </g>
+        </symbol>
+    </svg>
+
+    <!-- html structure
+    main, wrapping container
+        div,
+            heading
+            + / - buttons
+        div,
+            legend items
+        div,
+            screen
+            grid of seats
+        div,
+            heading
+            overflowing row of buttons
+        button
+    -->
+    <main>
+        <div class="header">
+            <h1>Choose seats</h1>
+            <!-- + icon -->
+            <button>
+                <svg viewBox="0 0 100 100" width="32" height="32">
+                    <g
+                        stroke="currentColor"
+                        stroke-width="10"
+                        fill="none">
+                        <path
+                            d="M 20 50 h 60">
+                        </path>
+                        <path
+                            d="M 50 20 v 60">
+                        </path>
+                    </g>
+                </svg>
+            </button>
+            <button>
+                <!-- - icon -->
+                <svg viewBox="0 0 100 100" width="32" height="32">
+                    <g
+                        stroke="currentColor"
+                        stroke-width="10"
+                        fill="none">
+                        <path
+                            d="M 20 50 h 60">
+                        </path>
+                    </g>
+                </svg>
+            </button>
+        </div>
+
+        <!-- show the legend items side by side, prefaced by the icon symbolizing them -->
+        <div class="legend">
+            <p>
+                <svg class="available" width="20" height="20">
+                    <use href="#available"></use>
+                </svg>
+                <span>
+                    Available
+                </span>
+            </p>
+            <p>
+                <svg class="reserved" width="20" height="20">
+                    <use href="#reserved"></use>
+                </svg>
+                <span>
+                    Reserved
+                </span>
+            </p>
+            <p>
+                <svg class="selected" width="20" height="20">
+                    <use href="#selected"></use>
+                </svg>
+                <span>
+                    Selected
+                </span>
+            </p>
+        </div>
+
+        <!-- after a paragraph detailing the screen include a grid for the seats -->
+        <div class="theater">
+            <p>Screen</p>
+            <!-- seats included in the script as buttons nesting the svg icons for available/reserved/selected seats -->
+            <div class="seats">
+                <!-- filler elements used to add empty spaces in the grid -->
+                <div class="filler"></div>
+                <div class="filler"></div>
+                <div class="filler"></div>
+                <div class="filler"></div>
+            </div>
+        </div>
+
+        <!-- display the details in an overflowing row -->
+        <div class="details">
+            <h4>Details</h4>
+            <!-- the idea is to have multiple buttons, one for each selected seat -->
+            <button>
+                <span>Row: 7 Seat: 4 Price: $16</span>
+                <!-- x icon (rotated + icon) -->
+                <svg viewBox="0 0 100 100" width="18" height="18">
+                    <g
+                        stroke="currentColor"
+                        stroke-width="10"
+                        fill="none"
+                        transform="translate(50 50) rotate(45)">
+                        <g transform="translate(-50 -50)">
+                            <path
+                                d="M 10 50 h 80">
+                            </path>
+                            <path
+                                d="M 50 10 v 80">
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+            </button>
+            <button>
+                Row: 8 Seat: 3 Price: $12
+            </button>
+        </div>
+
+        <button class="checkout">
+            <strong>$48</strong>
+            <span>Checkout</span>
+        </button>
+
+    </main>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
