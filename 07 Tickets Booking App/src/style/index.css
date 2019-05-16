@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,900");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  background: linear-gradient(#fae6e1, #f3dfd8);
+  font-family: "Lato", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --color: #2c2f62;
+  --background: #ffffff;
+  --accent: #fd6d8e;
+}
+.available {
+  color: #2dcff8;
+}
+.reserved {
+  color: hsl(0, 0%, 95%);
+}
+.selected {
+  color: var(--accent, #fd6d8e);
+}
