@@ -1,76 +1,16 @@
 # React Practice
 
-## Preface
-
-Inspired by many, but mostly [codevember](http://codevember.xyz/) and Wes Bos's course [javascript 30](https://javascript30.com/), I set out to create 30 applications with React.js. 31 for good measure.
-
-Each application will be saved in a separate folder of this very own repository. Upon completing the last project of the lot, I will update the grid-based layout referenced in the **React Practice Container** folder, showcasing each one of them.
+This repo was originally meant to produce 30+ projects using the React framework, in a bit more than a month. It is still scheduled to achieve the same goal, but with a much looser deadline.
 
 ## Projects
 
-### Reactice Container
-
-Cased [right here](https://codepen.io/borntofrappe/full/NELLxG/).
-
-A stylish container in which to reference every single future react-based project which is part of #reactice. While technically not one of the projects that fall under the "React Practice" label, it is a good excuse to practice with React, Styled Components and React Router.
-
-### 01 - Who's That Pokemon?
-
-Catch it [right here](https://codepen.io/borntofrappe/full/GwYLRw).
-
-A simple application to play a simple game inspired by the pokemon anime. Using the following:
-
-- styled-components;
-
-- react spring;
-
-- a public API.
-
-### 02 - FreeCodeCamp Podcast App
-
-Always updating [right here](https://codepen.io/borntofrappe/full/yGbpMm).
-
-A mobile-friendly application to play podcast episodes from the freeCodeCamp RSS feed. Practicing with:
-
-- styled-components;
-
-- RSS Feed.
-
-Can be definitely improved, but as a proof of concept it works wonders.
-
-### 03 - React SVGatch
-
-Ticking [right here](https://codepen.io/borntofrappe/full/ebRVJd).
-
-An analog watch highlighting the current time with a few vector-based niceties. Leveraging:
-
-- SVG syntax.
-
-### 04 - Timer App
-
-Counting down [right here](https://codepen.io/borntofrappe/full/dwVZRQ).
-
-A two-steps application to start a timer with style. Making use of:
-
-- styled-components;
-
-- react-spring.
-
-
-### 05 - Double Slider Form
-
-Sliding and gliding [right here](https://codepen.io/borntofrappe/full/OGyJbm).
-
-An incredibly popular design replicated with React, to allow visitors to alternatively sign in or sign up to an hypothetical application.
-
-### 06 - F1 Quiz
-
-Testing trivia [right here](https://codepen.io/borntofrappe/full/pBeMzz).
-
-Replicating the quiz proposed on the official F1 website every racing week.
-
-### 07 - Tickets Booking App
-
-With a light and dark theme [right here](https://codepen.io/borntofrappe/full/byqqKY).
-
-Creating a frame of a mobile application allowing to book seats for a hypothetical movie.
+|Name|Goal|Keyword|
+|---|---|---|
+|[Reactice Container](https://codepen.io/borntofrappe/full/NELLxG/)|Frame future React applications|codevember, react router|
+|01 - [Who's That Pokemon?](https://codepen.io/borntofrappe/full/GwYLRw)|Play a simple game inspired by the pokemon anime|pokemon, styled-components, react-spring, API|
+|02 - [FreeCodeCamp Podcast App](https://codepen.io/borntofrappe/full/yGbpMm)|Listen to the freeCodeCamp podcast with style|freeCodeCamp, styled-components, RSS|
+|03 - [SVGatch](https://codepen.io/borntofrappe/full/ebRVJd)|Relate the current number of seconds, minutes and hours through vector graphics|clock, svg|
+|04 - [Timer App](https://codepen.io/borntofrappe/full/dwVZRQ)|Count down to arbitrary amount of time|timer, styled-components, react-spring|
+|05 - [Double Slider Form](https://codepen.io/borntofrappe/full/OGyJbm)|Slide between a sign up and a sign in form|form, css transition|
+|06 - [F1 Quiz](https://codepen.io/borntofrappe/full/pBeMzz)|Test your knowledge of the Chinese F1 grand prix|quiz, styled-components|
+|07 - [Tickets Booking App](https://codepen.io/borntofrappe/full/byqqKY)|Rserve seats in an hypothetical movie theater|movies, theme, styled-components, grid|
