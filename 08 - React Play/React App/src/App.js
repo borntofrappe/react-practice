@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import data from './data/data.js';
 import Card from './Card';
+import { Carousel } from './style/components';
 
 /* state management
 - define empty arrays for the riders and predictions
@@ -12,7 +13,7 @@ class App extends Component {
     this.state = {
       riders: [],
       predictions: [],
-      index: 0, // integer to keep track of the current prediction
+      index: 1, // integer to keep track of the current prediction
       selection: [], // array to keep track of the selection for each prediction
     }
   }
@@ -42,7 +43,10 @@ class App extends Component {
       const { name: team, color, riders: composition} = curr;
       // for each team create an array of 2 objects, representing the riders
       const teamRiders = composition.map(({ name, number}) => ({
-        name: `${name.first} ${name.last}`,
+        name: {
+          first: name.first,
+          last: name.last
+        },
         // ! include the team's name and color from the parent object
         team,
         color,
@@ -74,7 +78,7 @@ class App extends Component {
       ]
     },
 
-    in stead of the integers though, the options property specifies the full name of the matching rider
+    in stead of the integers though, the options property specifies the name of the matching rider
     */
     const { predictions, index, riders } = this.state;
     let prediction = '';
@@ -82,15 +86,17 @@ class App extends Component {
     if(predictions.length > 0) {
       // include the prediction specified by the index
       prediction = predictions[index];
-      // in the options property include the full name of the rider with the same number
+      // in the options property include the rider with the same number
       const {options} = prediction;
       prediction.options = options.map(number => riders.find(rider => parseInt(rider.number, 10) === parseInt(number, 10)));
     }
     return(
-      <Card
-        prediction={prediction}
-        index={index}
-        total={predictions.length}/>
+      <Carousel>
+        <Card
+          prediction={prediction}
+          index={index}
+          total={predictions.length}/>
+      </Carousel>
     );
   }
 }

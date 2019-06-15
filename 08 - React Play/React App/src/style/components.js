@@ -1,0 +1,156 @@
+// styled components
+import styled from 'styled-components';
+
+// display the cards in a row
+export const Carousel = styled.div`
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+`;
+
+// style the card akin to a screen of a mobile device
+export const CardContainer = styled.div`
+  background: #383842;
+  max-width: 300px;
+  border-radius: 20px;
+`;
+
+/* style the question with the accent background and considerable padding */
+export const Header = styled.div`
+  padding: 1rem;
+  color: #ffffff;
+  background: #d90c08;
+  border-radius: inherit;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+`;
+
+export const Index = styled.div`
+  font-size: 0.75rem;
+  text-transform: uppercase;
+`;
+
+export const Question = styled.h1`
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0;
+`;
+
+/* style the selected area to have a fixed height
+when the div is empty include a string to explain the purpose of the selected area
+*/
+export const Selected = styled.div`
+  margin: 1.25rem 0.75rem 1.75rem;
+  height: 50px;
+  text-align: center;
+  color: #eee;
+  border-radius: 5px;
+
+  &:empty {
+    opacity: 0.3;
+    border: 2px dashed currentColor;
+    &:before {
+      content: "Make your prediction";
+      text-transform: uppercase;
+      font-weight: bold;
+      line-height: 50px;
+    }
+  }
+`;
+
+/* include a faux border with through an svg background */
+export const Selection = styled.div`
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="%23d90c08" stroke-width="2" stroke-linecap="round"><path d="M 0 1 h 90"></path><path d="M 90 1 a 9 9 0 0 1 9 9"></path><path d="M 99 10 v 85"></path></g></svg>'),
+  url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="%23d90c08" stroke-width="2" stroke-linecap="round"><path d="M 99 15 v 85"></path></g></svg>');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position-y: 0.7rem;
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+`;
+
+/* style the header with a solid background, to visually hide the pattern included on the container */
+export const Action = styled.h2`
+  padding: 0.25rem 0.75rem;
+  margin-right: 1rem;
+  background: #383842;
+  display: inline-block;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: bold;
+  word-spacing: 0.2rem;
+  letter-spacing: 0.015rem;
+`;
+
+/* display the options in a flex column */
+export const Options = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0.25rem 0 2rem;
+`;
+
+/* round the corners of the right side
+display the nested information in a vertically aligned row
+*/
+export const Option = styled.button`
+  cursor: pointer;
+  margin: 0.25rem 1.5rem;
+  margin-left: 0;
+  background: #ffffff;
+  padding: 0.3rem 0.5rem;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: none;
+  box-shadow: 0 1px 4px hsla(0, 0%, 0%, 0.2);
+  display: flex;
+  align-items: center;
+`;
+
+/* fix the width of the span to have one-digit and two-digits numbers occupy the same space
+with pseudo elements include a skewed gray background and a slanted bar of an accent color */
+export const Number = styled.span`
+  width: 2.25rem;
+  margin: 0 1.25rem 0 0.25rem;
+  position: relative;
+  font-size: 0.7rem;
+  z-index: 5;
+
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    z-index: -5;
+  }
+
+  &:before {
+    background: #eaeaea;
+    border-radius: 5px;
+    left: 50%;
+    width: 2.5rem;
+    height: 2rem;
+    transform: translate(calc(-50% + 0.15rem), -50%) skewX(-20deg);
+  }
+  &:after {
+    background: ${props => props.color};
+    right: 0%;
+    width: 0.3rem;
+    height: 1.5rem;
+    transform: translate(0, -50%) skewX(-20deg);
+  }
+`;
+
+// align the riders info to the left
+export const Rider = styled.div`
+  line-height: 1.3;
+  text-align: initial;
+`;
+export const Name = styled.h3`
+  font-size: 1rem;
+  font-weight: initial;
+`;
+export const Team = styled.p`
+  font-size: 0.7rem;
+  text-transform: uppercase;
+`;

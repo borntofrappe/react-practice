@@ -1,7 +1,8 @@
 import React from 'react';
 import CardHeader from './CardHeader';
-import CardSelection from './CardSelection';
+import CardSelected from './CardSelected';
 import CardOptions from './CardOptions';
+import { CardContainer } from './style/components';
 
 // card displaying the rider's information
 // retrieve the prediction as well as its index vis a vis the total number of predictions
@@ -10,17 +11,17 @@ function Card({prediction, index, total}) {
   const {name: question, options } = prediction;
   // render the components passing the necessary props
   return (
-    <div className="Card">
+    <CardContainer className="Card">
       <CardHeader
         question={question}
         index={index}
         total={total} />
 
-      <CardSelection selection=""/>
+      <CardSelected selected=""/>
 
       <CardOptions
         options={options}/>
-    </div>
+    </CardContainer>
   );
 }
 
