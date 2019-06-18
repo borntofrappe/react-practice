@@ -3,21 +3,19 @@ import data from './data/data.js';
 import Card from './Card';
 import { Carousel } from './style/components';
 
-/* state management
-- define empty arrays for the riders and predictions
-- when the component is mounted include the actual data from `data.js`, as if retrieved from an API
-*/
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      riders: [],
-      predictions: [],
-      selection: [], // array to keep track of the selection for each prediction
+      riders: [], // array specifying the riders' name, number, team and color
+      predictions: [], // array specifying the question and the options through the riders numbers
+      selections: [], // array to keep track of the selection for each prediction,
     }
+    this.selectOption = this.selectOption.bind(this);
+    this.removeOption = this.removeOption.bind(this);
   }
 
-  // include in the state the pertinent data from the f1Teams and f1Prediction objects
+  // when the components are initialized update the state with the data from the f1Teams and f1Prediction objects
   componentDidMount() {
     const {f1Teams, f1Predictions} = data;
     // for the predictions retrieve the array of predictions
@@ -27,7 +25,10 @@ class App extends Component {
     /* desired data structure
     [
       {
-        name: 'Lewis Hamilton',
+        name: {
+          first: 'Lewis',
+          last: 'Hamilton'
+        },
         team: 'Mercedes',
         color: '#00D2BE',
         number: 44,
@@ -55,11 +56,20 @@ class App extends Component {
       return [...acc, ...teamRiders]
     }, []);
 
+    // loop through the predictions array and swap the options' numbers with the rider's names
+    predictions.forEach(prediction => {
+      const {options} = prediction;
+      prediction.options = options.map(number => riders.find(rider => parseInt(rider.number, 10) === parseInt(number, 10)));
+    });
+
     // update the riders and predictions arrays with the actual data
+    // update the selections array to contain as many items as there are predictions
+    const selections = Array(predictions.length).fill('');
     this.setState({
       riders,
       predictions,
-    })
+      selections,
+    });
   }
 
   // function called on scroll, to focus one card at a time
@@ -76,14 +86,13 @@ class App extends Component {
       card.classList.remove('rotate', 'rotate-left', 'rotate-right');
       const {offsetLeft: left, offsetWidth: width } = card;
       // 45 to consider the whitespace around the cards, and to always focus on at least one card
-      if(fromLeft + fromWidth / 2 < left - 45) {
+      if(fromLeft + fromWidth / 2 < left - 40) {
         card.classList.add('rotate', 'rotate-left');
       }
-      if(fromLeft + fromWidth / 2 > left + width + 45) {
+      if(fromLeft + fromWidth / 2 > left + width + 40) {
         card.classList.add('rotate', 'rotate-right');
       }
     });
-
   }
 
   // once the components are set up listen for a scroll event on the carousel
@@ -92,6 +101,29 @@ class App extends Component {
     carousel.addEventListener('scroll', this.handleScroll);
     // immediately call the handle scroll function to focus on the first card
     this.handleScroll();
+  }
+
+  // function called when an option is clicked
+  // the function receives as argument the index of the card being clicked as well as the object representing the rider
+  selectOption(index, option) {
+    // update the selection array including the rider at the appropriate index
+    const {selections} = this.state;
+    selections[index] = option;
+
+    this.setState({
+      selections,
+    });
+  }
+
+  // function called when the selected option is clicked
+  // the function receives as argument the index of the selected option
+  removeOption(index) {
+    // update the selection array setting the specific selection to an empty string
+    const {selections} = this.state;
+    selections[index] = '';
+    this.setState({
+      selections,
+    })
   }
 
   // render the card passing through props a specific question
@@ -111,25 +143,21 @@ class App extends Component {
 
     in stead of the integers though, the options property specifies the name of the matching rider
     */
-    const { predictions, riders } = this.state;
-    const cards = [];
-    // if prediction describes more than an empty array
-    if(predictions.length > 0) {
-      predictions.forEach(prediction => {
-        const {options} = prediction;
-        prediction.options = options.map(number => riders.find(rider => parseInt(rider.number, 10) === parseInt(number, 10)));
-        cards.push(prediction);
-      });
-    }
+    const { predictions, selections } = this.state;
+
     return(
+      // passs the selected option identifying the item in the selections array
       <Carousel className="Carousel">
         {
-          cards.map((card, idx) => (
+          predictions.map((card, index) => (
             <Card
-              key={idx}
+              key={index}
               prediction={card}
-              index={idx}
-              total={predictions.length}/>
+              selected={selections[index]}
+              index={index}
+              total={predictions.length}
+              selectOption={this.selectOption}
+              removeOption={this.removeOption}/>
           ))
         }
       </Carousel>

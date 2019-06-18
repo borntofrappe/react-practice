@@ -92,7 +92,7 @@ export const Question = styled.h1`
 `;
 
 /* style the selected area to have a fixed height
-when the div is empty include a string to explain the purpose of the selected area
+when the div is blank include a string to explain the purpose of the selected area
 */
 export const Selected = styled.div`
   margin: 1.25rem 0.75rem 1.75rem;
@@ -104,6 +104,7 @@ export const Selected = styled.div`
   &:empty {
     opacity: 0.3;
     border: 2px dashed currentColor;
+    background: initial;
     &:before {
       content: "Make your prediction";
       text-transform: uppercase;
@@ -111,6 +112,27 @@ export const Selected = styled.div`
       line-height: 50px;
     }
   }
+
+  button {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    position: relative;
+
+    &:after {
+      content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g><circle fill="%23d90c08" cx="50" cy="50" r="50"></circle><g transform="translate(50 50) rotate(45)" stroke="%23ffffff" stroke-width="15" stroke-linecap="round" fill="none"><path d="M -23 0 h 46"></path><path d="M 0 -23 v 46"></path></g></g></svg>');
+      position: absolute;
+      right: 0%;
+      top: 0%;
+      transform: translate(50%, -50%);
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+    }
+  }
+
+
+
 `;
 
 /* include a faux border with through an svg background

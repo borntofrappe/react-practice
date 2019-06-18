@@ -5,11 +5,9 @@ import CardOptions from './CardOptions';
 import { CardContainer } from './style/components';
 
 // card displaying the rider's information
-// retrieve the prediction as well as its index vis a vis the total number of predictions
-function Card({prediction, index, total}) {
-  // destructure the question and the options array
+function Card({prediction, selected, index, total, selectOption, removeOption}) {
   const {name: question, options } = prediction;
-  // render the components passing the necessary props
+
   return (
     <CardContainer className="Card">
       <CardHeader
@@ -17,10 +15,15 @@ function Card({prediction, index, total}) {
         index={index}
         total={total} />
 
-      <CardSelected selected=""/>
+      <CardSelected
+        index={index}
+        selected={selected}
+        removeOption={removeOption}/>
 
       <CardOptions
-        options={options}/>
+        index={index}
+        options={options}
+        selectOption={selectOption}/>
     </CardContainer>
   );
 }
