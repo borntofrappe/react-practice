@@ -1,4 +1,4 @@
-// object describing the team lineup of the 2019 F1 season
+// object describing the lineup of the 2019 F1 season
 const f1Teams = {
   "name": "F1 Teams",
   "teams": [
@@ -206,8 +206,7 @@ const f1Teams = {
 };
 
 // object describing the questions and options for each prediction
-// the options array describe the number of each rider to be included for the prediction
-// the name could be very well included and matched through concatenation
+// the options refer to the riders' numbers
 const f1Predictions = {
   "name": "F1 Grand Prix Predictions",
   "predictions": [
@@ -286,7 +285,7 @@ const f1Predictions = {
       ]
     },
     {
-      "name": "Which driver will be the first to reture?",
+      "name": "Which driver will be the first to retire?",
       "options": [
         44,
         77,

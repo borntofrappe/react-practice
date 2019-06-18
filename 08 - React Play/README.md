@@ -1,31 +1,19 @@
 # React Play
 
+## [Live Demo](https://codepen.io/borntofrappe/full/dBpVbB)
+
 ## Goal
 
-Recreate the interactive carousel as highlighted in the [F1 Play gaming website](https://www.formula1.com/en/gaming/f1-play.html).
+Recreate the interactive carousel as highlighted on the [F1 gaming website](https://www.formula1.com/en/gaming/f1-play.html).
 
-## Development
+## Notes
 
-### UI
+The project wasn't developed in a single coding session, but is instead the result of a multiple day's effort.
 
-While the project is meant to be a React application, it is first designed with HTML markup and a single CSS stylesheet. The UI doesn't recreate the entirety of the carousel, but only of a card in said carousel. Given the predominance of the component however, I though it best to dedicate a coding session to the layout and style of the element.
+At first, I developed the UI of a single card in the carousel. You can find a reference [right here on codepen](https://codepen.io/borntofrappe/full/ZdbeJw) or in the UI subfolder.
 
-You can find the UI in the dedicated subfolder of this repo, or online [@codepen](https://codepen.io/borntofrappe/full/ZdbeJw).
+Following this design-heavy effort, I developed the application through the React framework. The application is broken down in multiple components, and each smaller component is then styled through the `styled-components` library. You can find the application in the **React App** folder, or at the [referenced URL](https://codepen.io/borntofrappe/full/dBpVbB).
 
-### Components
+## Future Notes
 
-Starting from the UI developed with HTML and CSS only, the application considers the following components:
-
-- `Card`, the container displaying the question and the list of options;
-
-- `CardHeader`, describing the query and the number of the card within the context of the carousel;
-
-- `CardSelection`, the container ultimately including the option selected from the options below;
-
-- `CardOptions`, describing the list of possible answers each through a button.
-
-### State
-
-The necessary information is included through two objects, specifying the riders and the predictions included each in a card. There's a bit of massaging to retrieve the desired data structure, but the logic highlighted in the `componentDidMount` callback is rather straightforward.
-
-The application is developed at first with a class component, in `App.js`. At a later stage I'd like to refactor the project to use **hooks**, but to practice with both syntaxes and the framework as a whole I considered the duplication to be worth the extra effort. It is most likely I will dedicate a separate folder, just like for the UI, to the class-based application and have the files in the root path describe the hook-powered solution.
+The project allowed me to practice with React, styled-components and vanilla JavaScript to massage the data in the desired format. That being said, the application leverages a class component in `App.js`. At a later stage I'd like to refactor the application and use **hooks** instead, leveraging functional components instead.

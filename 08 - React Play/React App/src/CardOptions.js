@@ -1,32 +1,30 @@
 import React from 'react';
 import { Selection, Action, Options, Option, Number, Rider, Name, Team } from './style/components';
 
-
-// following a heading render the options mapping through the values and including a button for each option
-// ! when a button gets clicked, call a function to retrieve the option and display it in the CardSelected component
+// container displaying the list of options
 function CardOptions({index, options, selectOption}) {
+  // render a heading and one element for each option
   return (
     <Selection>
       <Action>Select Driver</Action>
       <Options>
         {
           options &&
-          options.map(({ number, name, team, color}) => (
+          options.map(option => (
             <Option
-              onClick={() => selectOption(index, {number, name, team, color})}
-              key={number}>
-                <Number color={color}>
-                  { number }
+              onClick={() => selectOption(index, option)}
+              key={option.number}>
+                <Number color={option.color}>
+                  { option.number }
                 </Number>
                 <Rider>
                   <Name>
-                    {name.first} <strong>{name.last}</strong>
+                    {option.name.first} <strong>{option.name.last}</strong>
                   </Name>
                   <Team>
-                    {team}
+                    {option.team}
                   </Team>
                 </Rider>
-
             </Option>
             ))
         }

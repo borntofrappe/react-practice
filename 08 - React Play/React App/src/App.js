@@ -3,23 +3,23 @@ import data from './data/data.js';
 import Card from './Card';
 import { Carousel } from './style/components';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      riders: [], // array specifying the riders' name, number, team and color
-      predictions: [], // array specifying the question and the options through the riders numbers
-      selections: [], // array to keep track of the selection for each prediction,
+      riders: [], // rider's info
+      predictions: [], // questions and options
+      selections: [], // selections for the predictions
     }
+    // bind the functions updating the selections array
     this.selectOption = this.selectOption.bind(this);
     this.removeOption = this.removeOption.bind(this);
   }
 
-  // when the components are initialized update the state with the data from the f1Teams and f1Prediction objects
+  // update the state with the data from the f1Teams and f1Prediction objects
   componentDidMount() {
     const {f1Teams, f1Predictions} = data;
-    // for the predictions retrieve the array of predictions
-    const { predictions } = f1Predictions;
 
     // ! for the teams the application actually needs an array of riders instead of teams
     /* desired data structure
@@ -56,7 +56,8 @@ class App extends Component {
       return [...acc, ...teamRiders]
     }, []);
 
-    // loop through the predictions array and swap the options' numbers with the rider's names
+    // ! for the predictions retrieve the array of predictions and substitute the options' integers with the matching rider
+    const { predictions } = f1Predictions;
     predictions.forEach(prediction => {
       const {options} = prediction;
       prediction.options = options.map(number => riders.find(rider => parseInt(rider.number, 10) === parseInt(number, 10)));
@@ -78,14 +79,14 @@ class App extends Component {
     const carousel = document.querySelector('.Carousel');
     const cards = carousel.querySelectorAll('.Card');
 
-    // retrieve the distance being scrolled and the width of the carousel, to focus on the card placed in the middle of the container
+    // retrieve the distance being scrolled and the width of the carousel, to focus on the card placed in the middle of the viewport
     const {scrollLeft: fromLeft, offsetWidth: fromWidth} = carousel;
 
-    // add .rotate classes to cards which are located before and after the center of the screen, minus plus the size of the card
+    // add .rotate classes to the cards positioned before and after the center of the screen, minus plus the size of the card
     cards.forEach(card => {
       card.classList.remove('rotate', 'rotate-left', 'rotate-right');
       const {offsetLeft: left, offsetWidth: width } = card;
-      // 45 to consider the whitespace around the cards, and to always focus on at least one card
+      // 40 to consider the whitespace around the cards, and to always focus on at least one card
       if(fromLeft + fromWidth / 2 < left - 40) {
         card.classList.add('rotate', 'rotate-left');
       }
@@ -103,10 +104,11 @@ class App extends Component {
     this.handleScroll();
   }
 
-  // function called when an option is clicked
+  // functions updating the selections array
+
+  // select
   // the function receives as argument the index of the card being clicked as well as the object representing the rider
   selectOption(index, option) {
-    // update the selection array including the rider at the appropriate index
     const {selections} = this.state;
     selections[index] = option;
 
@@ -115,10 +117,9 @@ class App extends Component {
     });
   }
 
-  // function called when the selected option is clicked
+  // remove
   // the function receives as argument the index of the selected option
   removeOption(index) {
-    // update the selection array setting the specific selection to an empty string
     const {selections} = this.state;
     selections[index] = '';
     this.setState({
@@ -126,27 +127,11 @@ class App extends Component {
     })
   }
 
-  // render the card passing through props a specific question
+  // render one card for each prediction, passing along the matching selection
   render(){
-    /* the idea is to pass an object structured as follows
-    {
-      "name": "Who will top the podium?",
-      "options": [
-        44,
-        77,
-        5,
-        16,
-        33,
-        10
-      ]
-    },
-
-    in stead of the integers though, the options property specifies the name of the matching rider
-    */
     const { predictions, selections } = this.state;
 
     return(
-      // passs the selected option identifying the item in the selections array
       <Carousel className="Carousel">
         {
           predictions.map((card, index) => (

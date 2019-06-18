@@ -28,25 +28,27 @@ export const Carousel = styled.div`
 
 // style the card akin to a screen of a mobile device
 // display the content in a flex column
-// ! avoid shrinkage
-// ! if the div has a class of rotate have the card rotated toward the selected end
 export const CardContainer = styled.div`
   background: #383842;
   max-width: 300px;
   border-radius: 20px;
   margin: 1rem 1.25rem;
+  // avoid shrinking, allowing for horizontal scroll
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
+  // transition for the change in opacity and rotation
   transition-property: transform, opacity;
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
   opacity: 1;
+
   // reduce the opacity of the rotated cards
   &.rotate {
     opacity: 0.2;
   }
-  // rotate the cards according to their position vis a vis the center of the carousel
+
+  // rotate the cards according to their position vis-a-vis the center of the carousel
   // push the cards backwards through the z axis
   &.rotate-left {
     transform: translateZ(-70px) rotateY(-10deg);
@@ -54,7 +56,7 @@ export const CardContainer = styled.div`
   &.rotate-right {
     transform: translateZ(-70px) rotateY(10deg);
   }
-  // for the last card include a faux card to allocate additional space at the end of the carousel
+  // for the last card include a pseudo element card to allocate additional space at the end of the carousel
   // otherwise the element won't ever be focused upon when scrolling
   &:last-of-type {
     position: relative;
@@ -70,7 +72,6 @@ export const CardContainer = styled.div`
   }
 `;
 
-/* style the question with the accent background and considerable padding */
 export const Header = styled.div`
   padding: 1rem;
   color: #ffffff;
@@ -92,7 +93,7 @@ export const Question = styled.h1`
 `;
 
 /* style the selected area to have a fixed height
-when the div is blank include a string to explain the purpose of the selected area
+! when the div is blank include a string to explain the purpose of the selected area
 */
 export const Selected = styled.div`
   margin: 1.25rem 0.75rem 1.75rem;
@@ -113,14 +114,16 @@ export const Selected = styled.div`
     }
   }
 
+  // style the nested button to spread and cover the entirety of the width/height of the container
   button {
     width: 100%;
     height: 100%;
     border-radius: inherit;
     position: relative;
 
+    // include with a pseudo element a white x on a red background, in the top right corner of the button
     &:after {
-      content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g><circle fill="%23d90c08" cx="50" cy="50" r="50"></circle><g transform="translate(50 50) rotate(45)" stroke="%23ffffff" stroke-width="15" stroke-linecap="round" fill="none"><path d="M -23 0 h 46"></path><path d="M 0 -23 v 46"></path></g></g></svg>');
+      content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g><circle fill="%23d90c08" cx="50" cy="50" r="50"></circle><g transform="translate(50 50) rotate(45)" stroke="%23ffffff" stroke-width="12" stroke-linecap="round" fill="none"><path d="M -23 0 h 46"></path><path d="M 0 -23 v 46"></path></g></g></svg>');
       position: absolute;
       right: 0%;
       top: 0%;
@@ -130,9 +133,6 @@ export const Selected = styled.div`
       border-radius: 50%;
     }
   }
-
-
-
 `;
 
 /* include a faux border with through an svg background
@@ -147,10 +147,9 @@ export const Selection = styled.div`
   background-position-y: 0.7rem;
   margin-right: 1rem;
   padding-bottom: 1.5rem;
-
 `;
 
-/* style the header with a solid background, to visually hide the pattern included on the container */
+
 export const Action = styled.h2`
   padding: 0.25rem 0.75rem;
   margin-right: 1rem;
@@ -166,7 +165,6 @@ export const Action = styled.h2`
 
 /* display the options in a flex column
 ! cap the height of the containers allowing for vertical scroll
-style the scrollbar to be hidden from sight
 */
 export const Options = styled.div`
   display: flex;
@@ -174,14 +172,13 @@ export const Options = styled.div`
   margin: 0.25rem 0 0;
   overflow-y: scroll;
   height: 400px;
+  // hide the scrollbar from sight
   &::-webkit-scrollbar {
     width: 0;
   }
 `;
 
-/* round the corners of the right side
-display the nested information in a vertically aligned row
-*/
+
 export const Option = styled.button`
   cursor: pointer;
   margin: 0.25rem 1.5rem;
@@ -230,7 +227,7 @@ export const Number = styled.span`
   }
 `;
 
-// align the riders info to the left
+// display the rider's information aligned toward the left
 export const Rider = styled.div`
   line-height: 1.3;
   text-align: initial;

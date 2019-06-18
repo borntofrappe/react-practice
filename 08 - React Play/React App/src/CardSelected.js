@@ -1,25 +1,23 @@
 import React from 'react';
 import { Selected, Option, Number, Rider, Name, Team } from './style/components';
 
-// render a div with the selected option
-// using the same UI specified for the CardOptions component
-// ! in the Selected component specify an additional graphic through a pseudo element, signalling how clicking on the button removes the option
+// container displaying the selected option
 function CardSelected({selected, index, removeOption}) {
-  const { number, name, team, color } = selected;
+  // render the same UI used in the list of options, detailing only the removeOption function instead of the selectOption alternative
   return (
     <Selected className="Selected">
       {
         selected &&
         <Option onClick={() => removeOption(index)}>
-          <Number color={color}>
-            { number }
+          <Number color={selected.color}>
+            { selected.number }
           </Number>
           <Rider>
             <Name>
-              {name.first} <strong>{name.last}</strong>
+              {selected.name.first} <strong>{selected.name.last}</strong>
             </Name>
             <Team>
-              {team}
+              {selected.team}
             </Team>
           </Rider>
         </Option>

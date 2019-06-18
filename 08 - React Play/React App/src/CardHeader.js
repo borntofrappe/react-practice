@@ -1,9 +1,9 @@
 import React from 'react';
 import { Header, Index, Question } from './style/components';
 
-// render the question after a paragraph displaying the index of the card
-// ! 0-based indexing
+// container displaying the question
 function CardHeader({question, index, total}) {
+  // render the question prefaced by the index of the current prediction
   return (
     <Header>
       <Index>{index + 1} of {total}</Index>
