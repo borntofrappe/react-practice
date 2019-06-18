@@ -2,17 +2,72 @@
 import styled from 'styled-components';
 
 // display the cards in a row
+// ! cap the width of the container and allow for horizontal scroll
 export const Carousel = styled.div`
   display: flex;
-  padding: 1rem;
-  justify-content: center;
+  width: 850px;
+  overflow-x: auto;
+  margin: 0 auto;
+  // considerable padding to have the first card displayed mid screen
+  padding-left: 250px;
+  // remove a possible scrollbar for the y axis
+  overflow-y: hidden;
+  perspective: 500px;
+  // style the scrollbar for the x axis
+  &::-webkit-scrollbar {
+    height: 0.2rem;
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px hsla(0, 0%, 0%, 0.3);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: hsl(0, 0%, 90%);
+    border-radius: 5px;
+  }
 `;
 
 // style the card akin to a screen of a mobile device
+// display the content in a flex column
+// ! avoid shrinkage
+// ! if the div has a class of rotate have the card rotated toward the selected end
 export const CardContainer = styled.div`
   background: #383842;
   max-width: 300px;
   border-radius: 20px;
+  margin: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition-property: transform, opacity;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  opacity: 1;
+  // reduce the opacity of the rotated cards
+  &.rotate {
+    opacity: 0.2;
+  }
+  // rotate the cards according to their position vis a vis the center of the carousel
+  // push the cards backwards through the z axis
+  &.rotate-left {
+    transform: translateZ(-70px) rotateY(-10deg);
+  }
+  &.rotate-right {
+    transform: translateZ(-70px) rotateY(10deg);
+  }
+  // for the last card include a faux card to allocate additional space at the end of the carousel
+  // otherwise the element won't ever be focused upon when scrolling
+  &:last-of-type {
+    position: relative;
+    &:after {
+      position: absolute;
+      content: '';
+      left: 100%;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      transform: translateX(1.25rem);
+    }
+  }
 `;
 
 /* style the question with the accent background and considerable padding */
@@ -32,7 +87,7 @@ export const Index = styled.div`
 
 export const Question = styled.h1`
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   margin: 0.5rem 0 0;
 `;
 
@@ -58,15 +113,19 @@ export const Selected = styled.div`
   }
 `;
 
-/* include a faux border with through an svg background */
+/* include a faux border with through an svg background
+have the container expand to cover the available space
+*/
 export const Selection = styled.div`
+  flex-grow: 1;
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="%23d90c08" stroke-width="2" stroke-linecap="round"><path d="M 0 1 h 90"></path><path d="M 90 1 a 9 9 0 0 1 9 9"></path><path d="M 99 10 v 85"></path></g></svg>'),
   url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="%23d90c08" stroke-width="2" stroke-linecap="round"><path d="M 99 15 v 85"></path></g></svg>');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position-y: 0.7rem;
   margin-right: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 1.5rem;
+
 `;
 
 /* style the header with a solid background, to visually hide the pattern included on the container */
@@ -83,11 +142,19 @@ export const Action = styled.h2`
   letter-spacing: 0.015rem;
 `;
 
-/* display the options in a flex column */
+/* display the options in a flex column
+! cap the height of the containers allowing for vertical scroll
+style the scrollbar to be hidden from sight
+*/
 export const Options = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0.25rem 0 2rem;
+  margin: 0.25rem 0 0;
+  overflow-y: scroll;
+  height: 400px;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 `;
 
 /* round the corners of the right side

@@ -219,16 +219,95 @@ const f1Predictions = {
         5,
         16,
         33,
-        10
+        10,
+        3,
+        27,
+        8,
+        20,
+        55,
+        4,
+        11,
+        18,
+        7,
+        99,
+        26,
+        23,
+        63,
+        88
       ]
     },
     {
-      "name": "Who will finish in the highest position?",
+      "name": "Which driver will set the fastest lap?",
       "options": [
-        63,
-        88,
+        44,
+        77,
+        5,
+        16,
+        33,
+        10,
+        3,
+        27,
+        8,
+        20,
+        55,
+        4,
+        11,
+        18,
+        7,
         99,
+        26,
+        23,
+        63,
+        88
+      ]
+    },
+    {
+      "name": "Who will finish the race in the highest position?",
+      "options": [
+        3,
+        27,
+        8,
+        20,
+        55,
+        4,
         7
+      ]
+    },
+    {
+      "name": "Who will finish the race in the highest position?",
+      "options": [
+        11,
+        18,
+        99,
+        26,
+        23,
+        63,
+        88
+      ]
+    },
+    {
+      "name": "Which driver will be the first to reture?",
+      "options": [
+        44,
+        77,
+        5,
+        16,
+        33,
+        10,
+        3,
+        27,
+        8,
+        20,
+        55,
+        4,
+        11,
+        18,
+        7,
+        99,
+        26,
+        23,
+        63,
+        88
       ]
     }
   ]
