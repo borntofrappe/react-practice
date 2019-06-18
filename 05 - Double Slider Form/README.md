@@ -1,4 +1,4 @@
-# Double Slider Sign In/ Sign Up Form
+# Double Slider Form
 
 ## Links
 

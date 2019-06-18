@@ -1,4 +1,4 @@
-# React Timer
+# Timer Application
 
 Proud project [right here](https://codepen.io/borntofrappe/full/dwVZRQ), live on Codepen. Styled and animated!
 

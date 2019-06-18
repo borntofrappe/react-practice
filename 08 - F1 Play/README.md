@@ -1,4 +1,4 @@
-# React Play
+# F1 Play
 
 ## [Live Demo](https://codepen.io/borntofrappe/full/dBpVbB)
 

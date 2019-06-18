@@ -1,4 +1,4 @@
-# React Watch
+# SVG Watch
 
 Proud, and live!, pen [right here](https://codepen.io/borntofrappe/full/ebRVJd).
 

@@ -1,4 +1,4 @@
-# React F1 Quiz
+# F1 Quiz
 
 UI designed [right here](https://codepen.io/borntofrappe/pen/GLrXPR).
 

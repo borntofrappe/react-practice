@@ -1,4 +1,4 @@
-# React Podcast App
+# FreeCodeCamp Podcast App
 
 Link to the proud UI [right here on codepen](https://codepen.io/borntofrappe/pen/YdWpXN). Starting point for the application.
 
