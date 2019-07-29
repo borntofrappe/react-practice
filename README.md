@@ -15,4 +15,4 @@ This repo was originally meant to produce 30+ projects using the React framework
 |06 - [F1 Quiz](https://codepen.io/borntofrappe/full/pBeMzz)|Test your knowledge of an F1 grand prix.|styled-components|
 |07 - [Tickets Booking App](https://codepen.io/borntofrappe/full/byqqKY)|Reserve seats in an hypothetical movie theater|theme, styled-components, grid|
 |08 - [F1 Play](https://codepen.io/borntofrappe/full/dBpVbB)|Predict a few results for an upcoming F1 race.|carousel, styled-components|
-|09 - [Books by Title]()|Fetch books from the openlibrary API and display them through SVG elements.|hooks, lazy loading|
+|09 - [Books by Title](https://codepen.io/borntofrappe/full/JgWdZd)|Fetch books from the openlibrary API and display them through SVG elements.|useState, useRef|
