@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  background: #101011;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  /* center the .app container horizontally */
+  display: flex;
+  justify-content: center;
+}
