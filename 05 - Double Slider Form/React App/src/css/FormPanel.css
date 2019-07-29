@@ -1,0 +1,21 @@
+/* expand the first half to cover twice the space of the second half */
+.FormPanel {
+  flex-grow: 2;
+  /* remove the border radius for the corners matching the container */
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.FormPanel button {
+  background: var(--theme);
+  color: var(--theme-two);
+}
+
+/*
+on smaller viewports remove the border radius
+*/
+@media (max-width: 650px) {
+  .FormPanel {
+    border-radius: 0;
+  }
+}

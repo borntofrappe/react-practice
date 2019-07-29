@@ -2,6 +2,10 @@
 
 This repo was originally meant to produce 30+ projects using the React framework, in a bit more than a month. It is still scheduled to achieve the same goal, but with a much looser deadline.
 
+## Updates
+
+- 'Removed package files and created a similar organization for every project. A **React App** folder describes the **src** and **public** folder for each project.' 29/07/2019
+
 ## Projects
 
 |Name|Goal|Keyword|
