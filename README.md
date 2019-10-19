@@ -22,3 +22,4 @@ In the future I might revisit the first ten projects and update their structure 
 | 07 - [Tickets Booking App](https://codepen.io/borntofrappe/full/byqqKY)      | Reserve seats in an hypothetical movie theater                                  | theme, styled-components, grid       |
 | 08 - [F1 Play](https://codepen.io/borntofrappe/full/dBpVbB)                  | Predict a few results for an upcoming F1 race.                                  | carousel, styled-components          |
 | 09 - [Books by Title](https://codepen.io/borntofrappe/full/JgWdZd)           | Fetch books from the openlibrary API and display them through SVG elements.     | useState, useRef                     |
+| 10 - Concentration                                                           | Create a memory-based game in which cards are flipped and matched in pairs.     | useState, useRef                     |
