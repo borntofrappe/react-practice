@@ -1,5 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes} from 'styled-components';
+
+const pair = keyframes`
+    25% {
+        transform: rotateZ(-5deg);
+    }
+    75% {
+        transform: rotateZ(5deg);
+    }
+`;
 
 const Article = styled.article`
     position: relative;
@@ -13,6 +22,10 @@ const Article = styled.article`
 
     &.flip {
         transform: perspective(800px) rotateY(180deg);
+    }
+
+    &.paired {
+        animation: ${pair} 0.25s 1s ease-in-out 2 alternate;
     }
 `;
 

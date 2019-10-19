@@ -3,6 +3,7 @@ import styled from 'styled-components';
 	// import the function creating the deck and the components describing the application
 import { stackDeck } from './utils.js';
 import { useState } from 'react';
+
 import Card from './Card';
 import Victory from './Victory';
 
@@ -18,8 +19,9 @@ const Deck = styled.main`
   justify-content: center;
 `;
 
+
 function App() {
-  const cards = 4;
+  const cards = 16;
   const [deck, setDeck] = useState(stackDeck(cards));
   const [victory, setVictory] = useState(false);
 
