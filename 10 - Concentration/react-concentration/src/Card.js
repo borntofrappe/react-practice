@@ -24,11 +24,11 @@ const Front = styled.div`
     height: 100%;
     border-radius: inherit;
     backface-visibility: hidden;
-    border: 0.75rem solid hsl(340, 70%, 50%);
+    border: 0.75rem solid hsl(205, 75%, 50%);
     background: hsl(0, 0%, 100%);
     pointer-events: none;
-    background: url('data:image/svg+xml;utf8,<svg opacity="0.1" xmlns="http://www.w3.org/2000/svg" width="480" height="440" viewBox="0 0 240 220" stroke="hsl(340, 70%, 50%)" stroke-width="20" stroke-linejoin="round" stroke-linecap="round" fill="none"><g transform="translate(120 110) rotate(-35)"><path id="a" d="M50-22.5h-60 25a45 45 0 010 90h-75a45 45 0 010-90"/><use transform="scale(-1)" href="%23a"/></g></svg>'),
-            hsl(0, 0%, 100%);
+    background: url('data:image/svg+xml;utf8,<svg opacity="0.1" xmlns="http://www.w3.org/2000/svg" width="480" height="440" viewBox="0 0 240 220" stroke="hsl(205, 75%, 50%)" stroke-width="15" stroke-linejoin="round" stroke-linecap="round" fill="none"><g transform="translate(120 110) rotate(-30)"><ellipse id="a" cx="0" cy="0" rx="40" ry="100"/><use transform="rotate(60)" href="%23a"/><use transform="rotate(120)" href="%23a"/><circle stroke="none" fill="hsl(205, 75%, 50%)" cx="0" cy="0" r="20" /></g></svg>'),
+        hsl(0, 0%, 100%);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: 50% 50%;
@@ -45,11 +45,11 @@ const Back = styled.div`
     height: 100%;
     border-radius: inherit;
     backface-visibility: hidden;
-    border: 0.75rem solid hsl(340, 70%, 50%);
+    border: 0.75rem solid hsl(205, 75%, 50%);
     background: hsl(0, 0%, 100%);
     pointer-events: none;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200"><defs><path id="a" d="M0-50L50 0 0 50-50 0z" stroke="none"/><g id="b"><use href="%23a" fill="hsl(340, 70%, 50%)"/><use href="%23a" transform="scale(.8)" fill="hsl(345, 90%, 65%)"/><use href="%23a" transform="scale(.6)" fill="hsl(0, 90%, 60%)"/><use href="%23a" transform="scale(.4)" fill="hsl(30, 80%, 70%)"/><use href="%23a" transform="scale(.2)" fill="hsl(50, 95%, 80%)"/></g></defs><use href="%23b"/><use href="%23b" x="100"/><use href="%23b" x="100" y="100"/><use href="%23b" y="100"/><use href="%23b" x="50" y="50"/></svg>'),
-            hsl(0, 0%, 100%);
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200"><defs><path id="a" d="M0-50L50 0 0 50-50 0z" stroke="none"/><g id="b"><use href="%23a" fill="hsl(205, 75%, 50%)"/><use href="%23a" transform="scale(.8)" fill="hsl(205, 90%, 60%)"/><use href="%23a" transform="scale(.6)" fill="hsl(210, 80%, 50%)"/><use href="%23a" transform="scale(.4)" fill="hsl(190, 80%, 65%)"/><use href="%23a" transform="scale(.2)" fill="hsl(180, 95%, 85%)"/></g></defs><use href="%23b"/><use href="%23b" x="100"/><use href="%23b" x="100" y="100"/><use href="%23b" y="100"/><use href="%23b" x="50" y="50"/></svg>'),
+        hsl(0, 0%, 100%);
     background-size: 25%;
     transform: rotateY(180deg);
 `;
@@ -70,13 +70,16 @@ const Button = styled.button`
     border-radius: inherit;
 `;
 
-function Card({ card }) {
-
-    const { value, isFlipped, isPaired } = card;
+function Card({ card, flipCard }) {
+    const { value, id, isFlipped, isPaired } = card;
     let className = 'card';
-    if(isFlipped) {
+    if(isFlipped && !isPaired) {
         className += ' flip';
     }
+    if(isPaired) {
+        className += ' paired';
+    }
+
     return(
     <Article className={className}>
         <Front className="face front">
@@ -85,7 +88,7 @@ function Card({ card }) {
             </Value>
         </Front>
         <Back className="face back"></Back>
-        <Button aria-label="Flip card"></Button>
+        <Button onClick={() => flipCard(id)} disabled={isPaired} aria-label="Flip card"></Button>
     </Article>
     );
 }

@@ -59,7 +59,7 @@ export function stackDeck(cards) {
 		const index = randomUpTo(length);
 		const card = {
 			value,
-			isFlipped: false,
+			isFlipped: true,
 			isPaired: false,
 			id: Math.random(),
 		};
