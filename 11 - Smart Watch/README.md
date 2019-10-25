@@ -1,4 +1,4 @@
-# Smart Watch
+# [Smart Watch](https://codepen.io/borntofrappe/full/KKKqzJa)
 
 ## Goal
 
@@ -10,13 +10,13 @@ This project is inspired by the portable device from a few titles of the Pokemon
 
 The actual device has several gadgets, but I’d like to focus on the following:
 
--   digital watch
+-   [x] digital watch
 
 -   calculator
 
--   counter
+-   [x] counter
 
--   analog watch
+-   [x] analog watch
 
 I plan to develop these five applications, but the beauty of using a component-based approach means that the watch is ultimately expand-able, and adding a new feature is a matter of adding a dedicated component.
 
@@ -27,3 +27,11 @@ In the **res** folder you find the markup and stylesheet developed for each inde
 ## Development
 
 It is worth mentioning that I'm developing the same concept with Svelte. For reference, you can find the source code [here](https://github.com/borntofrappe/svelte-tutorial/tree/master/Smart%20Watch).
+
+## Reading List
+
+While researching hooks and how to implement the desired functionality, I came upon two articles worth a thorough read:
+
+-   [https://overreacted.io/a-complete-guide-to-useeffect/](https://overreacted.io/a-complete-guide-to-useeffect/)
+
+-   [Making setInterval Declarative with React Hooks](https://overreacted.io/making-setinterval-declarative-with-react-hooks/)

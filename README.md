@@ -23,4 +23,4 @@ In the future I might revisit the first ten projects and update their structure 
 | 08 - [F1 Play](https://codepen.io/borntofrappe/full/dBpVbB)                  | Predict a few results for an upcoming F1 race.                                  | carousel, styled-components               |
 | 09 - [Books by Title](https://codepen.io/borntofrappe/full/JgWdZd)           | Fetch books from the openlibrary API and display them through SVG elements.     | useState, useRef                          |
 | 10 - [Concentration](https://codepen.io/borntofrappe/full/rNNWGMZ)           | Create a memory-based game in which cards are flipped and matched in pairs.     | useState, styled-components, react-spring |
-| 10 - Smart Watch                                                             | Create a series of independent applications for a hypothetical smart watch      | useState, react router                    |
+| 10 - [Smart Watch](https://codepen.io/borntofrappe/pen/KKKqzJa)              | Create a series of independent applications for a hypothetical smart watch      | useState, useRef, useEffect               |

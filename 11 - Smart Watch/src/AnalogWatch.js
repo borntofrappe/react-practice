@@ -1,5 +1,30 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+/* this custom hook is straight copy-pased from Dan Abramov
+he explains the approach in these articles, which I still need to read
+https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+https://overreacted.io/a-complete-guide-to-useeffect/
+*/
+function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+}
+
 function AnalogWatch() {
     // initialize two stateful variables to describe the hours and minutes
     const now = new Date();
@@ -17,7 +42,8 @@ function AnalogWatch() {
     }, [hours, minutes]);
 
     // update the stateful variables at an interval
-    setInterval(() => {
+
+    useInterval(() => {
         const date = new Date();
         setHours(date.getHours());
         setMinutes(date.getMinutes());
@@ -46,12 +72,12 @@ function AnalogWatch() {
                     <use href="#dial-support" transform="scale(-1 1)"></use>
                 </g>
 
-                <g fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="4">
+                <g fill="none" stroke="currentColor" strokeLinecap="square" strokeWidth="4">
                     <g transform="rotate(0)" ref={hoursHands}>
-                        <path opacity="0.5" d="M 0 0 v -15" stroke-width="4"></path>
+                        <path opacity="0.5" d="M 0 0 v -15" strokeWidth="4"></path>
                     </g>
                     <g transform="rotate(0)" ref={minutesHands}>
-                        <path d="M 0 0 v -30" stroke-width="2.5"></path>
+                        <path d="M 0 0 v -30" strokeWidth="2.5"></path>
                     </g>
                 </g>
             </g>

@@ -113,7 +113,7 @@ function Counter() {
                     </g>
                 </g>
             </svg>
-            <CounterButton onClick={() => setCount(prev => prev > 9999 ? prev + 1 : prev)}>
+            <CounterButton onClick={() => setCount(prev => prev < 9999 ? prev + 1 : prev)}>
                 <svg viewBox="0 0 100 100" width="35" height="35">
                     <g transform="translate(50 50)">
                         <g fill="none" stroke="currentColor" strokeWidth="20">
