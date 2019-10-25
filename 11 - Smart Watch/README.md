@@ -14,14 +14,16 @@ The actual device has several gadgets, but I’d like to focus on the following:
 
 -   calculator
 
--   memo pad
-
 -   counter
 
 -   analog watch
 
 I plan to develop these five applications, but the beauty of using a component-based approach means that the watch is ultimately expand-able, and adding a new feature is a matter of adding a dedicated component.
 
-## UI
+## Design
 
-In the **res** folder you find the markup and stylesheet recreating the design of the smart watch from the Pokemon series. I'd like to include a more entertaining background, perhaps with a repeating pattern and SVG syntax in a future update.
+In the **res** folder you find the markup and stylesheet developed for each independent application. I spent a considerable amount of time creating the desired appearance with SVG syntax.
+
+## Development
+
+It is worth mentioning that I'm developing the same concept with Svelte. For reference, you can find the source code [here](https://github.com/borntofrappe/svelte-tutorial/tree/master/Smart%20Watch).
