@@ -22,7 +22,6 @@ function DigitalWatch() {
         m1.current.setAttribute('href', `#${zeroPadded(minutes)[1]}`);
     }, [hours, minutes]);
 
-
     // update the stateful variables at an interval
     setInterval(() => {
         const date = new Date();

@@ -1,12 +1,14 @@
 import React from 'react';
 import DigitalWatch from './DigitalWatch.js';
+import Counter from './Counter.js';
 
 function App() {
   return (
     <div className="Watch">
       <div className="Display">
         <main className="Screen">
-          <DigitalWatch />
+          {/* <DigitalWatch /> */}
+          <Counter />
         </main>
       </div>
       <div className="Controls">
