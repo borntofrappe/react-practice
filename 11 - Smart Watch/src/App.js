@@ -1,11 +1,12 @@
 import React from 'react';
+import DigitalWatch from './DigitalWatch.js';
 
-function Watch() {
+function App() {
   return (
     <div className="Watch">
       <div className="Display">
-        <main class="Screen">
-          {/* include the gadgets here */}
+        <main className="Screen">
+          <DigitalWatch />
         </main>
       </div>
       <div className="Controls">
@@ -16,4 +17,4 @@ function Watch() {
   );
 }
 
-export default Watch;
+export default App;
