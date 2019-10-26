@@ -12,7 +12,7 @@ The actual device has several gadgets, but I’d like to focus on the following:
 
 -   [x] digital watch
 
--   calculator
+-   [ ] calculator
 
 -   [x] counter
 
@@ -27,11 +27,3 @@ In the **res** folder you find the markup and stylesheet developed for each inde
 ## Development
 
 It is worth mentioning that I'm developing the same concept with Svelte. For reference, you can find the source code [here](https://github.com/borntofrappe/svelte-tutorial/tree/master/Smart%20Watch).
-
-## Reading List
-
-While researching hooks and how to implement the desired functionality, I came upon two articles worth a thorough read:
-
--   [https://overreacted.io/a-complete-guide-to-useeffect/](https://overreacted.io/a-complete-guide-to-useeffect/)
-
--   [Making setInterval Declarative with React Hooks](https://overreacted.io/making-setinterval-declarative-with-react-hooks/)
