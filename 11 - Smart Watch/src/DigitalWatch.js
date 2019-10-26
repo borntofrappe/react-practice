@@ -1,5 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { zeroPadded } from './utils.js';
+import styled, { keyframes } from 'styled-components';
+
+const blink = keyframes`
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+`;
+
+const Colon = styled.g`
+    animation: ${blink} 1s step-end infinite;
+`
 
 function DigitalWatch() {
     // initialize two stateful variables to describe the hours and minutes
@@ -67,10 +81,10 @@ function DigitalWatch() {
                         <use href="#0" ref={m1}></use>
                     </g>
                 </g>
-                <g style={{ animation: 'blink 1s step-end infinite' }} transform="translate(50 0)">
+                <Colon transform="translate(50 0)">
                     <use href="#square" y="-10"></use>
                     <use href="#square" y="10"></use>
-                </g>
+                </Colon>
             </g>
             <g transform="translate(25 100) scale(0.45)">
                 <g opacity="0.35" fill="currentColor" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
