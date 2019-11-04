@@ -37,3 +37,9 @@ var element = React.createElement(
 ```
 
 I've become rather familiar with JSX's own syntax, but thought it neat to dispose of the convenience, for once, and try to experiment with react's create method.
+
+## Modern React
+
+This version takes advantage of Babel and JSX syntax. It is eerily similar to the first effort, but this is mainly due to the simplicity of the component. On top of this, JSX is exactly an abstraction which allows to make due without `React.createElement`, and this project proves exactly that.
+
+By understanding how Babel compiles from JSX to the create method, it is possible to better understand the requirements of curly braces to include JavaScript code, or even the necessity of expressions within those curly braces, not statements.

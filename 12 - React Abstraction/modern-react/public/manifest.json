@@ -1,0 +1,8 @@
+{
+    "short_name": "React JSX",
+    "name": "Create a reusable component with JSX",
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+}
