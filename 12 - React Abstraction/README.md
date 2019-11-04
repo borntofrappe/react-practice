@@ -1,4 +1,4 @@
-# React Abstraction(s)
+# [React Abstraction(s)](https://codepen.io/collection/nkGRYO/)
 
 ## Goal
 
@@ -38,7 +38,7 @@ var element = React.createElement(
 
 I've become rather familiar with JSX's own syntax, but thought it neat to dispose of the convenience, for once, and try to experiment with react's create method.
 
-## Modern React
+## [JSX](https://codepen.io/borntofrappe/full/yLLvRYp)
 
 This version takes advantage of Babel and JSX syntax. It is eerily similar to the first effort, but this is mainly due to the simplicity of the component. On top of this, JSX is exactly an abstraction which allows to make due without `React.createElement`, and this project proves exactly that.
 
