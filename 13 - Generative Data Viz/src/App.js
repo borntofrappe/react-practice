@@ -24,15 +24,13 @@ const Link = styled.a`
 
 function App() {
   const { stream, twitter } = links;
-  const data = getData(10);
 
+  // pass the array describing the data to the Visualization component
+  const data = getData(20);
   return (
     <Root>
-      <Heading>Generative Data Viz</Heading>
-      <p>Inspired by <Link href={stream}>this insightful stream</Link>
-        from <Link href={twitter.jason}>Jason Lengstorf</Link>
-        and <Link href={twitter.shirley}>Shirley Wu</Link>.
-      </p>
+      <Heading>Generative Data Viz <span role="img">⚛️</span></Heading>
+      <p>Inspired by <Link href={stream}>this insightful stream</Link> from <Link href={twitter.jason}>Jason Lengstorf</Link> and <Link href={twitter.shirley}>Shirley Wu</Link>.</p>
       <Visualization data={data} />
     </Root>
   );

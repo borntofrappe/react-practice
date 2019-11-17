@@ -20,7 +20,7 @@ const adjective = [
     'playful',
     'charismatic',
   ];
-  const noun = ['story', 'novel', 'movie', 'series', 'book', 'tale', 'history'];
+  const noun = ['story', 'novel', 'series', 'book', 'tale', 'history', 'journey', 'discovery'];
   const color = [
     'crimson',
     'coral',
@@ -48,25 +48,14 @@ const adjective = [
     'panther',
   ];
 
-  // array describing categorical values and most importantly their color values
-  // ! this is a task better solved by a color scale
+  // array describing the categories modifying the color used in the bucket
   const topics = [
-    {
-      name: 'romance',
-      color: 'hsl(0, 80%, 60%)',
-    },
-    {
-      name: 'comedy',
-      color: 'hsl(90, 80%, 50%)',
-    },
-    {
-      name: 'tragedy',
-      color: 'hsl(180, 80%, 60%)',
-    },
-    {
-      name: 'other',
-      color: 'hsl(270, 80%, 60%)',
-    },
+      'romance',
+      'comedy',
+      'tragedy',
+      'mystery',
+      'fantasy',
+      'biography',
   ];
 
   // utility function returning an integer up to an optional maximum
