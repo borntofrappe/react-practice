@@ -1,6 +1,6 @@
 # Generative Data Viz
 
-<!-- ## [Live Demo]() -->
+## [Live Demo](https://codepen.io/borntofrappe/full/qBBLNOm)
 
 ## Goal
 
