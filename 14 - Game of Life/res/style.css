@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+/* center the canvas and button in a column */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: hsl(0, 0%, 90%);
+    background: hsl(0, 0%, 10%);
+}
+body > * + * {
+    margin-top: 1.5rem;
+}
+
+/* styling properties to pretty up the button */
+button {
+    font-family: monospace;
+    font-size: 1.2rem;
+    color: inherit;
+    background: none;
+    padding: 0.25rem 1rem;
+    border: 1.5px solid currentColor;
+}
