@@ -16,7 +16,10 @@ body {
 body > * + * {
     margin-top: 1.5rem;
 }
-
+/* by giving a background to the canvas you can draw only the "alive" cells and have the contrast highlight the difference */
+canvas {
+    background: hsl(0, 0%, 20%);
+}
 /* styling properties to pretty up the button */
 button {
     font-family: monospace;
