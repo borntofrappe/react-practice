@@ -1,13 +1,32 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+/* center the canvas and button in a column */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: hsl(0, 0%, 90%);
+    background: hsl(0, 0%, 10%);
+    font-family: monospace;
+}
+body > * + * {
+    margin-top: 1.5rem;
+}
+/* by giving a background to the canvas you can draw only the "alive" cells and have the contrast highlight the difference */
+canvas {
+    background: hsl(0, 0%, 20%);
+}
+/* styling properties to pretty up the button */
+button {
+    font-family: inherit;
+    font-size: 1.2rem;
+    color: inherit;
+    background: none;
+    padding: 0.25rem 1rem;
+    border: 1.5px solid currentColor;
 }
