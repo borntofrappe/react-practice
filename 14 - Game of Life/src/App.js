@@ -101,9 +101,26 @@ function App() {
     toggleAnimation();
   }
 
-  // to update the canvas, useEffect allows to fire side effects when one of the variables in the dependencies array changes
-  // useRef is used to retriefve the canvas element
+  // useRef is used to retrieve the canvas element
   const canvasRef = useRef();
+  function handleClick({ pageX: x, pageY: y }) {
+    const { left, top } = canvasRef.current.getBoundingClientRect();
+    const column = Math.floor((x - left) / size);
+    const row = Math.floor((y - top) / size);
+
+    setCells(previousCells => previousCells.map(cell => {
+      if(cell.column === column && cell.row === row) {
+        return ({
+          column,
+          row,
+          isAlive: !cell.isAlive,
+        })
+      }
+      return cell;
+    }));
+  }
+
+  // to update the canvas, useEffect allows to fire side effects when one of the variables in the dependencies array changes
   useEffect(() => {
     // draw one square for each "alive" cell
     const { current: canvas } = canvasRef;
@@ -123,7 +140,7 @@ function App() {
 
   return (
     <>
-      <canvas ref={canvasRef} width={width} height={height}></canvas>
+      <canvas onClick={handleClick} ref={canvasRef} width={width} height={height}></canvas>
       <h1>Generation: {gen}</h1>
       <details open>
         <summary>Controls</summary>
