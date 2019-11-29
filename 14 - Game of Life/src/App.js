@@ -7,9 +7,9 @@ function App() {
   const size = 20;
   const width = columns * size;
   const height = rows * size;
-
   // retrieve the possible patterns
   const patterns = getPatterns();
+
 
   // in the state keep track of the 1d array describing the cells
   // the columns and rows are not meant to change
@@ -21,11 +21,13 @@ function App() {
   // stateful variables to toggle between playing and pausing the animation
   const [isAnimating, setIsAnimating] = useState(false);
   const toggleAnimation = () => setIsAnimating(!isAnimating);
+  const [requestID, setRequestID] = useState(null);
+  const [timeoutID, setTimeoutID] = useState(null);
+
 
   // function updating the cells by moving 1 generation onward
   function updateCells() {
     setGen(gen => gen + 1);
-
     // update the boolean isAlive according to the existing neighbors and the previous state
     setCells(previousCells => previousCells.map(({ column, row, isAlive}, index, array) => {
       const neighbors = [
@@ -63,12 +65,11 @@ function App() {
     }));
   }
 
-  // reset the grid with a new random pattern
+  // reset the grid with a new random set of cells
   function resetCells() {
     setGen(0);
     setCells(createGrid().cells)
   }
-
 
   // set the grid to match a specific pattern
   function setPattern(key) {
@@ -76,9 +77,6 @@ function App() {
     setCells(getPattern(key).cells);
   }
 
-
-  const [requestID, setRequestID] = useState(null);
-  const [timeoutID, setTimeoutID] = useState(null);
   // animate the cells through request animation frame
   function animateCells() {
     const timeout = setTimeout(() => {
@@ -86,11 +84,11 @@ function App() {
       const id = requestAnimationFrame(animateCells);
       setRequestID(id);
       clearTimeout(timeoutID);
-    }, 500);
+    }, 250);
     setTimeoutID(timeout);
   }
 
-
+  // function toggling the animation by either calling the animating function or clearing the existing animation frame
   function handleAnimation() {
     if(!isAnimating) {
       animateCells();
@@ -103,11 +101,15 @@ function App() {
 
   // useRef is used to retrieve the canvas element
   const canvasRef = useRef();
+
+  // function following a click on the canvas
   function handleClick({ pageX: x, pageY: y }) {
+    // find the column and row considering the distance of the element from the left and top side
     const { left, top } = canvasRef.current.getBoundingClientRect();
     const column = Math.floor((x - left) / size);
     const row = Math.floor((y - top) / size);
 
+    // toggle the isAlive boolean of the cell being clicked
     setCells(previousCells => previousCells.map(cell => {
       if(cell.column === column && cell.row === row) {
         return ({
@@ -140,8 +142,16 @@ function App() {
 
   return (
     <>
-      <canvas onClick={handleClick} ref={canvasRef} width={width} height={height}></canvas>
+      <canvas
+        onClick={handleClick}
+        ref={canvasRef}
+        width={width}
+        height={height}>
+      </canvas>
+
       <h1>Generation: {gen}</h1>
+      {/* nest the buttons to animate the canvas in a details element
+      opened by default */}
       <details open>
         <summary>Controls</summary>
         <button onClick={updateCells}>step</button>
@@ -150,9 +160,13 @@ function App() {
           {isAnimating ? 'pause' : 'animate'}
         </button>
       </details>
+
+      {/* add one button for each hard-coded pattern in a second details element */}
       <details>
         <summary>Neat patterns</summary>
-       {patterns.map(pattern => <button key={pattern} onClick={() => setPattern(pattern)}>{pattern}</button>)}
+        {patterns.map(pattern => (
+        <button key={pattern} onClick={() => setPattern(pattern)}>{pattern}</button>
+        ))}
       </details>
     </>
   );

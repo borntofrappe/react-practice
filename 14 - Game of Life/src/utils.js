@@ -13,7 +13,7 @@ export const createGrid = () => {
         .map((d, row) => ({
         column,
         row,
-        isAlive: Math.random() > 0.5,
+        isAlive: Math.random() > 0.75,
         }))
     );
 
