@@ -1,17 +1,17 @@
 import React, { useState, useRef, useEffect} from 'react';
-import { getCells } from './utils'
+import { getCells, getPatterns, getPattern } from './utils'
 
 function App() {
-  // structure of the canvas
   const width = 400;
   const height = 400;
   const columns = 20;
   const rows = 20;
 
-  const [cells, setCells] = useState(getCells({columns, rows}));
+  const patterns = getPatterns();
+  const [cells, setCells] = useState(getCells());
 
   function resetCells() {
-    setCells(getCells({width, height, columns, rows}))
+    setCells(getCells())
   }
 
   function updateCells() {
@@ -28,7 +28,6 @@ function App() {
       ];
 
       const aliveNeighbors = neighbors.filter(cell => cell && cell.isAlive).length;
-
 
       if (isAlive && (aliveNeighbors <= 1 || aliveNeighbors >= 4)) {
         return ({
@@ -53,9 +52,16 @@ function App() {
   }
 
 
+  function animateCells() {
+    const timeout = setTimeout(() => {
+      updateCells();
+      requestAnimationFrame(animateCells);
+      clearTimeout(timeout);
+    }, 500);
+  }
+
   const ref = useRef();
   useEffect(() => {
-    console.log(cells);
     const { current: canvas } = ref;
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, width, height);
@@ -72,11 +78,18 @@ function App() {
     });
   }, [ref, cells]);
 
+  function setPattern(key) {
+    const pattern = getPattern(key);
+    setCells(pattern);
+  }
+
   return (
     <>
       <canvas ref={ref} width={width} height={height}></canvas>
       <button onClick={updateCells}>Step</button>
       <button onClick={resetCells}>Reset</button>
+      <button onClick={animateCells}>Animate</button>
+      <button onClick={() => setPattern(patterns[Math.floor(Math.random() * patterns.length)])}>Get Random Pattern</button>
     </>
   );
 }
