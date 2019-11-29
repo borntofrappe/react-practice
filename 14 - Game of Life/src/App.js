@@ -103,7 +103,7 @@ function App() {
   const canvasRef = useRef();
 
   // function following a click on the canvas
-  function handleClick({ pageX: x, pageY: y }) {
+  function handleClick({ clientX: x, clientY: y }) {
     // find the column and row considering the distance of the element from the left and top side
     const { left, top } = canvasRef.current.getBoundingClientRect();
     const column = Math.floor((x - left) / size);
