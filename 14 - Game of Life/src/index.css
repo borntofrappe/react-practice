@@ -3,32 +3,56 @@
     padding: 0;
     margin: 0;
 }
-/* center the canvas and button in a column */
 body {
     color: hsl(0, 0%, 90%);
     background: hsl(0, 0%, 10%);
     font-family: monospace;
 }
+
+/* display the elements in a horizontally centered column */
 #root {
-    min-height: 100vh;
+    max-width: 400px;
+    margin: 2rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 #root > * + * {
     margin-top: 1.5rem;
 }
+
 /* by giving a background to the canvas you can draw only the "alive" cells and have the contrast highlight the difference */
 canvas {
     background: hsl(0, 0%, 20%);
 }
-/* styling properties to pretty up the button */
+/* expand the width of the details to avoid the jump between opened and closed state */
+details {
+    width: 100%;
+}
+/* remove the default outline in favor of a border-left */
+details summary {
+    outline: none;
+    border-left: 4px solid transparent;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    padding: 0.1rem 0.2rem;
+}
+details summary:focus {
+    border-color: currentColor;
+}
+
+/* ghost buttons */
 button {
     font-family: inherit;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: inherit;
     background: none;
-    padding: 0.25rem 1rem;
-    border: 1.5px solid currentColor;
+    padding: 0.25rem 0.75rem;
+    border: 2px solid currentColor;
+    margin: 0.2rem;
+}
+button:hover,
+button:focus {
+    background: hsl(0, 0%, 90%);
+    color: hsl(0, 0%, 20%);
 }

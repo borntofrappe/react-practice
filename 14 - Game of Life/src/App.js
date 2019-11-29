@@ -1,20 +1,32 @@
 import React, { useState, useRef, useEffect} from 'react';
-import { getCells, getPatterns, getPattern } from './utils'
+import { createGrid, getPatterns, getPattern } from './utils'
 
 function App() {
-  const width = 400;
-  const height = 400;
-  const columns = 20;
-  const rows = 20;
+  // retrieve a first grid
+  const { columns, rows, cells: initialCells } = createGrid();
+  const size = 20;
+  const width = columns * size;
+  const height = rows * size;
 
+  // retrieve the possible patterns
   const patterns = getPatterns();
-  const [cells, setCells] = useState(getCells());
 
-  function resetCells() {
-    setCells(getCells())
-  }
+  // in the state keep track of the 1d array describing the cells
+  // the columns and rows are not meant to change
+  const [cells, setCells] = useState(initialCells);
 
+  // stateful variable to keep track of the generation's number
+  const [gen, setGen] = useState(0);
+
+  // stateful variables to toggle between playing and pausing the animation
+  const [isAnimating, setIsAnimating] = useState(false);
+  const toggleAnimation = () => setIsAnimating(!isAnimating);
+
+  // function updating the cells by moving 1 generation onward
   function updateCells() {
+    setGen(gen => gen + 1);
+
+    // update the boolean isAlive according to the existing neighbors and the previous state
     setCells(previousCells => previousCells.map(({ column, row, isAlive}, index, array) => {
       const neighbors = [
         array.find(cell => cell.column === column - 1 && cell.row === row - 1),
@@ -51,45 +63,80 @@ function App() {
     }));
   }
 
+  // reset the grid with a new random pattern
+  function resetCells() {
+    setGen(0);
+    setCells(createGrid().cells)
+  }
 
+
+  // set the grid to match a specific pattern
+  function setPattern(key) {
+    setGen(0);
+    setCells(getPattern(key).cells);
+  }
+
+
+  const [requestID, setRequestID] = useState(null);
+  const [timeoutID, setTimeoutID] = useState(null);
+  // animate the cells through request animation frame
   function animateCells() {
     const timeout = setTimeout(() => {
       updateCells();
-      requestAnimationFrame(animateCells);
-      clearTimeout(timeout);
+      const id = requestAnimationFrame(animateCells);
+      setRequestID(id);
+      clearTimeout(timeoutID);
     }, 500);
+    setTimeoutID(timeout);
   }
 
-  const ref = useRef();
+
+  function handleAnimation() {
+    if(!isAnimating) {
+      animateCells();
+    } else {
+      clearTimeout(timeoutID);
+      cancelAnimationFrame(requestID);
+    }
+    toggleAnimation();
+  }
+
+  // to update the canvas, useEffect allows to fire side effects when one of the variables in the dependencies array changes
+  // useRef is used to retriefve the canvas element
+  const canvasRef = useRef();
   useEffect(() => {
-    const { current: canvas } = ref;
+    // draw one square for each "alive" cell
+    const { current: canvas } = canvasRef;
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, width, height);
     cells.forEach(({ column, row, isAlive }) => {
       if(isAlive) {
-        const w = width / columns;
-        const h = height / rows;
-        const x = column * w;
-        const y = row * h;
+        const x = column * size;
+        const y = row * size;
         context.fillStyle = 'hsl(0, 0%, 80%)';
-        context.fillRect(x, y, w, h);
+        context.fillRect(x, y, size, size);
         context.fill();
       }
     });
-  }, [ref, cells]);
+  }, [canvasRef, cells, height, width]);
 
-  function setPattern(key) {
-    const pattern = getPattern(key);
-    setCells(pattern);
-  }
 
   return (
     <>
-      <canvas ref={ref} width={width} height={height}></canvas>
-      <button onClick={updateCells}>Step</button>
-      <button onClick={resetCells}>Reset</button>
-      <button onClick={animateCells}>Animate</button>
-      <button onClick={() => setPattern(patterns[Math.floor(Math.random() * patterns.length)])}>Get Random Pattern</button>
+      <canvas ref={canvasRef} width={width} height={height}></canvas>
+      <h1>Generation: {gen}</h1>
+      <details open>
+        <summary>Controls</summary>
+        <button onClick={updateCells}>step</button>
+        <button onClick={resetCells}>reset</button>
+        <button onClick={handleAnimation}>
+          {isAnimating ? 'pause' : 'animate'}
+        </button>
+      </details>
+      <details>
+        <summary>Neat patterns</summary>
+       {patterns.map(pattern => <button key={pattern} onClick={() => setPattern(pattern)}>{pattern}</button>)}
+      </details>
     </>
   );
 }
