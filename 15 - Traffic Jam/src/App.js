@@ -1,6 +1,32 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import { data } from './data.js'
 import * as d3 from 'd3'
+import styled from 'styled-components'
+
+const Visualization = styled.div`
+  max-width: 500px;
+  width: 90vw;
+  margin: 1rem auto;
+
+  & * + * {
+    margin-top: 0.5rem;
+  }
+`
+
+const Message = styled.p`
+  font-size: 0.95rem;
+  line-height: 1.75;
+`
+
+const SVG = styled.svg`
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  text {
+    font-weight: bold;
+  }
+`
 
 function App() {
 
@@ -8,9 +34,9 @@ function App() {
   const height = 500
   const margin = {
     top: 20,
-    right: 50,
+    right: 25,
     bottom: 20,
-    left: 150,
+    left: 90,
   }
 
   // horizontally consider the values from the dataset
@@ -29,21 +55,36 @@ function App() {
     .scaleBand()
     .domain(dates)
     .range([0, height])
-    .padding(0.1)
+    .padding(0.2)
+
+  const parseTime = d3.timeParse('%e-%m-%Y')
+  const formatTime = d3.timeFormat('%a %e %b')
+
+
 
   return (
-    <div className="App">
-      <h1>Traffic Jam</h1>
-      <p>This graph highlights the accumulation of traffic in the region of Île-de-France in 2019. The recent strike caused a considerable increase over the expected, average value.</p>
+    <Visualization>
+      <Message>This graph highlights the accumulation of traffic in the region of Île-de-France in 2019. The recent strike caused a considerable increase over the expected, average value.</Message>
 
-      <svg viewBox={`0 0 ${width + (margin.left + margin.right)} ${height + (margin.top + margin.bottom)}`} width={width} height={height}>
+      <SVG viewBox={`0 0 ${width + (margin.left + margin.right)} ${height + (margin.top + margin.bottom)}`} width={width} height={height}>
+        <defs>
+          <linearGradient id="dash-gradient" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" x2="5" y1="0" y2="5">
+            <stop stopColor="hsl(40 , 90%, 50%)" offset="0.5"></stop>
+            <stop stopColor="hsl(45, 100%, 60%)" offset="0.5"></stop>
+          </linearGradient>
+        </defs>
         <g transform={`translate(${margin.left} ${margin.top})`}>
           {/* include one group for each data point, translating the shapes vertically and according to the y scale */}
           {
-          data.map(({date, value, average}, index) => <g key={date}>
+          data.map(({date, value, average}) => <g key={date}>
             <g transform={`translate(0 ${yScale(date)})`}>
-              {/* rectangle describing the value */}
-              <rect width={xScale(value)} height={yScale.bandwidth()} />
+              {/* rectangles describing the value */}
+              {
+              value > average
+              &&
+              <rect fill="url(#dash-gradient)" width={xScale(average)} height={yScale.bandwidth()} />
+              }
+              <rect opacity="0.7" fill={value > average ? 'hsl(40, 90%, 50%)' : 'hsl(220, 80%, 50%)'} width={xScale(value)} height={yScale.bandwidth()} />
               {/* text describing the increase */}
               <g transform={`translate(${xScale(value) + 5} ${yScale.bandwidth() / 2})`}>
                 <text textAnchor="start" dominantBaseline="middle">
@@ -58,7 +99,7 @@ function App() {
           - dates for the y axis */}
           {dates.map(date => <g key={date}>
               <g transform={`translate(0 ${yScale(date) + yScale.bandwidth() / 2})`}>
-                <text dominantBaseline="middle" x="-5" textAnchor="end">{date}</text>
+                <text dominantBaseline="middle" x="-5" textAnchor="end">{formatTime(parseTime(date))}</text>
               </g>
           </g>)
           }
@@ -72,8 +113,8 @@ function App() {
           </g>)
           }
         </g>
-      </svg>
-    </div>
+      </SVG>
+    </Visualization>
   );
 }
 
