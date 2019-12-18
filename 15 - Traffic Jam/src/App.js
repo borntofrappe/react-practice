@@ -1,7 +1,40 @@
-import React, {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import { data } from './data.js'
 import * as d3 from 'd3'
 import styled from 'styled-components'
+
+const Tooltip = styled.div`
+  position: absolute;
+  left: ${({left}) => `${left}px`};
+  top: ${({top}) => `${top}px`};
+  background: hsl(0, 0%, 100%);
+  padding: 0.5rem 0.8rem;
+  line-height: 2;
+  filter: drop-shadow(-5px 0 10px hsla(0, 0%, 0%, 0.1));
+  border-radius: 5px;
+  transform: translate(0%, -50%);
+
+  &:after {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    content: '';
+    background: inherit;
+    width: 10px;
+    height: 10px;
+    clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+  }
+
+  h1 {
+    font-size: 0.9rem;
+  }
+  p {
+    font-size: 0.8rem;
+  }
+`
 
 const Visualization = styled.div`
   max-width: 500px;
@@ -29,6 +62,7 @@ const SVG = styled.svg`
 `
 
 function App() {
+  const [selection, setSelection] = useState()
 
   const width = 500
   const height = 500
@@ -42,7 +76,6 @@ function App() {
   // horizontally consider the values from the dataset
   const maxValue = d3.max(data, d => d.value)
   const xTicks = d3.ticks(100, maxValue, 5)
-  console.log(xTicks)
   const xScale = d3
     .scaleLinear()
     .domain([0, maxValue])
@@ -59,12 +92,38 @@ function App() {
 
   const parseTime = d3.timeParse('%e-%m-%Y')
   const formatTime = d3.timeFormat('%a %e %b')
+  const formatDay = d3.timeFormat('%A')
 
+  const groupBars = useRef()
+  function highlightSelection(date, value, average) {
+    const bars = groupBars.current.querySelectorAll('rect.bar')
+    const selection = [...bars].find(bar => bar.getAttribute('id') === `bar-${date}`)
 
+    bars.forEach(bar => {bar.style.opacity = 0.7})
+    selection.style.opacity = 1
+
+    const { x, y, width: w, height: h } = selection.getBoundingClientRect()
+    setSelection({
+      x: x + w,
+      y: y + h / 2,
+      date,
+      value,
+      average
+    })
+  }
 
   return (
     <Visualization>
+      {selection &&
+        <Tooltip left={selection.x} top={selection.y}>
+          <h1>{formatTime(parseTime(selection.date))}</h1>
+          <p>{selection.value}km of traffic</p>
+          <p>This is {`${selection.value > selection.average ? '+' : ''}${Math.round((selection.value - selection.average) / selection.average * 100)}`}% in comparison to the average {formatDay(parseTime(selection.date))} ({selection.average} km)</p>
+        </Tooltip>
+      }
+
       <Message>This graph highlights the accumulation of traffic in the region of Île-de-France in 2019. The recent strike caused a considerable increase over the expected, average value.</Message>
+      <Message>Hover on the rectangles for more details.</Message>
 
       <SVG viewBox={`0 0 ${width + (margin.left + margin.right)} ${height + (margin.top + margin.bottom)}`} width={width} height={height}>
         <defs>
@@ -73,7 +132,7 @@ function App() {
             <stop stopColor="hsl(45, 100%, 60%)" offset="0.5"></stop>
           </linearGradient>
         </defs>
-        <g transform={`translate(${margin.left} ${margin.top})`}>
+        <g ref={groupBars} transform={`translate(${margin.left} ${margin.top})`}>
           {/* include one group for each data point, translating the shapes vertically and according to the y scale */}
           {
           data.map(({date, value, average}) => <g key={date}>
@@ -84,7 +143,7 @@ function App() {
               &&
               <rect fill="url(#dash-gradient)" width={xScale(average)} height={yScale.bandwidth()} />
               }
-              <rect opacity="0.7" fill={value > average ? 'hsl(40, 90%, 50%)' : 'hsl(220, 80%, 50%)'} width={xScale(value)} height={yScale.bandwidth()} />
+              <rect id={`bar-${date}`} className="bar" onMouseEnter={() => highlightSelection(date, value, average)} opacity="0.7" fill={value > average ? 'hsl(40, 90%, 50%)' : 'hsl(220, 80%, 50%)'} width={xScale(value)} height={yScale.bandwidth()} />
               {/* text describing the increase */}
               <g transform={`translate(${xScale(value) + 5} ${yScale.bandwidth() / 2})`}>
                 <text textAnchor="start" dominantBaseline="middle">
