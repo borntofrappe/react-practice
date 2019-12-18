@@ -1,4 +1,4 @@
-export const data = [
+const input = [
     {
       date: '16-12-2019',
       value: 628,
@@ -64,4 +64,12 @@ export const data = [
       value: 557,
       average: 280,
     },
-  ];
+];
+
+// prior to exporting the input data include the percentage change
+export const data = input.map(({ date, value, average}) => ({
+  date,
+  value,
+  average,
+  change: `${value > average ? '+' : ''}${Math.round((value - average) / average * 100)}`,
+}));

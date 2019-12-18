@@ -1,6 +1,6 @@
 {
     "short_name": "Traffic Jam",
-    "name": "Highlight the spike in traffic due to a strike from the transport sector in France.",
+    "name": "Highlight the change in traffic with a bar chart and a linear gradient.",
     "icons": [
         {
             "src": "favicon.ico",

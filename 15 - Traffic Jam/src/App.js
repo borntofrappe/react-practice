@@ -1,16 +1,18 @@
 import React, {useRef, useState, useLayoutEffect} from 'react'
 import { data } from './data.js'
-import * as d3 from 'd3'
+import { scaleLinear, scaleBand, max, ticks, timeParse, timeFormat } from 'd3'
 import styled from 'styled-components'
 
+/* absolute position the tooltip
+include a triangle pointing downwards with a pseudo element
+*/
 const Tooltip = styled.div`
   position: absolute;
   background: hsl(0, 0%, 100%);
   padding: 0.75rem 1rem;
-  filter: drop-shadow(0 5px 10px hsla(0, 0%, 0%, 0.2));
-  border-radius: 5px;
+  filter: drop-shadow(0 2px 2px hsla(0, 0%, 0%, 0.4));
   transform: translate(-50%, -100%);
-  transition: all 0.2s ease-in-out;
+  transition: all 0.25s ease-in-out;
 
   &:after {
     padding: 0;
@@ -35,6 +37,7 @@ const Tooltip = styled.div`
   }
 `
 
+// cap the width of the content
 const Visualization = styled.div`
   max-width: 500px;
   width: 90vw;
@@ -60,9 +63,16 @@ const SVG = styled.svg`
   }
 `
 
+const Link = styled.a`
+  color: inherit;
+  font-size: 0.9rem;
+`
+
 function App() {
+  // use a variable to describe the data point currently being selected
   const [selection, setSelection] = useState()
 
+  // dimensions setting up the visualization
   const width = 500
   const height = 500
   const margin = {
@@ -72,31 +82,37 @@ function App() {
     left: 110,
   }
 
-  // horizontally consider the values from the dataset
-  const maxValue = d3.max(data, d => d.value)
-  const xTicks = d3.ticks(100, maxValue, 5)
-  const xScale = d3
-    .scaleLinear()
+  // xScale: consider the `value` property, describing a continuous domain
+  const maxValue = max(data, d => d.value)
+
+  const xScale = scaleLinear()
     .domain([0, maxValue])
     .range([0, width])
     .nice()
 
-  // vertically set up an band scale
+  // to fabricate the x axis, create "five" ticks up to the maximum value
+  const xTicks = ticks(100, maxValue, 5)
+
+  // yScale: consider the dates as individual bands, occupying a fraction of the vertical space
+  // array used as a faux y axis as well, including one text element for each date
   const dates = data.map(({date}) => date)
-  const yScale = d3
-    .scaleBand()
+  const yScale = scaleBand()
     .domain(dates)
     .range([0, height])
     .padding(0.2)
 
-  const parseTime = d3.timeParse('%e-%m-%Y')
-  const formatTime = d3.timeFormat('%a %e %b')
-  const formatDay = d3.timeFormat('%A')
+  // to describe the input date in a desired format, first parse the given syntax to a date object
+  const parseTime = timeParse('%e-%m-%Y')
+  // for the y axis and the heading in the tooltip show 'Tue 12 Dec'
+  const formatTime = timeFormat('%a %e %b')
+  // for the description of the tooltip retrieve also the long format for the day
+  const formatDay = timeFormat('%A')
 
+  // update the position of the tooltip as the selection changes
   const tooltip = useRef()
-
   useLayoutEffect(() => {
     if(selection) {
+      // ! this seems less than optimal, but to position the tooltip retrieve the coordinates/dimensions of the selected rectangle
       const bar = document.querySelector(`#bar-${selection.date}`)
       const { x, y, width: w } = bar.getBoundingClientRect()
 
@@ -105,28 +121,31 @@ function App() {
     }
   }, [selection, tooltip])
 
-  function highlightSelection({date, value, average}) {
+  function highlightSelection({date, value, average, change}) {
     setSelection({
       date,
       value,
-      average
+      average,
+      change,
     })
   }
 
   return (
     <Visualization onMouseLeave={() => setSelection(null)}>
+      {/* show the tooltip if a rectangle is being hovered on */}
       {selection &&
         <Tooltip ref={tooltip}>
           <h1>{formatTime(parseTime(selection.date))}</h1>
           <p>{selection.value}km of traffic</p>
-          <p>This is <strong>{`${selection.value > selection.average ? '+' : ''}${Math.round((selection.value - selection.average) / selection.average * 100)}`}%</strong> in comparison to the average {formatDay(parseTime(selection.date))} ({selection.average} km)</p>
+          <p>This is <strong>{selection.change}%</strong> in comparison to the average {formatDay(parseTime(selection.date))} ({selection.average} km)</p>
         </Tooltip>
       }
 
-      <Message>This graph highlights the accumulation of traffic in the region of Île-de-France and for the month of December 2019. The strike begun on the 5th of December caused a considerable increase over the expected, average value.</Message>
+      <Message>This graph illustrates the accumulation of traffic in the region of <strong>Île-de-France</strong> and for the month of <strong>December 2019</strong>. The strike begun on the 5th of December caused a considerable increase over the expected, average value.</Message>
       <Message>Hover on the rectangles for more details.</Message>
 
       <SVG viewBox={`0 0 ${width + (margin.left + margin.right)} ${height + (margin.top + margin.bottom)}`} width={width} height={height}>
+        {/* userSpaceOnUse to have a gradient independent of the size of the shape using the gradient */}
         <defs>
           <linearGradient id="dash-gradient" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" x2="10" y1="0" y2="10">
             <stop stopColor="hsl(40 , 90%, 50%)" offset="0.5"></stop>
@@ -136,35 +155,37 @@ function App() {
         <g transform={`translate(${margin.left} ${margin.top})`}>
           {/* include one group for each data point, translating the shapes vertically and according to the y scale */}
           {
-          data.map(({date, value, average}) => <g key={date}>
+          data.map(({date, value, average, change}) => <g key={date}>
             <g transform={`translate(0 ${yScale(date)})`}>
-              {/* rectangles describing the value */}
+              {/* rectangles describing the value
+              the idea is to add a dashed variant for the rectangles describing an increase
+              by playing with the opacity of the solid shape included afterwards, the dashes will be covered by the solid using the same color
+              */}
               {
               value > average
               &&
               <rect fill="url(#dash-gradient)" width={xScale(average)} height={yScale.bandwidth()} />
               }
-              <rect id={`bar-${date}`} onMouseEnter={() => highlightSelection({date, value, average})} opacity={selection && selection.date === date ? 1 : 0.6} fill={value > average ? 'hsl(40, 90%, 50%)' : 'hsl(220, 80%, 50%)'} width={xScale(value)} height={yScale.bandwidth()} />
-              {/* text describing the increase */}
+              <rect
+                id={`bar-${date}`}
+                onMouseEnter={() => highlightSelection({date, value, average, change})}
+                opacity={selection && selection.date === date ? 1 : 0.6}
+                fill={value > average ? 'hsl(40, 90%, 50%)' : 'hsl(220, 80%, 50%)'}
+                width={xScale(value)}
+                height={yScale.bandwidth()} />
+
+              {/* text describing the change, to the right of the rectangles */}
               <g transform={`translate(${xScale(value) + 5} ${yScale.bandwidth() / 2})`}>
                 <text textAnchor="start" dominantBaseline="middle">
-                  {`${value > average ? '+' : ''}${Math.round((value - average) / average * 100)}`}%
+                  {change}%
                 </text>
               </g>
             </g>
           </g>)
           }
 
-          {/* makeshift axes
-          - dates for the y axis */}
-          {dates.map(date => <g key={date}>
-              <g transform={`translate(0 ${yScale(date) + yScale.bandwidth() / 2})`}>
-                <text dominantBaseline="middle" x="-10" textAnchor="end">{formatTime(parseTime(date))}</text>
-              </g>
-          </g>)
-          }
-          {/*
-          - an arbitrary number of values for the x axis */}
+          {/* makeshift axes */}
+          {/* text & grid lines for the x axis */}
           {xTicks.map(tick => <g key={tick}>
               <g transform={`translate(${xScale(tick)} 0)`}>
                 <text y="-10" textAnchor="middle">{tick}km</text>
@@ -172,8 +193,21 @@ function App() {
               </g>
           </g>)
           }
+
+          {/* text for the y axis */}
+          {dates.map(date => <g key={date}>
+              <g transform={`translate(0 ${yScale(date) + yScale.bandwidth() / 2})`}>
+                <text dominantBaseline="middle" x="-10" textAnchor="end">{formatTime(parseTime(date))}</text>
+              </g>
+          </g>)
+          }
+
         </g>
       </SVG>
+
+      <Link href="https://www.lemonde.fr/les-decodeurs/article/2019/12/16/ile-de-france-entre-25-et-100-de-bouchons-en-plus-depuis-le-debut-de-la-greve_6023037_4355770.html">
+        Article inspiring the visualization <span role="img" aria-label="French">🇫🇷</span>
+      </Link>
     </Visualization>
   );
 }
