@@ -1,18 +1,16 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState, useLayoutEffect} from 'react'
 import { data } from './data.js'
 import * as d3 from 'd3'
 import styled from 'styled-components'
 
 const Tooltip = styled.div`
   position: absolute;
-  left: ${({left}) => `${left}px`};
-  top: ${({top}) => `${top}px`};
   background: hsl(0, 0%, 100%);
-  padding: 0.5rem 0.8rem;
-  line-height: 2;
-  filter: drop-shadow(-5px 0 10px hsla(0, 0%, 0%, 0.1));
+  padding: 0.75rem 1rem;
+  filter: drop-shadow(0 5px 10px hsla(0, 0%, 0%, 0.2));
   border-radius: 5px;
-  transform: translate(0%, -50%);
+  transform: translate(-50%, -100%);
+  transition: all 0.2s ease-in-out;
 
   &:after {
     padding: 0;
@@ -22,17 +20,18 @@ const Tooltip = styled.div`
     background: inherit;
     width: 10px;
     height: 10px;
-    clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
-    top: 50%;
-    right: 100%;
-    transform: translateY(-50%);
+    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   h1 {
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 0.95rem;
   }
   p {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 `
 
@@ -57,7 +56,7 @@ const SVG = styled.svg`
   display: block;
 
   text {
-    font-weight: bold;
+    font-weight: 700;
   }
 `
 
@@ -68,9 +67,9 @@ function App() {
   const height = 500
   const margin = {
     top: 20,
-    right: 25,
+    right: 35,
     bottom: 20,
-    left: 90,
+    left: 110,
   }
 
   // horizontally consider the values from the dataset
@@ -94,18 +93,20 @@ function App() {
   const formatTime = d3.timeFormat('%a %e %b')
   const formatDay = d3.timeFormat('%A')
 
-  const groupBars = useRef()
-  function highlightSelection(date, value, average) {
-    const bars = groupBars.current.querySelectorAll('rect.bar')
-    const selection = [...bars].find(bar => bar.getAttribute('id') === `bar-${date}`)
+  const tooltip = useRef()
 
-    bars.forEach(bar => {bar.style.opacity = 0.7})
-    selection.style.opacity = 1
+  useLayoutEffect(() => {
+    if(selection) {
+      const bar = document.querySelector(`#bar-${selection.date}`)
+      const { x, y, width: w } = bar.getBoundingClientRect()
 
-    const { x, y, width: w, height: h } = selection.getBoundingClientRect()
+      tooltip.current.style.left = `${x + w / 2}px`
+      tooltip.current.style.top = `${y}px`
+    }
+  }, [selection, tooltip])
+
+  function highlightSelection({date, value, average}) {
     setSelection({
-      x: x + w,
-      y: y + h / 2,
       date,
       value,
       average
@@ -113,26 +114,26 @@ function App() {
   }
 
   return (
-    <Visualization>
+    <Visualization onMouseLeave={() => setSelection(null)}>
       {selection &&
-        <Tooltip left={selection.x} top={selection.y}>
+        <Tooltip ref={tooltip}>
           <h1>{formatTime(parseTime(selection.date))}</h1>
           <p>{selection.value}km of traffic</p>
-          <p>This is {`${selection.value > selection.average ? '+' : ''}${Math.round((selection.value - selection.average) / selection.average * 100)}`}% in comparison to the average {formatDay(parseTime(selection.date))} ({selection.average} km)</p>
+          <p>This is <strong>{`${selection.value > selection.average ? '+' : ''}${Math.round((selection.value - selection.average) / selection.average * 100)}`}%</strong> in comparison to the average {formatDay(parseTime(selection.date))} ({selection.average} km)</p>
         </Tooltip>
       }
 
-      <Message>This graph highlights the accumulation of traffic in the region of Île-de-France in 2019. The recent strike caused a considerable increase over the expected, average value.</Message>
+      <Message>This graph highlights the accumulation of traffic in the region of Île-de-France and for the month of December 2019. The strike begun on the 5th of December caused a considerable increase over the expected, average value.</Message>
       <Message>Hover on the rectangles for more details.</Message>
 
       <SVG viewBox={`0 0 ${width + (margin.left + margin.right)} ${height + (margin.top + margin.bottom)}`} width={width} height={height}>
         <defs>
-          <linearGradient id="dash-gradient" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" x2="5" y1="0" y2="5">
+          <linearGradient id="dash-gradient" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" x2="10" y1="0" y2="10">
             <stop stopColor="hsl(40 , 90%, 50%)" offset="0.5"></stop>
-            <stop stopColor="hsl(45, 100%, 60%)" offset="0.5"></stop>
+            <stop stopColor="hsl(50, 100%, 85%)" offset="0.5"></stop>
           </linearGradient>
         </defs>
-        <g ref={groupBars} transform={`translate(${margin.left} ${margin.top})`}>
+        <g transform={`translate(${margin.left} ${margin.top})`}>
           {/* include one group for each data point, translating the shapes vertically and according to the y scale */}
           {
           data.map(({date, value, average}) => <g key={date}>
@@ -143,7 +144,7 @@ function App() {
               &&
               <rect fill="url(#dash-gradient)" width={xScale(average)} height={yScale.bandwidth()} />
               }
-              <rect id={`bar-${date}`} className="bar" onMouseEnter={() => highlightSelection(date, value, average)} opacity="0.7" fill={value > average ? 'hsl(40, 90%, 50%)' : 'hsl(220, 80%, 50%)'} width={xScale(value)} height={yScale.bandwidth()} />
+              <rect id={`bar-${date}`} onMouseEnter={() => highlightSelection({date, value, average})} opacity={selection && selection.date === date ? 1 : 0.6} fill={value > average ? 'hsl(40, 90%, 50%)' : 'hsl(220, 80%, 50%)'} width={xScale(value)} height={yScale.bandwidth()} />
               {/* text describing the increase */}
               <g transform={`translate(${xScale(value) + 5} ${yScale.bandwidth() / 2})`}>
                 <text textAnchor="start" dominantBaseline="middle">
@@ -158,7 +159,7 @@ function App() {
           - dates for the y axis */}
           {dates.map(date => <g key={date}>
               <g transform={`translate(0 ${yScale(date) + yScale.bandwidth() / 2})`}>
-                <text dominantBaseline="middle" x="-5" textAnchor="end">{formatTime(parseTime(date))}</text>
+                <text dominantBaseline="middle" x="-10" textAnchor="end">{formatTime(parseTime(date))}</text>
               </g>
           </g>)
           }
@@ -166,7 +167,7 @@ function App() {
           - an arbitrary number of values for the x axis */}
           {xTicks.map(tick => <g key={tick}>
               <g transform={`translate(${xScale(tick)} 0)`}>
-                <text y="-5" textAnchor="middle">{tick}km</text>
+                <text y="-10" textAnchor="middle">{tick}km</text>
                 <path d={`M 0 10 V ${height}`} fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="5" opacity="0.25" />
               </g>
           </g>)
