@@ -117,7 +117,7 @@ function App() {
       const { x, y, width: w } = bar.getBoundingClientRect()
 
       tooltip.current.style.left = `${x + w / 2}px`
-      tooltip.current.style.top = `${y}px`
+      tooltip.current.style.top = `${y + document.documentElement.scrollTop}px`
     }
   }, [selection, tooltip])
 
