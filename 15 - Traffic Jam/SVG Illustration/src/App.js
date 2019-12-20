@@ -4,7 +4,7 @@ import {data} from './data.js';
 import Illustration from './Illustration.js';
 
 const Root = styled.div`
-  max-width: 400px;
+  max-width: 500px;
   width: 90vw;
   margin: 1rem auto;
   text-align: center;
@@ -53,7 +53,7 @@ function App() {
   return (
     <Root>
       <Form onSubmit={(e) => e.preventDefault()}>
-        <Select name="dates" onInput={() => console.log('input')}>
+        <Select name="dates" onInput={(e) => setSelection(data.find(d => d.date === e.target.value))}>
           {data.map(({date}) => date).map(date => <option key={date} value={date}>{date}</option>)}
         </Select>
 
