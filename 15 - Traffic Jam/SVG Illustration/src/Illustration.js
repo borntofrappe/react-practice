@@ -5,8 +5,7 @@ const translate = keyframes`
     to {
         transform: translateX(-100px);
     }
-
-`
+`;
 
 const Illustration = styled.svg`
     width: 100%;

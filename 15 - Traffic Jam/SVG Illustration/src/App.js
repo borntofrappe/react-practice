@@ -27,7 +27,8 @@ const Label = styled.label`
   border-radius: 2px;
   background: hsl(0, 0%, 100%);
   border: 1px solid hsl(0, 0%, 20%);
-`
+`;
+
 const Input = styled.input`
   position: absolute;
   top: 0;
@@ -35,7 +36,7 @@ const Input = styled.input`
   width: 100%;
   height: 100%;
   opacity: 0;
-`
+`;
 
 const Select = styled.select`
     margin: 1rem 0;
@@ -58,7 +59,7 @@ function App() {
         </Select>
 
         <Label>
-          {showValue ? 'Actual Value' : 'Expected Value'}
+          Show {showValue ? 'Expected Value' : 'Actual Value'}
           <Input aria-label="Toggle value" onInput={() => setShowValue(!showValue)} type="checkbox"/>
         </Label>
 

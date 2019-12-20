@@ -2,7 +2,7 @@
 
 ## [Bar Chart](https://codepen.io/borntofrappe/full/YzPNRjR)
 
-<!-- ## [SVG Illustration]() -->
+## [SVG Illustration](https://codepen.io/borntofrappe/full/OJPpgOq)
 
 ## Goal
 
