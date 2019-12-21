@@ -1,9 +1,13 @@
 import React from 'react';
-import * as d3 from 'd3';
 import styled from 'styled-components';
-import {data} from './data.js';
+import { data } from './data.js';
+import { scaleLinear, scaleOrdinal, extent, range, schemeBlues } from 'd3';
 
-const Viz = styled.div`
+/* the idea is to show the text and illustration in two different layouts
+- by default in a row, showing the SVG graphic first
+- when the viewport is thinner than a predefined threshold, in a column, with the SVG following the text
+*/
+const Visualization = styled.div`
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
@@ -26,6 +30,7 @@ const Viz = styled.div`
   }
 `;
 
+
 const Main = styled.main`
   max-width: 400px;
   padding: 1rem;
@@ -36,7 +41,6 @@ const Main = styled.main`
     margin-top: 1rem;
   }
 `;
-
 const Heading = styled.h1`
   font-family: "Dosis", sans-serif;
   font-size: 1.5rem;
@@ -44,12 +48,10 @@ const Heading = styled.h1`
   letter-spacing: 1px;
   border-bottom: 1px solid currentColor;
 `;
-
 const List = styled.ul`
   list-style-position: inside;
   line-height: 2;
 `;
-
 const Source = styled.p`
   font-size: 0.9rem;
 
@@ -60,7 +62,9 @@ const Source = styled.p`
   }
 `;
 
-const SVG = styled.svg`
+
+// position the SVG at the very bottom of the page
+const Illustration = styled.svg`
   width: 100%;
   max-width: 600px;
   height: auto;
@@ -69,10 +73,10 @@ const SVG = styled.svg`
   align-self: flex-end;
 `;
 
+
 function App() {
-  /* data massaging
+  /* data massaging part 1
   desired data structure: an array describing the country and championships awarded
-  ! if two countries have the same number of championships, include them in the same object
   {
     country
     value
@@ -87,7 +91,7 @@ function App() {
       return [...acc, countryMen, countryWomen];
     }, []);
 
-  // array describing the countries for each year year, considering both mens and women' competitions
+  // array describing an object for each unique country
   const championships = countries
     .reduce((acc, curr) => {
       const index = acc.findIndex(({country}) => country === curr);
@@ -101,7 +105,7 @@ function App() {
       }];
     }, []);
 
-    // array collapsing duplicate objects with the same value into one and sorting the objects by value
+  // array collapsing duplicate objects with the same value into one and sorting the objects by value
   const dataChampionships = championships
     .reduce((acc, curr) => {
       const index = acc.findIndex(({value}) => value === curr.value);
@@ -128,7 +132,7 @@ function App() {
       return [...acc, nameMen, nameWomen];
     }, []);
 
-  const championshipsByAthletes = athletes
+  const dataAthletes = athletes
     .reduce((acc, curr) => {
       const index = acc.findIndex(({athlete}) => athlete === curr);
       if(index !== -1) {
@@ -146,42 +150,51 @@ function App() {
   const width = 300;
   const height = 200;
 
-  // create a linear scale mapping the scale of the path in the [1, 4] range
-  const scale = d3
-    .scaleLinear()
-    .domain(d3.extent(dataChampionships, ({value}) => value))
+  // create a linear scale mapping the scale of the path to a [1, 4] range
+  const scale = scaleLinear()
+    .domain(extent(dataChampionships, ({value}) => value))
     .range([1, 4]);
 
 
-  const colorScale = d3
-    .scaleOrdinal()
-    .domain(d3.range(dataChampionships.length).reverse())
-    .range(d3.schemeBlues[dataChampionships.length]);
+  // ordinal scale describing the different shades of blue applied to the wave
+  // 1. based on the index of the shape
+  // 1. increasing in blue intensity
+  const colorScale = scaleOrdinal()
+    .domain(range(dataChampionships.length).reverse())
+    .range(schemeBlues[dataChampionships.length]);
 
   return (
-    <Viz>
+    <Visualization>
       <Main>
         <Heading>Riding the wave</Heading>
+        {/* inject a few variables describing the first year and the country awarded most points */}
         <p>Surfing championships have been held since <strong>{data[data.length - 1].year}</strong>, showcasing talent at a global scale.</p>
         <p>Despite the global reach, a few countries monopolize the sport, with <strong>{dataChampionships[0].country}</strong> alone able to win <strong>{dataChampionships[0].value}</strong> times.</p>
         <p>A few athletes have also been able to win on multiple occasions:</p>
+        {/* list the top three scorers */}
         <List>
-          {championshipsByAthletes.slice(0, 3).map(({athlete, value}) => <li key={athlete}>
+          {dataAthletes.slice(0, 3).map(({athlete, value}) => <li key={athlete}>
             {athlete} ({value} times)
           </li>)}
         </List>
         <Source>Source: <a href="https://www.worldsurfleague.com/pages/history">Surf World League</a></Source>
-
       </Main>
-      <SVG viewBox={`-10 ${-height - 8} ${width} ${height}`}>
+
+      {/* modify the viewbox to draw the path elements from the bottom */}
+      <Illustration viewBox={`-10 ${-height - 8} ${width} ${height}`}>
         <defs>
+          {/* path used to create the wave and position the text */}
           <path id="wave" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 40" />
+          {/* shadow applied to the waves */}
           <filter id="shadow">
             <feDropShadow dx="0.1" dy="0.1" stdDeviation="0.3"/>
           </filter>
         </defs>
+        {/* for each object add a group */}
           {dataChampionships.map(({country, value}, index) => <g key={country}>
+            {/* scale the group according to the value */}
             <g transform={`scale(${scale(value)})`}>
+              {/* wave */}
               <use
                 style={{ filter: 'url(#shadow)'}}
                 href="#wave"
@@ -190,7 +203,7 @@ function App() {
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round" />
-
+              {/* text using the path's syntax to position the country at the top of the wave */}
               <text dy='-2'>
                 <textPath
                 href="#wave"
@@ -205,8 +218,8 @@ function App() {
               </text>
             </g>
           </g>)}
-      </SVG>
-    </Viz>
+      </Illustration>
+    </Visualization>
   );
 }
 
