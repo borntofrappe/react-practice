@@ -1,8 +1,8 @@
-# Surf World Cups
+# Surf World League
 
 ## Goal
 
-Highlight the number of championship won by countries with a generative data viz.
+Highlight the number of championship won by countries and through various surfing competitions.
 
 ## Notes
 

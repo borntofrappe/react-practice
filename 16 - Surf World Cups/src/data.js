@@ -5,77 +5,77 @@ export const data = [
       year: '2018',
       men: {
         name: 'Gabriel Medina',
-        country: 'BRA',
+        country: 'Brazil',
       },
       women: {
         name: 'Stephanie Gilmore',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2017',
       men: {
         name: 'John John Florence',
-        country: 'HAW',
+        country: 'Hawaii',
       },
       women: {
         name: 'Tyler Wright',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2016',
       men: {
         name: 'John John Florence',
-        country: 'HAW',
+        country: 'Hawaii',
       },
       women: {
         name: 'Tyler Wright',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2015',
       men: {
         name: 'Adriano de Souza',
-        country: 'BRA',
+        country: 'Brazil',
       },
       women: {
         name: 'Carissa Moore',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
       year: '2014',
       men: {
         name: 'Gabriel Medina',
-        country: 'BRA',
+        country: 'Brazil',
       },
       women: {
         name: 'Stephanie Gilmore',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2013',
       men: {
         name: 'Mick Fanning',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Carissa Moore',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
       year: '2012',
       men: {
         name: 'Joel Parkinson',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Stephanie Gilmore',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -86,7 +86,7 @@ export const data = [
       },
       women: {
         name: 'Carissa Moore',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
@@ -97,18 +97,18 @@ export const data = [
       },
       women: {
         name: 'Stephanie Gilmore',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2009',
       men: {
         name: 'Mick Fanning',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Stephanie Gilmore',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -119,18 +119,18 @@ export const data = [
       },
       women: {
         name: 'Stephanie Gilmore',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2007',
       men: {
         name: 'Mick Fanning',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Stephanie Gilmore',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -141,7 +141,7 @@ export const data = [
       },
       women: {
         name: 'Layne Beachley',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -152,40 +152,40 @@ export const data = [
       },
       women: {
         name: 'Chelsea Georgeson',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2004',
       men: {
         name: 'Andy Irons',
-        country: 'HAW',
+        country: 'Hawaii',
       },
       women: {
         name: 'Sofia Mulanovich',
-        country: 'PER',
+        country: 'Peru',
       },
     },
     {
       year: '2003',
       men: {
         name: 'Andy Irons',
-        country: 'HAW',
+        country: 'Hawaii',
       },
       women: {
         name: 'Layne Beachley',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2002',
       men: {
         name: 'Andy Irons',
-        country: 'HAW',
+        country: 'Hawaii',
       },
       women: {
         name: 'Layne Beachley',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -196,29 +196,29 @@ export const data = [
       },
       women: {
         name: 'Layne Beachley',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '2000',
       men: {
         name: 'Sunny Garcia',
-        country: 'HAW',
+        country: 'Hawaii',
       },
       women: {
         name: 'Layne Beachley',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '1999',
       men: {
         name: 'Mark Occhilupo',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Layne Beachley',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -229,7 +229,7 @@ export const data = [
       },
       women: {
         name: 'Layne Beachley',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -280,11 +280,11 @@ export const data = [
       year: '1993',
       men: {
         name: 'Derek Ho',
-        country: 'HAW',
+        country: 'Hawaii',
       },
       women: {
         name: 'Pauline Menczer',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -295,18 +295,18 @@ export const data = [
       },
       women: {
         name: 'Wendy Botha',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '1991',
       men: {
         name: 'Damien Hardman',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Wendy Botha',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -317,7 +317,7 @@ export const data = [
       },
       women: {
         name: 'Pam Burridge',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
@@ -328,14 +328,14 @@ export const data = [
       },
       women: {
         name: 'Wendy Botha',
-        country: 'AUS',
+        country: 'Australia',
       },
     },
     {
       year: '1988',
       men: {
         name: 'Barton Lynch',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Freida Zamba',
@@ -346,11 +346,11 @@ export const data = [
       year: '1987',
       men: {
         name: 'Damien Hardman',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Wendy Botha',
-        country: 'RSA',
+        country: 'South Africa',
       },
     },
     {
@@ -379,7 +379,7 @@ export const data = [
       year: '1984',
       men: {
         name: 'Tom Carroll',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Freida Zamba',
@@ -390,7 +390,7 @@ export const data = [
       year: '1983',
       men: {
         name: 'Tom Carroll',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Kim Mearig',
@@ -401,7 +401,7 @@ export const data = [
       year: '1982',
       men: {
         name: 'Mark Richards',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Debbie Beacham',
@@ -412,62 +412,62 @@ export const data = [
       year: '1981',
       men: {
         name: 'Mark Richards',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Margo Oberg',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
       year: '1980',
       men: {
         name: 'Mark Richards',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Margo Oberg',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
       year: '1979',
       men: {
         name: 'Mark Richards',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Lynn Boyer',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
       year: '1978',
       men: {
         name: 'Wayne Bartholomew',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Lynn Boyer',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
       year: '1977',
       men: {
         name: 'Shaun Tomson',
-        country: 'RSA',
+        country: 'South Africa',
       },
       women: {
         name: 'Margo Oberg',
-        country: 'HAW',
+        country: 'Hawaii',
       },
     },
     {
       year: '1976',
       men: {
         name: 'Peter Townend',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: '',
@@ -478,7 +478,7 @@ export const data = [
       year: '1975',
       men: {
         name: 'Mark Richards',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: '',
@@ -500,7 +500,7 @@ export const data = [
       year: '1973',
       men: {
         name: 'Ian Cairns',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: '',
@@ -544,7 +544,7 @@ export const data = [
       year: '1966',
       men: {
         name: 'Nat Young',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: 'Joyce Hoffman',
@@ -555,7 +555,7 @@ export const data = [
       year: '1965',
       men: {
         name: 'Felipe Pomar',
-        country: 'PER',
+        country: 'Peru',
       },
       women: {
         name: 'Joyce Hoffman',
@@ -566,11 +566,11 @@ export const data = [
       year: '1964',
       men: {
         name: 'Midget Farrelly',
-        country: 'AUS',
+        country: 'Australia',
       },
       women: {
         name: "Phyllis O'Donnell",
-        country: 'AUS',
+        country: 'Australia',
       },
     },
   ];
