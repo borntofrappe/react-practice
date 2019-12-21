@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Dosis:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Dosis:700|Open+Sans:400,700&display=swap");
 
 * {
     box-sizing: border-box;
@@ -12,5 +12,5 @@ body {
         linear-gradient(-160deg, hsl(215, 85%, 45%), hsl(190, 85%, 50%)), hsl(200, 85%, 55%);
     background-size: 50px, 100%;
     min-height: 100vh;
-    font-family: "Dosis", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }

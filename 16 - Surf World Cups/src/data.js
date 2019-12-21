@@ -2,6 +2,17 @@
 // source https://www.worldsurfleague.com/pages/history
 export const data = [
     {
+      year: '2019',
+      men: {
+        name: 'Italo Ferreira',
+        country: 'Brazil',
+      },
+      women: {
+        name: 'Carissa Moore',
+        country: 'Hawaii',
+      },
+    },
+    {
       year: '2018',
       men: {
         name: 'Gabriel Medina',
