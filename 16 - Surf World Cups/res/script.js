@@ -575,46 +575,31 @@ const data = [
   },
 ];
 
-/* data massaging
-for the first visualization highlights the countries with most championship
+// array describing the countries for each year year, considering both mens and women' competitions
+const countriesArray = data
+  .reduce((acc, curr) => {
+    const { country: countryMen } = curr.men;
+    const { country: countryWomen } = curr.women;
+    return [...acc, countryMen, countryWomen];
+  }, [])
+  // filter out falsy values like empty strings (which happens for a few years and the women' category)
+  .filter(country => country);
 
-desired data structure
-
+/*  object enumerating the countries in the array
 {
-  country: value,
-  country: value,
-  country: value,
+  country: num,
+  country: num,
+  country: num,
   ...
 }
 */
-const dataCountries = data.reduce((acc, curr) => {
-  // identify the country for the men/women tournament
-  // ! it might be an empty string
-  const { country: cMen } = curr.men;
-  const { country: cWomen } = curr.women;
-
-  // if the country is already represented increase its counter
-  // else add an object
-  if (cMen) {
-    if (acc[cMen]) {
-      acc[cMen] += 1;
-      return acc;
-    }
-    return {
-      ...acc,
-      [cMen]: 1,
-    };
+const dataCountries = countriesArray.reduce((acc, curr) => {
+  if(acc[curr]) {
+    acc[curr] += 1;
+  } else {
+    acc[curr] = 1;
   }
-  if (cWomen) {
-    if (acc[cWomen]) {
-      acc[cWomen] += 1;
-      return acc;
-    }
-    return {
-      ...acc,
-      [cWomen]: 1,
-    };
-  }
+  return acc;
 }, {});
 
 const dataAreaChart = Object.entries(dataCountries).sort(([, vA], [, vB]) =>
@@ -624,6 +609,11 @@ const width = 300;
 const height = 400;
 
 const root = d3.select('#root');
+
+const html = root.append('div');
+html.append('h1').text('Surf World Championships');
+html.append('p').text('This area chart describes the number of championships won by country and through various global surfing competitions.');
+html.append('p').html('Source : <a href="https://www.worldsurfleague.com/pages/history">World Surf League</a>');
 
 const svg = root.append('svg').attr('viewBox', `0 0 ${width * 1.2} ${height}`);
 
@@ -680,4 +670,5 @@ countries
   .attr('x', '5')
   .attr('y', (d, i, { length }) => (i === length - 1 ? 0 : 10))
   .attr('font-size', '10')
+  .attr('font-weight', '500')
   .text(([country]) => country);
