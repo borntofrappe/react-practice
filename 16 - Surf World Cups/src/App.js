@@ -4,16 +4,15 @@ import * as d3 from 'd3';
 import styled from 'styled-components';
 
 const Visualization = styled.div`
-  margin: 1rem auto;
-  max-width: 500px;
-  width: 100vw;
-  background: hsl(200, 80%, 80%);
+display: flex;
+min-height: 100vh;
 `;
 
 const SVG = styled.svg`
-  display: block;
-  width: 100%;
+  margin-top: auto;
+  max-width: 800px;
   height: auto;
+  width: 100vh;
 `;
 
 function App() {
@@ -55,8 +54,8 @@ function App() {
     vA > vB ? -1 : 1
   );
 
-  const width = 400;
-  const height = 400;
+  const width = 200;
+  const height = 200;
   // horizontally consider a linear scale for the number of championships
   const xScale = d3
     .scaleLinear()
@@ -84,12 +83,10 @@ function App() {
 
   return (
     <Visualization>
-      <SVG viewBox={`0 0 ${width * 1.1} ${height}`}>
-        <path d={area(dataAreaChart)} fill="hsl(200, 80%, 60%)" stroke="none" />
-        <path d={line(dataAreaChart)} fill="none" stroke="hsl(220, 80%, 40%)" strokeWidth="4" />
-        {dataAreaChart.map(([country, value], index) => <g key={country} transform={`translate(${xScale(value)} ${yScale(country)})`}>
-          <text y={index === 0 ? "15" : "0"} fontSize="15" fill="hsl(220, 80%, 10%)" fontWeight="bold" textAnchor="start">{country}</text>
-        </g>)}
+      <SVG viewBox={`-10 ${-height} ${width} ${height}`}>
+          <path transform="scale(3)" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" fill="hsl(220, 80%, 50%)" stroke="hsl(220, 80%, 50%)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path transform="scale(2)" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" fill="hsl(210, 80%, 55%)" stroke="hsl(210, 80%, 55%)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path transform="scale(1)" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" fill="hsl(200, 80%, 60%)" stroke="hsl(200, 80%, 60%)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
       </SVG>
     </Visualization>
   );
