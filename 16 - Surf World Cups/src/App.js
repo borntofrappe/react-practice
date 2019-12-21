@@ -1,22 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-import {data} from './data.js'
+import {data} from './data.js';
 import * as d3 from 'd3';
-import Flag from './Flag';
+import styled from 'styled-components';
 
-/* center the visualization horizontally */
-const Viz = styled.div`
-  max-width: 600px;
-  width: 90vw;
+const Visualization = styled.div`
   margin: 1rem auto;
-  background: hsl(35, 85%, 85%);
-  box-shadow: 0 0 5px -4px hsl(35, 85%, 20%);
-  border-radius: 20px;
+  max-width: 500px;
+  width: 100vw;
+  background: hsl(200, 80%, 80%);
 `;
 
 const SVG = styled.svg`
-  border-radius: inherit;
   display: block;
+  width: 100%;
+  height: auto;
 `;
 
 function App() {
@@ -51,14 +48,14 @@ function App() {
         [cWomen]: 1,
       };
     }
+    return acc;
   }, {});
 
   const dataAreaChart = Object.entries(dataCountries).sort(([, vA], [, vB]) =>
     vA > vB ? -1 : 1
   );
 
-
-  const width = 300;
+  const width = 400;
   const height = 400;
   // horizontally consider a linear scale for the number of championships
   const xScale = d3
@@ -86,19 +83,15 @@ function App() {
     .curve(d3.curveCatmullRom);
 
   return (
-    <Viz>
+    <Visualization>
       <SVG viewBox={`0 0 ${width * 1.1} ${height}`}>
-        <path d={line(dataAreaChart)} fill="none" stroke="hsl(220, 70%, 50%)" stroke-width="5" />
-        <path d={area(dataAreaChart)} fill="hsl(220, 60%, 80%)" stroke="none" />
-        {dataAreaChart.map(([country, value], index, {length}) => <g key={country} transform={`translate(${xScale(value)} ${yScale(country)})`}>
-          <g transform="scale(0.3) translate(-30 0)">
-            <g transform={`translate(0 ${index === (length - 1) ? -60 : 0})`}>
-             <Flag country={country} />
-            </g>
-          </g>
+        <path d={area(dataAreaChart)} fill="hsl(200, 80%, 60%)" stroke="none" />
+        <path d={line(dataAreaChart)} fill="none" stroke="hsl(220, 80%, 40%)" strokeWidth="4" />
+        {dataAreaChart.map(([country, value], index) => <g key={country} transform={`translate(${xScale(value)} ${yScale(country)})`}>
+          <text y={index === 0 ? "15" : "0"} fontSize="15" fill="hsl(220, 80%, 10%)" fontWeight="bold" textAnchor="start">{country}</text>
         </g>)}
       </SVG>
-    </Viz>
+    </Visualization>
   );
 }
 

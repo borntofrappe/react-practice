@@ -14,3 +14,7 @@ body {
     min-height: 100vh;
     font-family: "Maven Pro", sans-serif;
 }
+svg {
+    width: 90vw;
+    max-width: 800px;
+}
