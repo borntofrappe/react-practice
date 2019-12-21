@@ -10,7 +10,7 @@ min-height: 100vh;
 
 const SVG = styled.svg`
   margin-top: auto;
-  max-width: 800px;
+  max-width: 700px;
   height: auto;
   width: 100vh;
 `;
@@ -50,43 +50,70 @@ function App() {
     return acc;
   }, {});
 
-  const dataAreaChart = Object.entries(dataCountries).sort(([, vA], [, vB]) =>
+  const dataAreaChart = Object.entries(dataCountries)
+    .reduce((acc, curr) => {
+      const [country, value] = curr;
+      const match = acc.findIndex(d => d[1] === value);
+      if(match !== -1) {
+        acc[match][0] += ` ${country}`;
+        return acc;
+      }
+
+      return [...acc, [country, value]]
+
+    }, [])
+    .sort(([, vA], [, vB]) =>
     vA > vB ? -1 : 1
   );
 
-  const width = 200;
-  const height = 200;
-  // horizontally consider a linear scale for the number of championships
-  const xScale = d3
+  console.log(dataAreaChart);
+
+  const width = 300;
+  const height = 300;
+
+  // create a linear scale mapping the scale of the path in the [1, 4] range
+  const scale = d3
     .scaleLinear()
-    .domain([0, d3.max(dataAreaChart, ([, value]) => value)])
-    .range([0, width]);
+    .domain(d3.extent(dataAreaChart, ([, value]) => value))
+    .range([1, 4]);
+  // create a color scale mapping the values to an arbitrary range from aquamarine to full blue
+  const colorScale = d3
+    .scaleLinear()
+    .domain(d3.extent(dataAreaChart, ([, value]) => value))
+    .range(['hsl(180, 80%, 95%)', 'hsl(220, 85%, 40%)']);
 
-  // vertically consider one point for each country
-  const yScale = d3
-    .scalePoint()
-    .domain(dataAreaChart.map(([country]) => country))
-    .range([0, height]);
+    // create a color scale mapping the values to an arbitrary range from aquamarine to full blue
+  const offsetScale = d3
+  .scaleQuantize()
+  .domain(d3.range(dataAreaChart.length))
+  .range([20, 57]);
 
-  const line = d3
-    .line()
-    .x(([, value]) => xScale(value))
-    .y(([country]) => yScale(country))
-    .curve(d3.curveCatmullRom);
-
-  const area = d3
-    .area()
-    .x0(() => xScale(0))
-    .x1(([, value]) => xScale(value))
-    .y(([country]) => yScale(country))
-    .curve(d3.curveCatmullRom);
+  console.log(d3.range(dataAreaChart.length))
 
   return (
     <Visualization>
       <SVG viewBox={`-10 ${-height} ${width} ${height}`}>
-          <path transform="scale(3)" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" fill="hsl(220, 80%, 50%)" stroke="hsl(220, 80%, 50%)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-          <path transform="scale(2)" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" fill="hsl(210, 80%, 55%)" stroke="hsl(210, 80%, 55%)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-          <path transform="scale(1)" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" fill="hsl(200, 80%, 60%)" stroke="hsl(200, 80%, 60%)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <defs>
+          <path id="wave" d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" />
+          <filter id="shadow">
+            <feDropShadow dx="0.1" dy="0.1" stdDeviation="0.1"/>
+          </filter>
+        </defs>
+          {dataAreaChart.map(([country, value], index) => <g key={country}>
+            <g>
+              <path style={{ filter: 'url(#shadow)'}} transform={`scale(${scale(value)})`} id={`wave-${country}`} d="M 0 0 a 45 45 0 0 1 60 -40 a 20 20 0 0 0 0 42" fill={colorScale(value)} stroke={colorScale(value)} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+              <text dy={-4 - scale(value)}>
+                <textPath href={`#wave-${country}`} startOffset="56%" textAnchor="end" fontSize={8 + scale(value) * 2} fontWeight="700" fill="hsl(220, 90%, 5%)" stroke="none">
+                  {country}
+                </textPath>
+              </text>
+            </g>
+          </g>)}
+            {/* <text dy="-4">
+              <textPath startOffset="55%" textAnchor="end" fontSize="7" fill="hsl(0, 0%, 100%)" fontWeight="700" href="#wave">
+                Peru, South Africa and UK
+              </textPath>
+            </text> */}
       </SVG>
     </Visualization>
   );
