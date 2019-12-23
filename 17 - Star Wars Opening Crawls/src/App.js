@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useSpring, useChain, animated, config } from 'react-spring';
+import { useSpring, useChain, useTrail, animated, config } from 'react-spring';
 
 /* center in the viewport */
 const Loading = styled.div`
@@ -25,72 +25,84 @@ const Text = styled(animated.text)`
 `;
 
 function App() {
-  const removeOffsetRef = useRef();
-  const removeOffset = useSpring({
-    from: { strokeDashoffset: 150},
-    to: { strokeDashoffset: 0},
-    config: {
-      mass: 1,
-      tension: 200,
-      friction: 400,
+  const letters = [
+    {
+      paths: ['M 0 10 h 8 a 7 7 0 0 0 0 -14 h 9 v -6 h -10 a 7 7 0 0 0 0 14 h -10 v 6 z'],
+      transform: 'translate(9 10.5)'
     },
-    ref: removeOffsetRef,
+    {
+      paths: ['M 0 -10 h 20 v 6 h -7 v 15 h -6 v -15 h -7 z'],
+      transform: 'translate(30 10.5)'
+    },
+    {
+      paths: [
+        'M 0 10 l 7 -20 h 6 l 7 20 h -6 l -1.05 -3 h -5.9 l -1.05 3 z',
+        'M 8 2 h 4 l -2 -5.7 -2 5.7 z'
+      ],
+      transform: 'translate(51 10.5)'
+    },
+    {
+      paths: [
+        'M 0 -10 h 12 a 7 7 0 0 1 0 14 l 5 6 h -7 l -5 -6 v 6 h -5.5 z',
+        'M 5 -5 h 5 a 2 2 0 0 1 0 4 h -5 z'
+      ],
+      transform: 'translate(76 10.5)'
+    },
+    {
+      paths: ['M 0 -10 l 7 20 h 6 l 1.75 -5 1.75 5 h 6 l 7 -20 h -7 l -2.375 6.8 -2.375 -6.8 h -6 l -2.375 6.8 -2.375 -6.8 h -7z'],
+      transform: 'translate(0.5 35.5)'
+    },
+    {
+      paths: [
+        'M 0 10 l 7 -20 h 6 l 7 20 h -6 l -1.05 -3 h -5.9 l -1.05 3 z',
+        'M 8 2 h 4 l -2 -5.7 -2 5.7 z',
+      ],
+      transform: 'translate(30 35.5)'
+    },
+    {
+      paths: [
+        'M 0 -10 h 12 a 7 7 0 0 1 0 14 l 5 6 h -7 l -5 -6 v 6 h -5.5 z',
+        'M 5 -5 h 5 a 2 2 0 0 1 0 4 h -5 z'
+      ],
+      transform: 'translate(56 35.5)'
+    },
+    {
+      paths: ['M 0 10 h 8 a 7 7 0 0 0 0 -14 h 9 v -6 h -10 a 7 7 0 0 0 0 14 h -10 v 6 z'],
+      transform: 'translate(82.5 35.5)'
+    },
+  ]
+
+
+  const trailRef = useRef();
+  const trail = useTrail(letters.length, {
+    from: { opacity: 0, strokeDashoffset: 200},
+    to: { opacity: 1, strokeDashoffset: 0},
+    config: config.molasses,
+    ref: trailRef,
   });
 
-  const translateYRef = useRef();
-  const translateY = useSpring({
+  const springRef = useRef();
+  const spring = useSpring({
     from: { transform: 'translateY(6px)'},
     to: { transform: 'translateY(0)'},
     config: config.slow,
-    ref: translateYRef
+    ref: springRef
   });
 
-  useChain([removeOffsetRef, translateYRef], [0, 1]);
+  useChain([trailRef, springRef], [0, 4]);
+
 
   return (
     <Loading>
-      <SVG viewBox="0 0 100 58">
+      <SVG viewBox="0 0 100 55">
         <g stroke="hsl(60, 100%, 50%)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" fill="none">
-            <g transform="translate(5 10.5)">
-                <g transform="translate(4 0)">
-                    <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 10 h 8 a 7 7 0 0 0 0 -14 h 9 v -6 h -10 a 7 7 0 0 0 0 14 h -10 v 6 z" />
-                </g>
-
-                <g transform="translate(25 0)">
-                    <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 -10 h 20 v 6 h -7 v 15 h -6 v -15 h -7 z" />
-                </g>
-                <g transform="translate(46 0)">
-                    <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 10 l 7 -20 h 6 l 7 20 h -6 l -1.05 -3 h -5.9 l -1.05 3 z" />
-                    <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 8 2 h 4 l -2 -5.7 -2 5.7 z" />
-                </g>
-                <g transform="translate(71 0)">
-                    <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 -10 h 12 a 7 7 0 0 1 0 14 l 5 6 h -7 l -5 -6 v 6 h -5.5 z" />
-                    <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 5 -5 h 5 a 2 2 0 0 1 0 4 h -5 z" />
-                </g>
-            </g>
-
-            <g transform="translate(0 35)">
-                <g stroke="hsl(60, 100%, 50%)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" fill="none">
-                    <g transform="translate(0.5 0)">
-                        <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 -10 l 7 20 h 6 l 1.75 -5 1.75 5 h 6 l 7 -20 h -7 l -2.375 6.8 -2.375 -6.8 h -6 l -2.375 6.8 -2.375 -6.8 h -7z" />
-                    </g>
-                    <g transform="translate(30 0)">
-                        <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 10 l 7 -20 h 6 l 7 20 h -6 l -1.05 -3 h -5.9 l -1.05 3 z" />
-                        <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 8 2 h 4 l -2 -5.7 -2 5.7 z" />
-                    </g>
-                    <g transform="translate(56 0)">
-                        <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 -10 h 12 a 7 7 0 0 1 0 14 l 5 6 h -7 l -5 -6 v 6 h -5.5 z" />
-                        <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 5 -5 h 5 a 2 2 0 0 1 0 4 h -5 z" />
-                    </g>
-                    <g transform="translate(82.5 0)">
-                        <animated.path strokeDasharray="150" strokeDashoffset="150" style={removeOffset} d="M 0 10 h 8 a 7 7 0 0 0 0 -14 h 9 v -6 h -10 a 7 7 0 0 0 0 14 h -10 v 6 z" />
-                    </g>
-                </g>
-            </g>
+          {trail.map((props, index) => <g key={index} transform={letters[index].transform}>
+            {letters[index].paths.map((d) => <animated.path style={props} strokeDasharray="200" strokeDashoffset="200" key={`${index}-${d}`} d={d} />)}
+          </g>)}
         </g>
 
-        <Text style={translateY} x="50" y="58" textLength="100" lengthAdjust="spacing" textAnchor="middle" fill="hsl(0, 0%, 100%)">
-            Coming soon
+        <Text style={spring} x="50" y="55" textLength="100" lengthAdjust="spacing" textAnchor="middle" fill="hsl(0, 0%, 100%)">
+            Opening crawls
         </Text>
       </SVG>
     </Loading>
