@@ -1,16 +1,17 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useSpring, useChain, useTrail, animated, config } from 'react-spring';
+import OpeningCrawls from './OpeningCrawls';
 
 /* center in the viewport */
-const Loading = styled.div`
+const Heading = styled.div`
   min-height: 100vh;
   display: flex;
 `
 
 const SVG = styled.svg`
   margin: auto;
-  max-width: 550px;
+  max-width: 500px;
   width: 95vw;
   height: auto;
   display: block;
@@ -72,40 +73,77 @@ function App() {
     },
   ]
 
-
-  const trailRef = useRef();
-  const trail = useTrail(letters.length, {
+  const removeOffsetRef = useRef();
+  const removeOffset = useTrail(letters.length, {
     from: { opacity: 0, strokeDashoffset: 200},
     to: { opacity: 1, strokeDashoffset: 0},
     config: config.molasses,
-    ref: trailRef,
+    ref: removeOffsetRef,
   });
 
-  const springRef = useRef();
-  const spring = useSpring({
+  const translateYRef = useRef();
+  const translateY = useSpring({
     from: { transform: 'translateY(6px)'},
     to: { transform: 'translateY(0)'},
     config: config.slow,
-    ref: springRef
+    ref: translateYRef
   });
 
-  useChain([trailRef, springRef], [0, 4]);
+  const showCursorRef = useRef();
+  const showCursor = useSpring({
+    from: { opacity: 0},
+    to: { opacity: 1},
+    config: config.slow,
+    ref: showCursorRef
+  });
 
+  const scrollCursorRef = useRef();
+  const scrollCursor = useSpring({
+    from: { transform: 'translateY(0px)' },
+    to: async next => {
+      await next({ transform: 'translateY(2px)' })
+      await next({ transform: 'translateY(0px)' })
+    },
+    config: config.slow,
+    ref: scrollCursorRef
+  });
+
+  useChain([removeOffsetRef, translateYRef, showCursorRef, scrollCursorRef], [0, 4, 7, 8]);
 
   return (
-    <Loading>
-      <SVG viewBox="0 0 100 55">
+    <>
+    <Heading>
+      <SVG viewBox="0 0 100 75">
+        <defs>
+          <clipPath id="text--clip">
+            <rect x="0" y="0" width="100" height="55" />
+          </clipPath>
+        </defs>
         <g stroke="hsl(60, 100%, 50%)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" fill="none">
-          {trail.map((props, index) => <g key={index} transform={letters[index].transform}>
+          {removeOffset.map((props, index) => <g key={index} transform={letters[index].transform}>
             {letters[index].paths.map((d) => <animated.path style={props} strokeDasharray="200" strokeDashoffset="200" key={`${index}-${d}`} d={d} />)}
           </g>)}
         </g>
 
-        <Text style={spring} x="50" y="55" textLength="100" lengthAdjust="spacing" textAnchor="middle" fill="hsl(0, 0%, 100%)">
-            Opening crawls
-        </Text>
+        <g clipPath="url(#text--clip)">
+          <Text style={translateY} x="50" y="55" textLength="100" lengthAdjust="spacing" textAnchor="middle" fill="hsl(0, 0%, 100%)">
+              Opening crawls
+          </Text>
+        </g>
+
+        <animated.g style={showCursor} transform="translate(50 67.75)" opacity="0.5">
+          <g fill="none" stroke="hsl(0, 0%, 100%)" strokeWidth="0.5">
+            <rect x="-2.5" y="0" width="5" height="7" rx="2.5"  />
+            <animated.path style={scrollCursor} d="M 0 2 v 1" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+        </animated.g>
       </SVG>
-    </Loading>
+    </Heading>
+
+
+    <OpeningCrawls/>
+
+    </>
   );
 }
 
