@@ -1,9 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useSpring, useChain, useTrail, animated, config } from 'react-spring';
+import { useSpring, useChain, useTrail, useTransition, animated, config } from 'react-spring';
 import OpeningCrawls from './OpeningCrawls';
 
-/* center in the viewport */
 const Heading = styled.div`
   min-height: 100vh;
   display: flex;
@@ -17,7 +16,7 @@ const SVG = styled.svg`
   display: block;
 `
 
-const Text = styled(animated.text)`
+const SVGText = styled(animated.text)`
   font-family: sans-serif;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -89,60 +88,66 @@ function App() {
     ref: translateYRef
   });
 
-  const showCursorRef = useRef();
-  const showCursor = useSpring({
-    from: { opacity: 0},
-    to: { opacity: 1},
-    config: config.slow,
-    ref: showCursorRef
+  useChain([removeOffsetRef, translateYRef], [0, 4]);
+
+  const [crawls, setCrawls] = useState([]);
+  const [showCursor, setShowCursor] = useState(false);
+  const cursorTransition = useTransition(showCursor, null, {
+    from: {opacity: 0},
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: config.molasses,
   });
 
-  const scrollCursorRef = useRef();
-  const scrollCursor = useSpring({
-    from: { transform: 'translateY(0px)' },
-    to: async next => {
-      await next({ transform: 'translateY(2px)' })
-      await next({ transform: 'translateY(0px)' })
-    },
-    config: config.slow,
-    ref: scrollCursorRef
-  });
-
-  useChain([removeOffsetRef, translateYRef, showCursorRef, scrollCursorRef], [0, 4, 7, 8]);
+  useEffect(() => {
+      fetch('https://swapi.co/api/films')
+          .then(response => response.json())
+          .then(json => {
+              const results = json.results
+                  .map(({episode_id: id, title, opening_crawl : crawl}) => ({
+                      id,
+                      title,
+                      crawl
+                  }))
+                  .sort(({id: idA}, { id: idB}) => idA > idB ? 1 : -1);
+              setCrawls(results);
+              setShowCursor(true);
+          });
+  }, []);
 
   return (
     <>
-    <Heading>
-      <SVG viewBox="0 0 100 75">
-        <defs>
-          <clipPath id="text--clip">
-            <rect x="0" y="0" width="100" height="55" />
-          </clipPath>
-        </defs>
-        <g stroke="hsl(60, 100%, 50%)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" fill="none">
-          {removeOffset.map((props, index) => <g key={index} transform={letters[index].transform}>
-            {letters[index].paths.map((d) => <animated.path style={props} strokeDasharray="200" strokeDashoffset="200" key={`${index}-${d}`} d={d} />)}
-          </g>)}
-        </g>
-
-        <g clipPath="url(#text--clip)">
-          <Text style={translateY} x="50" y="55" textLength="100" lengthAdjust="spacing" textAnchor="middle" fill="hsl(0, 0%, 100%)">
-              Opening crawls
-          </Text>
-        </g>
-
-        <animated.g style={showCursor} transform="translate(50 67.75)" opacity="0.5">
-          <g fill="none" stroke="hsl(0, 0%, 100%)" strokeWidth="0.5">
-            <rect x="-2.5" y="0" width="5" height="7" rx="2.5"  />
-            <animated.path style={scrollCursor} d="M 0 2 v 1" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round" />
+      <Heading>
+        <SVG viewBox="0 0 100 75">
+          <defs>
+            <clipPath id="text--clip">
+              <rect x="0" y="0" width="100" height="55" />
+            </clipPath>
+          </defs>
+          <g stroke="hsl(60, 100%, 50%)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" fill="none">
+            {removeOffset.map((props, index) => <g key={index} transform={letters[index].transform}>
+              {letters[index].paths.map((d) => <animated.path style={props} strokeDasharray="200" strokeDashoffset="200" key={`${index}-${d}`} d={d} />)}
+            </g>)}
           </g>
-        </animated.g>
-      </SVG>
-    </Heading>
 
+          <g clipPath="url(#text--clip)">
+            <SVGText style={translateY} x="50" y="55" textLength="100" lengthAdjust="spacing" textAnchor="middle" fill="hsl(0, 0%, 100%)">
+                Opening crawls
+            </SVGText>
+          </g>
 
-    <OpeningCrawls/>
-
+          {cursorTransition.map(({ item, key, props }) =>
+            item &&
+            <animated.g style={props} key={key} transform="translate(50 67.75)">
+              <g fill="none" stroke="hsl(0, 0%, 100%)" strokeWidth="0.5">
+                <rect x="-2.25" y="0" width="4.5" height="6" rx="2.25"  />
+                <path d="M 0 1.75 v 1" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
+            </animated.g>
+          )}
+        </SVG>
+      </Heading>
+      <OpeningCrawls crawls={crawls}/>
     </>
   );
 }
