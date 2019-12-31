@@ -32,7 +32,7 @@ This is already a good way to practice with a few `<input>` elements, perhaps wi
 
 ### 3D Transform
 
-Here I apply a 3D rotation to the SVG, according to the mouse position relative to the window's width and height. It's also the first time I've used the shorter syntax for the rotation, through the `rotate3d` value, but I found the formula to be rather convenient.
+3D rotation to the SVG, according to the mouse position relative to the window's width and height. It's also the first time I've used the shorter syntax for the rotation, through the `rotate3d` value, but I found the formula to be rather convenient.
 
 ```css
 svg {
@@ -41,6 +41,10 @@ svg {
 ```
 
 `x` and `y` can then describe a number between `-1` and `1`, leading up to a rotation in the `[-angle, angle]` range. There's no need to include a linear scale to map the input values to a desired range.
+
+### Pseudo Elements
+
+With a pseudo element and 3D transform properties, this folder describes the transition which is supposed to occur as the application moves from the interactive form to the "locked" card, simply displaying the fields.
 
 ## Links
 

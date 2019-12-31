@@ -1,6 +1,6 @@
 // following the mousemove event on the window update the rotation of the svg
 const svg = document.querySelector('svg');
-const angle = 15;
+const angle = 25;
 
 window.addEventListener('mousemove', (e) => {
   const { innerWidth: width, innerHeight: height } = window;

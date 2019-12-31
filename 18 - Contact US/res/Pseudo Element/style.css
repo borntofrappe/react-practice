@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  color: hsl(0, 0%, 100%);
+  background: hsl(220, 5%, 5%);
+  perspective: 400px;
+}
+div {
+  padding: 2rem 2.5rem;
+  background: hsl(220, 2%, 10%);
+  color: hsl(30, 85%, 90%);
+  width: 350px;
+  margin: auto;
+  transform: translateZ(-150px) rotate3d(0, 0, 0, 360deg);
+  transition: transform 1.5s cubic-bezier(0.68, -0.2, 0.265, 1.2);
+  transform-style: preserve-3d;
+  transform-origin: 70% 70%;
+  position: relative;
+  z-index: 5;
+}
+div:before {
+  z-index: -5;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotateY(180deg);
+  background: inherit;
+}
+div.toggle {
+  transform: translateZ(-50px) rotate3d(1, 1, 0, 360deg);
+}
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}

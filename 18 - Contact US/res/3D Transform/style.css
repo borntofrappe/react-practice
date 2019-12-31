@@ -19,5 +19,5 @@ svg {
   width: 300px;
   height: auto;
   margin: auto;
-  transform: rotate3d(-1, 0, 0, 15deg);
+  transform: translateZ(-100px) rotate3d(-1, 0, 0, 15deg);
 }
