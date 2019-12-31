@@ -7,10 +7,10 @@ const SVG = styled.svg`
   height: auto;
 `
 
-export default ({showFlag}) => (
+export default ({isValid}) => (
   <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 65" width="110" height="65">
     {
-      showFlag
+      isValid
       ?
         <g>
           <rect id="line--half" x="55" width="55" height="5" fill="currentColor" />

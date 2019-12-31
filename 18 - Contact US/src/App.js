@@ -10,7 +10,7 @@ const Card = styled.form`
   color: hsl(30, 85%, 90%);
   padding: 2rem 3rem;
   & > * + * {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
 `
 
@@ -20,6 +20,8 @@ const Label = styled.label`
   align-items: flex-start;
   font-size: 0.8rem;
   letter-spacing: 1px;
+  color: hsl(0, 0%, 80%);
+  line-height: 2;
 `
 
 const Input = styled.input`
@@ -28,39 +30,40 @@ const Input = styled.input`
   font-family: inherit;
   color: inherit;
   padding: 0.2rem 0.8rem;
-  background: hsl(0, 0%, 20%);
+  background: hsl(0, 0%, 25%);
   outline: none;
   font-size: 1rem;
 
   &:focus {
-    background: hsl(0, 0%, 30%);
+    background: hsl(0, 0%, 15%);
   }
 `
 
 function App() {
-  const [showFlag, setShowFlag] = useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [isValid, setIsValid] = useState(false)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
 
-  useEffect(() => setShowFlag(telephoneCheck(phone)) , [phone]);
+  useEffect(() => setIsValid(telephoneCheck(phone)) , [phone]);
 
   return (
-    <Card>
-      <Illustration showFlag={showFlag}/>
-      <Label>
-        Name
-        <Input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
+    <Card onSubmit={(e) => e.preventDefault()}>
+      <Illustration isValid={isValid}/>
+      {/* <Label>
+        First Name
+        <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
       </Label>
       <Label>
-        Email
-        <Input type="text" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      </Label>
+        Last Name
+        <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+      </Label> */}
       <Label>
-        Phone
+        US Phone
         <Input type="text" value={phone} onChange={(e) => setPhone(e.target.value)}/>
       </Label>
     </Card>
+
   );
 }
 
