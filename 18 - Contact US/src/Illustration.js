@@ -6,7 +6,7 @@ const SVG = styled.svg`
   width: 100%;
   height: auto;
 `
-
+// show the us flag or default contact icon according to the input boolean
 export default ({isValid}) => (
   <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 65" width="110" height="65">
     {

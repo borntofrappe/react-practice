@@ -5,12 +5,13 @@ import { telephoneCheck } from './utils.js'
 
 const Card = styled.form`
   width: 300px;
-
-  background: hsl(220, 2%, 10%);
+  border-radius: 0.5rem;
+  background: hsl(220, 15%, 15%);
+  box-shadow: 0 0 10px -2px hsla(220, 15%, 5%, 0.5);
   color: hsl(30, 85%, 90%);
   padding: 2rem 3rem;
   & > * + * {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 `
 
@@ -29,35 +30,26 @@ const Input = styled.input`
   border: none;
   font-family: inherit;
   color: inherit;
-  padding: 0.2rem 0.8rem;
-  background: hsl(0, 0%, 25%);
-  outline: none;
+  padding: 0.35rem 0.8rem;
+  background: hsl(0, 0%, 10%);
   font-size: 1rem;
 
   &:focus {
-    background: hsl(0, 0%, 15%);
+    outline: 1px solid hsl(0, 0%, 4%);
   }
+
 `
 
 function App() {
   const [isValid, setIsValid] = useState(false)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
 
+  // as state of the input changes, update the boolean to describe a valid/invalid phone number
   useEffect(() => setIsValid(telephoneCheck(phone)) , [phone]);
 
   return (
     <Card onSubmit={(e) => e.preventDefault()}>
       <Illustration isValid={isValid}/>
-      {/* <Label>
-        First Name
-        <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
-      </Label>
-      <Label>
-        Last Name
-        <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-      </Label> */}
       <Label>
         US Phone
         <Input type="text" value={phone} onChange={(e) => setPhone(e.target.value)}/>
