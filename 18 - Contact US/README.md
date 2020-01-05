@@ -1,4 +1,4 @@
-# Contact US
+# [Contact US](https://codepen.io/borntofrappe/full/PowJQew)
 
 ## Goal
 
@@ -18,7 +18,7 @@ From these two assets, the idea is to provide an application which allows to fil
 
 While at first I wanted to experiment with 3D transform properties, so to rotate the card with a bit of perspective, I decided to instead focus on an animation below the input element. This inspired by [this screencast](https://www.youtube.com/watch?v=D0fzZtj05Ag) from the [keframers](https://twitter.com/keyframers).
 
-For an idea of what I wanted to achieve prior to this screencast, you can see [this application using Svelte](https://njbcg.codesandbox.io/).
+For an idea of what I wanted to achieve prior to this update, you can see [this application using Svelte](https://njbcg.codesandbox.io/).
 
 ## Links
 

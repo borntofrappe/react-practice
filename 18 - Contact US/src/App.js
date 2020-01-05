@@ -3,6 +3,7 @@ import Illustration from './Illustration.js'
 import styled, {keyframes} from 'styled-components'
 import { telephoneCheck } from './utils.js'
 
+// fading animation for the list's items
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -11,7 +12,6 @@ const fadeIn = keyframes`
     opacity: 1;
   }
 `
-
 
 const Card = styled.form`
   width: 300px;
@@ -48,15 +48,16 @@ const Input = styled.input`
   }
 `
 
+// animate the background of the list through the pseudo element
+// use the height as retrieved through useEffect
 const List = styled.ul`
   margin-top: -2rem;
-  padding: 1rem 3.8rem;
+  padding: 1rem 3rem;
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
   list-style: none;
-  line-height: 2;
   color: hsl(30, 85%, 100%);
   z-index: 5;
 
@@ -68,23 +69,29 @@ const List = styled.ul`
     width: 100%;
     height: ${({height}) => `${height}px`};
     background: hsl(220, 15%, 15%);
-    transition: 0.5s height cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    transition: 0.5s height cubic-bezier(0.645, 0.045, 0.355, 1);
     z-index: -5;
   }
 `
 
+// animate the list items in order
+// use the index and length properties passed through jsx to match the duration of the list's transition
 const Item = styled.li`
   font-size: 0.9rem;
   letter-spacing: 1px;
-  animation: ${fadeIn} 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) both;
+  padding: 0.5rem 0.8rem;
+  animation: ${fadeIn} 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) both;
   animation-delay: ${({index, length}) => `${index * 0.5 / length}s`};
+  transition: background 0.25s ease-in-out;
+
+  &:hover {
+    background: hsl(220, 15%, 20%);
+  }
 `
 
 function App() {
   const [isValid, setIsValid] = useState(false)
   const [phone, setPhone] = useState('')
-  const listRef = useRef()
-  const [height, setHeight] = useState()
 
   // list of valid US phone numbers
   // shown below the input
@@ -97,14 +104,19 @@ function App() {
     "1 555 555 5555"
   ];
 
-  // as state of the input changes, update the boolean to describe a valid/invalid phone number
+  // for the animation, create a reference for the unordered list
+  const ref = useRef()
+  // variable describing the height of the list
+  const [height, setHeight] = useState()
+
+  // as the state of the input changes, update the boolean and the height
   useEffect(() => {
     setIsValid(telephoneCheck(phone));
-    const list = listRef.current;
+
+    const list = ref.current;
     const { height } = list.getBoundingClientRect();
     setHeight(height);
-    console.log(height);
-  } , [phone, listRef])
+  } , [phone, ref])
 
   return (
     <Card onSubmit={(e) => e.preventDefault()}>
@@ -113,8 +125,8 @@ function App() {
         US Phone
         <Input type="text" value={phone} onChange={(e) => setPhone(e.target.value)}/>
       </Label>
-      {/* show the hints only as the user types */}
-      <List ref={listRef} height={height}>
+      <List ref={ref} height={height}>
+        {/* show the hints only as the user types */}
         {phone && hints.map((hint, index, {length}) => <Item key={hint} index={index} length={length}>{hint}</Item>)}
       </List>
     </Card>
