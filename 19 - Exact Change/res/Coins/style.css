@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,600&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+/* display the coins in a wrapping row */
+body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: hsl(0, 0%, 20%);
+  font-family: "IBM Plex Mono", monospace;
+}
+svg {
+  font-weight: 600;
+  width: 5rem;
+  height: auto;
+  display: block;
+  margin: 1rem;
+}
