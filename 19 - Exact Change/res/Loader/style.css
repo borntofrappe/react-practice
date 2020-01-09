@@ -13,18 +13,18 @@ svg {
 slightly modify an expo-in-out timing function to make the keyframes snappy, but not excessively
 */
 .rotate {
-  animation: rotate 1s cubic-bezier(0.95, 0, 0.08, 1) infinite alternate;
+  animation: rotate 2s cubic-bezier(0.95, 0, 0.08, 1) infinite;
 }
 .translate {
-  animation: translate 1s cubic-bezier(0.95, 0, 0.08, 1) infinite alternate;
+  animation: translate 2s cubic-bezier(0.95, 0, 0.08, 1) infinite;
 }
 @keyframes translate {
-  to {
+  35% {
     transform: translate(-5px, -10px);
   }
 }
 @keyframes rotate {
-  to {
+  35% {
     transform: rotate(-10deg);
   }
 }
