@@ -83,7 +83,7 @@ export default ({play}) => <Section>
   </Illustration>
   <Heading>Exact change</Heading>
 
-  <Button onClick={() => play()}>
+  <Button aria-label="Play" onClick={() => play()}>
     <svg viewBox="-50 -50 100 100" width="30" height="30">
       <path fill="currentColor" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" d="M -15 -30 l 40 30 -40 30 z"/>
     </svg>

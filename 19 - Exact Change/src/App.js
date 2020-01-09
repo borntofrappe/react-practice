@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const Root = styled.div`
   background: hsl(0, 0%, 100%);
   color: hsl(0, 0%, 20%);
-  padding: 3.5rem;
+  padding: 3rem;
   border-radius: 20px;
   box-shadow: 0 0 10px -6px hsl(0, 0%, 50%);
 `
