@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Exact Change - Loader</title>
+  </head>
+  <body>
+    <!--
+      - position at the bottom
+      - rotate several groups through the .rotate class
+      - translate several groups through the .translate class
+      by positioning the groups and nested shapes, the transformed groups can be used as hinges
+    -->
+    <svg viewBox="0 0 100 100" width="100" height="100">
+      <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <g transform="translate(17.5 100)">
+          <g class="rotate">
+            <g id="coin">
+              <rect width="65" height="12" y="-14" rx="1" />
+              <path d="M 10 -2 v -12" />
+              <path d="M 20 -2 v -12" />
+              <path d="M 50 -2 v -12" />
+            </g>
+            <g transform="translate(70 -14) scale(-1 1)">
+              <g class="translate">
+                <g class="rotate">
+                  <use href="#coin" />
+                  <g transform="translate(70 -14) scale(-1 1)">
+                    <g class="rotate">
+                      <g class="translate">
+                        <use href="#coin" />
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </body>
+</html>
