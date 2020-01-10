@@ -5,20 +5,24 @@ import { randomSum } from './utils.js'
 
 const Board = styled.div`
   text-align: center;
+
   & > * + * {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 `
 
 const Task = styled.h1`
   font-weight: initial;
   font-size: 1.5rem;
+  line-height: 1.5;
 `
 
 const Main = styled.main`
   @supports (display: grid) {
     display: grid;
     grid-template-areas: "two one fifty" "twenty change ten" "five cents cent";
+    grid-auto-columns: 6rem;
+    grid-auto-rows: 6rem;
     align-items: center;
     justify-items: center;
     grid-gap: 1rem;
@@ -67,22 +71,22 @@ const Change = styled.h2`
   &::selection {
     background: hsl(30, 95%, 60%);
   }
-
-  &:after {
+  span {
     margin: 0 0.5rem;
-    content: "${({state}) => state}";
     font-size: 0.8em;
     font-weight: bold;
-    color: ${({state}) => state === '✓' ? 'hsl(130, 90%, 45%)' : 'hsl(0, 95%, 60%)'};
+    color: hsl(10, 95%, 55%);
   }
 `;
 
-// ▲✓✗
+const Line = styled.hr`
+  background: currentColor;
+  height: 0.2rem;
+`
 
 export default () => {
   const [change, setChange] = useState(0);
   const [sum, setSum] = useState(0)
-  const [state, setState] = useState('▲');
   const timeout = useRef();
 
   useEffect(() => {
@@ -91,14 +95,6 @@ export default () => {
 
   useEffect(() => {
     const delta = change - sum;
-    if(delta > 0) {
-      setState('✗');
-    } else if(delta < 0) {
-      setState('▲');
-    } else {
-      setState('✓');
-    }
-
     if(delta >= 0) {
       timeout.current = setTimeout(() => {
         setSum(randomSum());
@@ -156,19 +152,21 @@ export default () => {
 
 return <Board>
   <Task>
-    Find the <em>exact change</em> for <strong>{sum}</strong>
+    Find the exact change for <strong>{sum}</strong>
   </Task>
-  <Main>
 
-    <Change state={state}>
+  <Line />
+
+  <Main>
+    <Change>
       {change}
+      {sum - change > 0 && <span>▲</span>}
     </Change>
     {
       coins.map(({key, value}) => <Coin onClick={() => addCoin(value)} key={key} area={key}>
         <Cut cut={key} />
       </Coin>)
     }
-
   </Main>
 </Board>
 }

@@ -9,7 +9,8 @@ const Root = styled.div`
   color: hsl(0, 0%, 20%);
   padding: 2.5rem;
   border-radius: 0px;
-  box-shadow: 0 0 10px hsl(0, 0%, 0%);
+  border: 0.25rem solid currentColor;
+  box-shadow: 0px 0px 10px -4px hsl(0, 0%, 0%);
   max-width: 450px;
   width: 90vw;
 `
