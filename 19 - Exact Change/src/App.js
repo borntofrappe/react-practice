@@ -4,11 +4,14 @@ import Game from './Game.js'
 import styled from 'styled-components'
 
 const Root = styled.div`
+  color: hsl(0, 0%, 15%);
   background: hsl(0, 0%, 100%);
   color: hsl(0, 0%, 20%);
-  padding: 3rem;
-  border-radius: 20px;
-  box-shadow: 0 0 10px -6px hsl(0, 0%, 50%);
+  padding: 2.5rem;
+  border-radius: 0px;
+  box-shadow: 0 0 10px hsl(0, 0%, 0%);
+  max-width: 450px;
+  width: 90vw;
 `
 
 function App() {

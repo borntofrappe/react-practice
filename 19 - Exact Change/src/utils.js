@@ -1,0 +1,1 @@
+export const randomSum = () => Math.floor(Math.random() * 500) / 100;
