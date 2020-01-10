@@ -1,4 +1,4 @@
-# Exact Change
+# [Exact Change](https://codepen.io/borntofrappe/full/LYEmybp)
 
 ## Goal
 
@@ -52,3 +52,7 @@ body {
   background-size: 10vmax;
 }
 ```
+
+### Update
+
+I ended up using the graphic described in the Loader project to detail whether or not the change accurately matches the desired sum.

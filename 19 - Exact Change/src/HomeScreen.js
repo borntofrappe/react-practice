@@ -1,21 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
+import { Root, Title } from './StyledComponents'
 import Logo from './Logo'
 import Button from './Button'
 
-const Title = styled.h1`
-  font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 2.5rem;
-  text-transform: capitalize;
-
-  &::selection {
-    background: hsl(30, 95%, 60%);
-  }
-`
-
-export default ({showGameScreen}) => <>
+// following a click event use the function passed to props to move toward the game
+export default ({play}) => <Root>
   <Logo />
   <Title>Exact change</Title>
 
-  <Button label="Go to game screen" handleClick={showGameScreen} />
-</>
+  <Button label="Go to game screen" handleClick={play} />
+</Root>

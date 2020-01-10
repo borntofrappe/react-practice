@@ -1,40 +1,21 @@
 import React, { useState } from 'react'
 import HomeScreen from './HomeScreen.js'
-import GameScreen from './GameScreen.js'
-import styled from 'styled-components'
-
-const Root = styled.div`
-  background: hsl(0, 0%, 100%);
-  color: hsl(0, 0%, 20%);
-  padding: 2.5rem;
-  border: 0.25rem solid currentColor;
-  box-shadow: 0px 0px 10px -4px hsl(0, 0%, 0%);
-  max-width: 450px;
-  width: 90vw;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  line-height: 2;
-  & > * + * {
-    margin-top: 1rem;
-  }
-`
+import Game from './Game.js'
 
 function App() {
-  const [gameScreen, setGameScreen] = useState(false);
+  // boolean to show move between the home screen and the actual game
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <Root>
+    <>
       {
-        gameScreen
+        isPlaying
         ?
-        <GameScreen />
+        <Game />
         :
-        <HomeScreen showGameScreen={() => setGameScreen(true)} />
+        <HomeScreen play={() => setIsPlaying(true)} />
       }
-    </Root>
+    </>
   );
 }
 
