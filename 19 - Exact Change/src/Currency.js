@@ -2,7 +2,7 @@ import React from 'react'
 
 export default ({cut}) => {
   switch(cut) {
-    case 'two':
+    case 'two-euros':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />
@@ -11,7 +11,7 @@ export default ({cut}) => {
         <path d="M -12 -8 a 12 12 0 0 1 24 0 q 0 12 -22 26 h 22" />
       </g>
     </svg>;
-    case 'one':
+    case 'one-euro':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />
@@ -20,7 +20,7 @@ export default ({cut}) => {
         <path d="M -12 18 h 24 m -12 0 v -36 q 0 8 -10 10" />
       </g>
     </svg>;
-    case 'fifty':
+    case 'fifty-cents':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />
@@ -29,7 +29,7 @@ export default ({cut}) => {
         <path transform="scale(0.75)" d="M 11 -18 h -22 v 14 h 10 a 11 11 0 0 1 0 22 h -10 m -10 0 h 0" />
       </g>
     </svg>;
-    case 'twenty':
+    case 'twenty-cents':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />
@@ -38,7 +38,7 @@ export default ({cut}) => {
         <path transform="scale(0.75)" d="M -12 -8 a 12 12 0 0 1 24 0 q 0 12 -22 26 h 22 m -32 0 h 0" />
       </g>
     </svg>;
-    case 'ten':
+    case 'ten-cents':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />
@@ -47,7 +47,7 @@ export default ({cut}) => {
         <path transform="scale(0.75)" d="M -20 18 h 0 m 8 0 h 24 m -12 0 v -36 q 0 8 -10 10" />
       </g>
     </svg>;
-    case 'five':
+    case 'five-cents':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />
@@ -57,7 +57,7 @@ export default ({cut}) => {
         <path transform="translate(8 0) scale(0.5)" d="M 11 -18 h -22 v 14 h 10 a 11 11 0 0 1 0 22 h -10" />
       </g>
     </svg>;
-    case 'cents':
+    case 'two-cents':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />
@@ -67,7 +67,7 @@ export default ({cut}) => {
         <path transform="translate(8 0) scale(0.5)" d="M -12 -8 a 12 12 0 0 1 24 0 q 0 12 -22 26 h 22" />
       </g>
     </svg>;
-    case 'cent':
+    case 'one-cent':
       return <svg viewBox="-50 -50 100 100" width="100" height="100">
       <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
         <circle r="47" />

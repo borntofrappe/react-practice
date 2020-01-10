@@ -14,11 +14,11 @@ In the background, I've also decided to use the following SVG:
 
 ```js
 <svg viewBox="-50 -50 100 100" width="100" height="100">
-  <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="hsl(0, 0%, 0%)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
     <circle r="47" />
     <circle r="42" stroke-dasharray="26.3" transform="rotate(180)" />
     <circle r="37" />
-    <path d="M -8 10 l 8 -20 8 20 -20 -12.5 h 24 z" fill="currentColor" />
+    <path d="M -8 10 l 8 -20 8 20 -20 -12.5 h 24 z" fill="hsl(0, 0%, 0%)" />
   </g>
 </svg>
 ```
@@ -28,18 +28,18 @@ By fiddling with the `viewBox`, you can make sure the repeating pattern has a sm
 On second thought, by also repeating the shape around the corner, you can get a more pleasing pattern.
 
 ```html
-<svg viewBox="-120 -120 240 240" width="100" height="100">
-  <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-    <g id="coin" transform="rotate(-45)">
+<svg opacity="0.3" viewBox="-120 -120 240 240" width="100" height="100">
+  <g fill="none" stroke="hsl(0, 0%, 0%)" stroke-linecap="round" stroke-linejoin="round">
+    <g id="coin" stroke-width="2">
       <circle r="47" />
       <circle r="42" stroke-dasharray="26.3" transform="rotate(180)" />
       <circle r="37" />
-      <path d="M -8 10 l 8 -20 8 20 -20 -12.5 h 24 z" fill="currentColor" />
+      <path stroke-width="4" d="M -8 12 l 8 -24 8 24 -20 -14.5 h 24 z" fill="hsl(0, 0%, 0%)" />
     </g>
-    <use href="#coin" transform="translate(100 100) scale(0.75) rotate(-20)" />
-    <use href="#coin" transform="translate(-100 100) scale(0.75) rotate(-20)" />
-    <use href="#coin" transform="translate(100 -100) scale(0.75) rotate(-20)" />
-    <use href="#coin" transform="translate(-100 -100) scale(0.75) rotate(-20)" />
+    <use href="#coin" transform="translate(120 120) scale(0.75) rotate(-30)" />
+    <use href="#coin" transform="translate(-120 120) scale(0.75) rotate(-30)" />
+    <use href="#coin" transform="translate(120 -120) scale(0.75) rotate(-30)" />
+    <use href="#coin" transform="translate(-120 -120) scale(0.75) rotate(-30)" />
   </g>
 </svg>
 ```

@@ -1,62 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import Cut from './Cut'
-import { randomSum } from './utils.js'
+import Currency from './Currency'
+import { randomSum, roundNum } from './utils.js'
 
-const Board = styled.div`
-  text-align: center;
-
-  & > * + * {
-    margin-top: 1rem;
-  }
-`
-
-const Task = styled.h1`
+const Description = styled.h1`
   font-weight: initial;
   font-size: 1.5rem;
   line-height: 1.5;
 `
 
-const Main = styled.main`
+const Board = styled.main`
   @supports (display: grid) {
     display: grid;
-    grid-template-areas: "two one fifty" "twenty change ten" "five cents cent";
+    grid-template-areas:
+      "two-euros one-euro fifty-cents"
+      "twenty-cents change ten-cents"
+      "five-cents two-cents one-cent";
     grid-auto-columns: 6rem;
     grid-auto-rows: 6rem;
     align-items: center;
     justify-items: center;
     grid-gap: 1rem;
     justify-content: center;
-  }
-`
-
-const Coin = styled.button`
-  color: inherit;
-  border: none;
-  background: none;
-  display: inline-block;
-  width: 6rem;
-  height: 6rem;
-  padding: 1rem;
-  grid-area: ${({area}) => area};
-  transform: scale(0.8);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.5), color 0.3s ease-in-out;
-
-  svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  &:focus {
-    outline: none;
-  }
-  &:focus,
-  &:hover {
-    transform: scale(1);
-  }
-  &:hover {
-    color: hsl(30, 95%, 50%);
   }
 `
 
@@ -79,9 +44,40 @@ const Change = styled.h2`
   }
 `;
 
+const Coin = styled.button`
+  color: inherit;
+  border: none;
+  background: none;
+  display: inline-block;
+  width: 6rem;
+  height: 6rem;
+  padding: 0.75rem;
+  grid-area: "${({area}) => area}";
+  transform: scale(0.75);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.5), color 0.3s ease-in-out;
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  &:focus {
+    outline: none;
+  }
+  &:focus,
+  &:hover {
+    transform: scale(1);
+  }
+  &:hover {
+    color: hsl(30, 95%, 50%);
+  }
+`
+
 const Line = styled.hr`
   background: currentColor;
   height: 0.2rem;
+  width: 100%;
 `
 
 export default () => {
@@ -111,62 +107,63 @@ export default () => {
 
   function addCoin(value) {
     if(change < sum) {
-      setChange(change + value);
+      setChange(roundNum(change + value));
     }
   }
 
   const coins = [
     {
-      key: 'two',
+      key: 'two-euros',
       value: 2,
     },
     {
-      key: 'one',
+      key: 'one-euro',
       value: 1,
     },
     {
-      key: 'fifty',
+      key: 'fifty-cents',
       value: 0.5,
     },
     {
-      key: 'twenty',
+      key: 'twenty-cents',
       value: 0.2,
     },
     {
-      key: 'ten',
+      key: 'ten-cents',
       value: 0.1,
     },
     {
-      key: 'five',
+      key: 'five-cents',
       value: 0.05,
     },
     {
-      key: 'cents',
+      key: 'two-cents',
       value: 0.02,
     },
     {
-      key: 'cent',
+      key: 'one-cent',
       value: 0.01,
     },
   ]
 
-return <Board>
-  <Task>
-    Find the exact change for <strong>{sum}</strong>
-  </Task>
+return <>
+  <Description>
+    Find the change for <strong>{sum}</strong>
+  </Description>
 
   <Line />
 
-  <Main>
+  <Board>
     <Change>
       {change}
       {sum - change > 0 && <span>▲</span>}
     </Change>
+
     {
-      coins.map(({key, value}) => <Coin onClick={() => addCoin(value)} key={key} area={key}>
-        <Cut cut={key} />
+      coins.map(({key, value}) => <Coin aria-label={`Add ${key.split('-').join(' ')}`} onClick={() => addCoin(value)} key={key} area={key}>
+        <Currency cut={key} />
       </Coin>)
     }
-  </Main>
-</Board>
+  </Board>
+</>
 }
