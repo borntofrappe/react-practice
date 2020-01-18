@@ -2,10 +2,12 @@
 
 ## Goal
 
-Count in binary using a series of light bulbs.
+Count in binary with a class component and a series of light bulbs.
 
 ## Notes
 
-This project was inspired by [this pen](https://codepen.io/RockStarwind/pen/NWPLeQq), but most prominently by the representation of binary code presented in the [CS50 introductory course to software](https://youtu.be/jjqgP9dpD1k?t) to software. It is thoroughly and delightfully explained [roughly at this timestamp](https://youtu.be/jjqgP9dpD1k?t=509).
+This project was inspired by the [CS50 introductory course to software](https://youtu.be/jjqgP9dpD1k?t). In this course, counting in binary is delightfully explained through a series of light bulb, switches, as visible [roughly at this timestamp](https://youtu.be/jjqgP9dpD1k?t=509).
 
 In the **res** folder you find the graphic for the light bulb used throughout the project. The idea is to change the color of the bulb, but also add the dashes all around the shape to signal whether or not a specific light bulb has been lit.
+
+You also find the pattern used in the background of the application in `pattern.svg`.
