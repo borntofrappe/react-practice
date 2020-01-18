@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Binary Counter",
+  "name": "Count in binary using a series of light bulbs.",
   "icons": [
     {
       "src": "favicon.ico",
