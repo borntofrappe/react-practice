@@ -4,7 +4,7 @@
   margin: 0;
 }
 body {
-  background: hsl(40, 90%, 95%);
+  background: hsl(0, 0%, 10%);
   color: #4e4f4a;
   min-height: 100vh;
   display: flex;
@@ -19,7 +19,7 @@ body {
   justify-content: center;
 }
 svg {
-  width: 5rem;
+  width: 8rem;
   height: auto;
   display: block;
   padding: 0.5rem;

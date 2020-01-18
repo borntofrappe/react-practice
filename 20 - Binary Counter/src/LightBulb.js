@@ -1,13 +1,13 @@
 import React from 'react'
 
-export default({on = true, hue = 0}) => <svg viewBox="-22.5 -37.5 45 52">
-<g stroke="hsl(0, 0%, 70%)" fill="none">
+export default({on = false, hue = 0}) => <svg viewBox="-22.5 -37.5 45 52">
+<g stroke="hsl(0, 0%, 80%)" fill="none">
   <circle strokeWidth="1" cy="-15" r="15" />
-  <path strokeWidth="0.5" d="M -2 0 v -12 a 3 3 0 0 0 -6 0 3 3 0 0 0 3 3 h 9 a 3 3 0 0 0 3 -3 3 3 0 0 0 -6 0 v 12" />
+  <path strokeWidth="1" d="M -2 0 v -12 a 3 3 0 0 0 -6 0 3 3 0 0 0 3 3 h 9 a 3 3 0 0 0 3 -3 3 3 0 0 0 -6 0 v 12" />
 </g>
 {
   on &&
-  <g stroke={`hsl(${hue}, 80%, 75%)`}>
+  <g stroke={`hsl(${hue}, 80%, 70%)`}>
   <g fill="none" strokeWidth="1.5" strokeLinecap="round">
     <g transform="translate(0 -15)">
       <path transform="translate(0 -18.75)" d="M 0 0 v -3" />
@@ -20,8 +20,8 @@ export default({on = true, hue = 0}) => <svg viewBox="-22.5 -37.5 45 52">
     </g>
   </g>
   <g>
-    <circle fill={`hsl(${hue}, 90%, 65%)`} strokeWidth="1" cy="-15" r="15" />
-    <path stroke={`hsl(${hue}, 80%, 90%)`} fill="none" strokeWidth="0.5" d="M -2 0 v -12 a 3 3 0 0 0 -6 0 3 3 0 0 0 3 3 h 9 a 3 3 0 0 0 3 -3 3 3 0 0 0 -6 0 v 12" />
+    <circle fill={`hsl(${hue}, 80%, 60%)`} strokeWidth="1" cy="-15" r="15" />
+    <path stroke={`hsl(${hue}, 80%, 40%)`} fill="none" strokeWidth="1" d="M -2 0 v -12 a 3 3 0 0 0 -6 0 3 3 0 0 0 3 3 h 9 a 3 3 0 0 0 3 -3 3 3 0 0 0 -6 0 v 12" />
   </g>
   </g>
 }
