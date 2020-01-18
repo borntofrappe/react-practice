@@ -6,4 +6,21 @@
 body {
   background: hsl(40, 90%, 95%);
   color: #4e4f4a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+svg {
+  width: 5rem;
+  height: auto;
+  display: block;
+  padding: 0.5rem;
 }
