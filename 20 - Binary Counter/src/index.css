@@ -3,9 +3,9 @@
   padding: 0;
   margin: 0;
 }
+
 body {
-  background: hsl(0, 0%, 10%);
-  color: #4e4f4a;
+  background: hsl(0, 0%, 15%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@ body {
   align-items: center;
 }
 
-.Row {
+div {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
