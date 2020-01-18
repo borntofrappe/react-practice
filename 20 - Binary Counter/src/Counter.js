@@ -26,9 +26,13 @@ class Counter extends React.Component {
 
   render() {
     const { count, DIGITS } = this.state;
+
     const binary = count
+                    // to binary
                     .toString(2)
+                    // padded to have an arbitrary number of digits
                     .padStart(DIGITS, "0")
+                    // to an array
                     .split("")
                     .map((value, index, { length }) => ({
                       key: index,
@@ -38,6 +42,7 @@ class Counter extends React.Component {
     return (
       <div>
         {
+          // render one svg for each value
           binary.map(({key, hue, isOn}) => <LightBulb key={key} hue={hue} isOn={isOn} />)
         }
       </div>

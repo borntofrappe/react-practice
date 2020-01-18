@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100">
+  <defs>
+    <path id="dash" d="M 0 0 h 10" />
+  </defs>
+  <g id="graphic" stroke="hsl(0, 0%, 100%)" fill="none" stroke-width="2" stroke-linecap="round">
+    <g id="dashes">
+      <use transform="rotate(45) translate(30 0)" href="#dash" />
+      <use transform="rotate(90) translate(45 0)" href="#dash" />
+      <use transform="rotate(135) translate(30 0)" href="#dash" />
+      <use transform="rotate(180) translate(45 0)" href="#dash" />
+    </g>
+      <use href="#dashes" transform="scale(-1 -1)" />
+    </g>
+</svg>
