@@ -13,6 +13,8 @@ const Container = styled.div`
 `;
 
 const Form = styled.form`
+  color: hsl(207, 26%, 16%);
+
   background: hsl(0, 0%, 100%);
   box-shadow: 0 2px 10px -7px hsla(0, 0%, 0%, 0.8);
   padding: 28px 36px;
@@ -36,6 +38,7 @@ const Select = styled.select`
   padding: 0.2rem 0.5rem;
 `;
 
+
 function App() {
   const url = "https://api.covid19api.com";
   const [countries, setCountries] = useState([]);
@@ -48,58 +51,63 @@ function App() {
     fetch(`${url}/countries`)
       .then(response => response.json())
       .then(json => {
-        setCountries(json.map(({Country, Slug}) => ({
-          country: Country,
-          slug: Slug,
-        })));
+        setCountries(
+          json.map(({ Country, Slug }) => ({
+            country: Country,
+            slug: Slug
+          }))
+        );
       });
   }, []);
 
   useEffect(() => {
-    if(country) {
+    if (country) {
       fetch(`${url}/total/country/${country}/status/${status}`)
         .then(response => response.json())
         .then(json => {
-          setData(json.map(({Date, Cases}) => ({
-            date: Date,
-            cases: Cases,
-          })))
+          setData(
+            json.map(({ Date, Cases }) => ({
+              date: Date,
+              cases: Cases
+            }))
+          );
         });
     }
   }, [country, status]);
 
   return (
     <Container>
-      {
-        countries.length > 0 ?
-      <Form onSubmit={(e) => e.preventDefault()}>
-        <Label>
-          Country
-          <Select onInput={(e) => setCountry(e.target.value)}>
-            <option>---</option>
-            {
-            countries.map(({country, slug}) => <option value={slug} key={slug}>{country}</option>)
-            }
-          </Select>
-        </Label>
-        <Label>
-          Status
-          <Select onInput={(e) => setStatus(e.target.value)}>
-            {
-              statuses.map(status => <option value={status} key={status}>{status}</option>)
-            }
-          </Select>
-        </Label>
-    </Form>
-        : null
-      }
-    {
-      data.length > 0 &&
-      <LineChart country={country} status={status} data={data} />
-    }
-
+      {countries.length > 0 ? (
+        <Form onSubmit={e => e.preventDefault()}>
+          <Label>
+            Country
+            <Select onInput={e => setCountry(e.target.value)}>
+              <option>---</option>
+              {countries.map(({ country, slug }) => (
+                <option value={slug} key={slug}>
+                  {country}
+                </option>
+              ))}
+            </Select>
+          </Label>
+          <Label>
+            Status
+            <Select onInput={e => setStatus(e.target.value)}>
+              {statuses.map(status => (
+                <option value={status} key={status}>
+                  {status}
+                </option>
+              ))}
+            </Select>
+          </Label>
+        </Form>
+      ) : null}
+      {data.length > 0 && (
+        <LineChart country={country} status={status} data={data} />
+      )}
     </Container>
   );
 }
+
 
 export default App;

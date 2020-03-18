@@ -1,3 +1,3 @@
-# Line Charts
+# [Line Charts](https://codepen.io/borntofrappe/full/dyoKaOR)
 
-This project allows me to practice with React, hooks and D3 to collect data from a public API.
+Practice with React, hooks, specifically `useEffect` and the fetch API to display information retrieved from a public API.

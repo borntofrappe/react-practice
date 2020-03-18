@@ -3,6 +3,7 @@ import { scaleLinear, scaleTime, max, min, line, format, timeFormat, ticks } fro
 import styled from 'styled-components';
 
 const Main = styled.main`
+  color: hsl(207, 26%, 16%);
   background: hsl(0, 0%, 100%);
   box-shadow: 0 2px 10px -7px hsla(0, 0%, 0%, 0.8);
   padding: 20px 28px;
@@ -34,13 +35,12 @@ const SVG = styled.svg`
   text {
     text-transform: capitalize;
   }
-`
+`;
 
-function LineChart({country, status, data}) {
+function LineChart({ country, status, data }) {
   const margin = 30;
   const width = 600;
   const height = 400;
-
 
   const total = data.reduce((acc, curr) => acc + curr.cases, 0);
   const formatNumber = format(",");
@@ -51,8 +51,8 @@ function LineChart({country, status, data}) {
     .domain([0, maxCases])
     .range([height, 0]);
 
-    const dayOne = min(data, d => new Date(d.date));
-    const dayLast = max(data, d => new Date(d.date));
+  const dayOne = min(data, d => new Date(d.date));
+  const dayLast = max(data, d => new Date(d.date));
   const xScale = scaleTime()
     .domain([dayOne, dayLast])
     .range([0, width]);
@@ -62,27 +62,51 @@ function LineChart({country, status, data}) {
     .y(d => yScale(d.cases));
 
   const ticksY = ticks(0, maxCases, 4);
-  const ticksX = data.filter((d, i) => i % 5 === 0).map(({date}) => date);
+  const ticksX = data.filter((d, i) => i % 5 === 0).map(({ date }) => date);
 
   return (
     <Main>
       <H1>{country}</H1>
-      <H2>{formatNumber(total)} <span>{status}</span></H2>
-      <SVG viewBox={`0 0 ${width + margin * 2} ${height + margin * 2}`} width={width} height={height}>
+      <H2>
+        {formatNumber(total)} <span>{status}</span>
+      </H2>
+      <SVG
+        viewBox={`0 0 ${width + margin * 2} ${height + margin * 2}`}
+        width={width}
+        height={height}
+      >
         <g transform={`translate(${margin} ${margin})`}>
           <g>
-            {
-              ticksY.map(tick => <g key={`y-${tick}`}>
-                  <path fill="none" stroke="currentColor" strokeDasharray="2 3" opacity="0.3" d={`M 0 ${yScale(tick)} h ${width}`} />
-                  <text fontSize="25" y={yScale(tick) - 5}>{formatNumber(tick)}</text>
-                </g>)
-            }
-            {
-              ticksX.map(tick => <g key={`x-${tick}`} transform={`translate(${xScale(new Date(tick))} ${height})`}>
-                  <path fill="none" stroke="currentColor" opacity="0.3" d={`M 0 0 v 5`} />
-                  <text fontSize="25" y="25">{formatDay(new Date(tick))}</text>
-                </g>)
-            }
+            {ticksY.map(tick => (
+              <g key={`y-${tick}`}>
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  strokeDasharray="2 3"
+                  opacity="0.3"
+                  d={`M 0 ${yScale(tick)} h ${width}`}
+                />
+                <text fontSize="25" y={yScale(tick) - 5}>
+                  {formatNumber(tick)}
+                </text>
+              </g>
+            ))}
+            {ticksX.map(tick => (
+              <g
+                key={`x-${tick}`}
+                transform={`translate(${xScale(new Date(tick))} ${height})`}
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  opacity="0.3"
+                  d={`M 0 0 v 5`}
+                />
+                <text fontSize="25" y="25">
+                  {formatDay(new Date(tick))}
+                </text>
+              </g>
+            ))}
           </g>
           <g fill="none" stroke="currentColor" strokeWidth="5">
             <path d={lineFunction(data)} />
@@ -90,7 +114,7 @@ function LineChart({country, status, data}) {
         </g>
       </SVG>
     </Main>
-  )
+  );
 }
 
 export default LineChart;
