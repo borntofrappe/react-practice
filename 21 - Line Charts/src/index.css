@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Mukta Malar", sans-serif;
+  color: hsl(207, 26%, 16%);
+  background: hsl(0, 0%, 95%);
+}
