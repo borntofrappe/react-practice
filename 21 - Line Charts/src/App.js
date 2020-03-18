@@ -1,30 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import LineChart from './LineChart';
 
 function App() {
+  const url = "https://api.covid19api.com";
+  const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState();
+  const statuses = ["confirmed", "deaths", "recovered"];
+  const [status, setStatus] = useState(statuses[0]);
   const [data, setData] = useState([]);
 
-  const randomDataPoint = () => ({
-    value: Math.floor(Math.random() * 100),
-    id: Math.random()
-  })
+  useEffect(() => {
+    fetch(`${url}/countries`)
+      .then(response => response.json())
+      .then(json => {
+        setCountries(json.map(({Country, Slug}) => ({
+          country: Country,
+          slug: Slug,
+        })));
+      });
+  }, []);
 
-  const addData = () => setData([...data, randomDataPoint()]);
-  const removeData = () => setData([...data.slice(0, -2)]);
-
+  useEffect(() => {
+    if(country) {
+      fetch(`${url}/total/country/${country}/status/${status}`)
+        .then(response => response.json())
+        .then(json => {
+          setData(json.map(({Date, Cases}) => ({
+            date: Date,
+            cases: Cases,
+          })))
+        });
+    }
+  }, [country, status]);
 
   return (
-    <div>
-      <h1>Line Chart</h1>
-      <button onClick={() => addData()}>Add data point</button>
-      <button onClick={() => removeData()}>Remove data point</button>
-
-      <>
+    <>
       {
-        data.map(({value, id}) => <span key={id}>{value}</span>)
+        countries.length > 0 ?
+      <form onSubmit={(e) => e.preventDefault()}>
+        <label>
+          Select country
+          <select onInput={(e) => setCountry(e.target.value)}>
+            <option>---</option>
+            {
+            countries.map(({country, slug}) => <option value={slug} key={slug}>{country}</option>)
+            }
+          </select>
+        </label>
+        <label>
+          Select status
+          <select onInput={(e) => setStatus(e.target.value)}>
+            {
+              statuses.map(status => <option value={status} key={status}>{status}</option>)
+            }
+          </select>
+        </label>
+    </form>
+        : null
       }
-      </>
+    {
+      data.length > 0 &&
+      <LineChart data={data} />
+    }
 
-    </div>
+    </>
   );
 }
 

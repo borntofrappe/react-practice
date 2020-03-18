@@ -1,14 +1,32 @@
 import React from 'react';
+import { scaleLinear, scaleTime, extent, max, line } from 'd3';
 
-function LineChart(props) {
-  console.log(props);
+function LineChart({data}) {
+  const margin = 25;
+  const width = 400;
+  const height = 400;
 
-  const width = 500;
-  const height = 500;
+
+  const yScale = scaleLinear()
+    .domain([0, max(data, d => d.cases)])
+    .range([height, 0]);
+
+  const xScale = scaleTime()
+    .domain(extent(data, d => new Date(d.date)))
+    .range([0, width]);
+
+  const lineFunction = line()
+    .x(d => xScale(new Date(d.date)))
+    .y(d => yScale(d.cases));
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
-      <circle r="2" cx="50" cy="50" />
+    <svg viewBox={`0 0 ${width + margin * 2} ${height + margin * 2}`} width={width} height={height}>
+      <g transform={`translate(${margin} ${margin})`}>
+        <text>{data.reduce((acc, curr) => acc + curr.cases, 0)} Cases</text>
+        <g fill="none" stroke="currentColor" strokeWidth="5">
+          <path d={lineFunction(data)} />
+        </g>
+      </g>
     </svg>
   )
 }
