@@ -42,7 +42,7 @@ function LineChart({ country, status, data }) {
   const width = 600;
   const height = 400;
 
-  const total = data.reduce((acc, curr) => acc + curr.cases, 0);
+  const total = data[data.length - 1].cases;
   const formatNumber = format(",");
   const formatDay = timeFormat("%d/%m");
 
