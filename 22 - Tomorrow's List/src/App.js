@@ -1,66 +1,23 @@
 import React, { useState } from 'react';
 import List from './List';
-import styled from 'styled-components';
+import styled from 'styled-components'
+import { Container, Form, Label, Input, Button } from './StyledComponents';
 
-const Container = styled.div`
-  margin: 2.5rem auto;
-  max-width: 25em;
-  width: 90vw;
-`;
-
-const Form = styled.form`
-  display: flex;
-  position: relative;
-`;
-
-const Label = styled.label`
-  position: absolute;
-  bottom: 100%;
-  font-size: 0.9rem;
-  margin: 0.25rem 0;
-`;
-
-const Input = styled.input`
-  flex-grow: 1;
-  padding: 0.5rem;
-  background: none;
-  font-size: 0.9rem;
-  font-family: inherit;
-  border: 2px solid currentColor;
-  outline: none;
-
-  &:placeholder {
-    font-family: inherit;
-  }
-  &:focus {
-    border-color: hsl(150, 90%, 30%);
-  }
-
-  &:focus + button {
-    background: hsl(150, 90%, 30%);
-  }
-`;
-
-const Button = styled.button`
+const AddButton = styled(Button)`
   background: hsl(200, 95%, 5%);
   color: hsl(0, 0%, 98%);
-  padding: 0.5rem;
-  border: none;
   font-size: 0.9rem;
   text-transform: uppercase;
 
   &:focus {
     outline-color: hsl(150, 90%, 30%);
-  background: hsl(150, 90%, 30%);
+    background: hsl(150, 90%, 30%);
   }
-`;
+`
 
 function App() {
   const [value, setValue] = useState("");
-  const [list, setList] = useState([{
-    value: 'Drink some water',
-    id: 0.456845145,
-  }]);
+  const [list, setList] = useState([]);
 
   function updateValue(e) {
     setValue(e.target.value)
@@ -96,10 +53,10 @@ function App() {
           name="task"
           id="task"
           type="text"
-          placeholder="Morning exercises" />
-        <Button>
+          placeholder="Something neat" />
+        <AddButton>
           Add
-        </Button>
+        </AddButton>
       </Form>
 
       {list.length > 0 && <>
