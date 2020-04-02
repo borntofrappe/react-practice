@@ -13,7 +13,7 @@ const AddButton = styled(Button)`
     outline-color: hsl(150, 90%, 30%);
     background: hsl(150, 90%, 30%);
   }
-`
+`;
 
 function App() {
   const initialState = {
