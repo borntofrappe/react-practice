@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  min-height: 100vh;
+  background: hsl(0, 0%, 98%);
+  color: hsl(220, 95%, 8%);
+  background-image: url("data:image/svg+xml,%3Csvg opacity='0.5' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 157.5 95' width='157.5' height='95'%3E%3Cg fill='none' stroke='hsl(50, 90%25, 10%25)' stroke-width='0.5'%3E%3Cpath d='M 0 45 h 47 l 55 -44.75 55 44.75 v 50' /%3E%3Cpath d='M 145 5 a 7.5 7.5 0 0 0 10 10 9 9 0 1 1 -10 -10' /%3E%3Cpath d='M 28 45 a 5 5 0 0 1 0 -10 1.5 1.5 0 0 1 0 3 2 2 0 0 0 0 4 h 4 a 11 11 0 0 1 11 -11 v -5.5 l 2 2.5 a 8 8 0 0 1 8 0 l 2 -2.5 v 7.8' /%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  background-size: 70vmin;
+  font-family: "Roboto", sans-serif;
+  border-top: 0.5rem solid currentColor;
+}
+.container {
+  margin: 2.5rem auto;
+  max-width: 25em;
+  width: 90vw;
+}
+form {
+  display: flex;
+  position: relative;
+}
+form label {
+  position: absolute;
+  bottom: 100%;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+form input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  background: none;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 2px solid currentColor;
+  outline: none;
+}
+form input:focus {
+  border-color: hsl(150, 90%, 30%);
+}
+form input:focus + button {
+  background: hsl(150, 90%, 30%);
+}
+form label input:placeholder {
+  font-family: inherit;
+}
+form button {
+  background: hsl(200, 95%, 5%);
+  color: hsl(0, 0%, 98%);
+  padding: 0.5rem;
+  border: none;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+form button:focus {
+  outline-color: hsl(150, 90%, 30%);
+  background: hsl(150, 90%, 30%);
+}
+ul {
+  list-style: none;
+  padding: 0.5rem 0;
+}
+
+ul li {
+  display: flex;
+  padding: 0.5rem 0;
+  align-items: flex-end;
+}
+ul li p {
+  flex-grow: 1;
+  font-size: 0.9rem;
+}
+ul li > * + * {
+  margin-left: 0.5rem;
+}
+ul li button {
+  background: hsl(200, 95%, 5%);
+  color: hsl(0, 0%, 98%);
+  padding: 0.5rem;
+  border: none;
+}
+ul li button:focus {
+  outline-color: hsl(0, 90%, 40%);
+  background: hsl(0, 90%, 40%);
+}

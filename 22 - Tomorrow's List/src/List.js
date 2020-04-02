@@ -1,17 +1,43 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
+import styled from 'styled-components';
 
-export default ({list, removeValueById}) => <Grid container direction="row" component="ul">
-  {list && list.map(({value, id}) => <Grid style={{ marginBottom: "0.75rem"}} xs={4} component="li" key={id}>
-    <p style={{fontSize: "1.5rem", marginBottom: "0.5rem"}}>{value}</p>
-    <Button
-      variant="outlined"
-      disableElevation
-      onClick={() => removeValueById(id)}>
+const List = styled.ul`
+  list-style: none;
+  padding: 0.5rem 0;
+`;
+const Item = styled.li`
+  display: flex;
+  padding: 0.5rem 0;
+  align-items: flex-end;
+
+  & > * + * {
+    margin-left: 0.5rem;
+  }
+`;
+const Value = styled.p`
+  flex-grow: 1;
+  font-size: 0.9rem;
+`;
+
+const Button = styled.button`
+  background: hsl(200, 95%, 5%);
+  color: hsl(0, 0%, 98%);
+  padding: 0.5rem;
+  border: none;
+
+  &:focus {
+    outline-color: hsl(0, 90%, 40%);
+    background: hsl(0, 90%, 40%);
+  }
+`;
+
+export default ({list, removeValueById}) => <List>
+  {list && list.map(({value, id}) => <Item key={id}>
+    <Value>
+      {value}
+    </Value>
+    <Button onClick={() => removeValueById(id)}>
         Remove
-        <DeleteOutlined />
       </Button>
-  </Grid>)}
-</Grid>
+  </Item>)}
+</List>

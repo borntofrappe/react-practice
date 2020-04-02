@@ -1,17 +1,65 @@
 import React, { useState } from 'react';
 import List from './List';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import AddBox from '@material-ui/icons/AddBox';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import DeleteForever from '@material-ui/icons/DeleteForever'
+import styled from 'styled-components';
+
+const Container = styled.div`
+  margin: 2.5rem auto;
+  max-width: 25em;
+  width: 90vw;
+`;
+
+const Form = styled.form`
+  display: flex;
+  position: relative;
+`;
+
+const Label = styled.label`
+  position: absolute;
+  bottom: 100%;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+`;
+
+const Input = styled.input`
+  flex-grow: 1;
+  padding: 0.5rem;
+  background: none;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 2px solid currentColor;
+  outline: none;
+
+  &:placeholder {
+    font-family: inherit;
+  }
+  &:focus {
+    border-color: hsl(150, 90%, 30%);
+  }
+
+  &:focus + button {
+    background: hsl(150, 90%, 30%);
+  }
+`;
+
+const Button = styled.button`
+  background: hsl(200, 95%, 5%);
+  color: hsl(0, 0%, 98%);
+  padding: 0.5rem;
+  border: none;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+
+  &:focus {
+    outline-color: hsl(150, 90%, 30%);
+  background: hsl(150, 90%, 30%);
+  }
+`;
 
 function App() {
   const [value, setValue] = useState("");
   const [list, setList] = useState([{
-    value: 'grocery',
-    id: 2,
+    value: 'Drink some water',
+    id: 0.456845145,
   }]);
 
   function updateValue(e) {
@@ -28,11 +76,6 @@ function App() {
       setValue('');
     }
   }
-
-  function clearList() {
-    setList([]);
-  }
-
   function removeValueById(id) {
     const index = list.findIndex(item => item.id === id);
     if(index !== -1) {
@@ -41,35 +84,28 @@ function App() {
   }
 
   return (
-    <Container style={{margin: "2rem auto", maxWidth: "30em"}}>
-      <Box component="form" onSubmit={updateList} style={{ display: 'flex', marginBottom: "1.5rem" }}>
-        <TextField
-          style={{flexGrow: '1'}}
+    <Container>
+      <Form onSubmit={updateList}>
+        <Label for="task">
+          New task
+        </Label>
+        <Input
+          required
           value={value}
           onChange={updateValue}
-          required
           name="task"
           id="task"
           type="text"
-          label="New task"
-          variant="outlined" />
-
-        <Button variant="contained" color="primary" disableElevation style={{ marginLeft: "0.4rem "}}>
+          placeholder="Morning exercises" />
+        <Button>
           Add
-          <AddBox
-            style={{ fontSize: "1.75em", marginLeft: "0.5rem", lineHeight: "1.75em"}} />
         </Button>
-      </Box>
+      </Form>
 
       {list.length > 0 && <>
         <List
           list={list}
           removeValueById={removeValueById} />
-
-        <Button style={{marginTop: "1.5rem"}} variant="contained" disableElevation color="secondary" onClick={clearList}>
-          Clear List
-          <DeleteForever />
-        </Button>
       </>}
     </Container>
   );

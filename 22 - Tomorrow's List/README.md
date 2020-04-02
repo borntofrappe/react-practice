@@ -16,3 +16,11 @@ The only flair introduced in the project is in the form of the following SVG ele
 ```
 
 It describes the outline of a cat, sitting on the outline of a house. I've managed to create the illustration while `create-react-app` was setting up the website and I'd like to include it in the body's background, to reinforce the point of the application: a list for tomorrow'ss priorities. As I see it, I will use the application at the end of the day, to set the priorities of the day which follows.
+
+## Style
+
+At first I decided to test out a popular framework in [material-ui](https://material-ui.com/). I'm sure it's more out of inexperience than anything, but I found the design rather cumbersome and incredibly inefficient, so I switched back to CSS and `styled-components`. In the **res** folder you find a basic idea behind the design of the application using HTML and CSS.
+
+<!-- ## useState -->
+
+<!-- ## useReducer -->
