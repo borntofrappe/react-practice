@@ -5,9 +5,9 @@
 }
 body {
   min-height: 100vh;
-  background: hsl(207, 95%, 5%);
-  color: hsl(200, 95%, 95%);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 157.5 95' width='157.5' height='95'%3E%3Cg fill='none' stroke='hsl(45, 95%25, 20%25)' stroke-width='0.5'%3E%3Cpath d='M 0 45 h 47 l 55 -44.75 55 44.75 v 50' /%3E%3Cpath d='M 28 45 a 5 5 0 0 1 0 -10 1.5 1.5 0 0 1 0 3 2 2 0 0 0 0 4 h 4 a 11 11 0 0 1 11 -11 v -5.5 l 2 2.5 a 8 8 0 0 1 8 0 l 2 -2.5 v 7.8' /%3E%3C/g%3E%3C/svg%3E");
+  background: hsl(0, 0%, 95%);
+  color: hsl(200, 95%, 5%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 157.5 95' width='157.5' height='95'%3E%3Cg fill='none' stroke='hsl(50, 90%25, 10%25)' stroke-width='0.5'%3E%3Cpath d='M 0 45 h 47 l 55 -44.75 55 44.75 v 50' /%3E%3Cpath d='M 145 5 a 7.5 7.5 0 0 0 10 10 9 9 0 1 1 -10 -10' /%3E%3Cpath d='M 28 45 a 5 5 0 0 1 0 -10 1.5 1.5 0 0 1 0 3 2 2 0 0 0 0 4 h 4 a 11 11 0 0 1 11 -11 v -5.5 l 2 2.5 a 8 8 0 0 1 8 0 l 2 -2.5 v 7.8' /%3E%3C/g%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 0% 100%;
   background-size: 300px;
