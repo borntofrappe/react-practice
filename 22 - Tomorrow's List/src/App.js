@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import List from './List';
 import styled from 'styled-components'
 import { Container, Form, Label, Input, Button } from './StyledComponents';
@@ -16,40 +16,50 @@ const AddButton = styled(Button)`
 `
 
 function App() {
-  const [value, setValue] = useState("");
-  const [list, setList] = useState([]);
-
-  function updateValue(e) {
-    setValue(e.target.value)
+  const initialState = {
+    value: '',
+    list: [],
   }
 
-  function updateList(e) {
-    e.preventDefault();
-    if(value) {
-      setList([{
-        value,
-        id: Math.random(),
-      }, ...list]);
-      setValue('');
+  function reducer(state, action) {
+    switch(action.type) {
+      case 'UPDATE_VALUE':
+        return {...state, value: action.value };
+      case 'ADD_ITEM_TO_LIST':
+        const item = {
+          id: Math.random(),
+          value: state.value
+        };
+        return {...state, value: '', list: [item, ...state.list]}
+      case 'REMOVE_ITEM_FROM_LIST':
+        const { list } = state;
+        const index = list.findIndex(item => item.id === action.id);
+        return {...state, list: [...list.slice(0, index), ...list.slice(index + 1)]};
+      default:
+        return state;
     }
   }
-  function removeValueById(id) {
-    const index = list.findIndex(item => item.id === id);
-    if(index !== -1) {
-      setList([...list.slice(0, index), ...list.slice(index + 1)]);
-    }
-  }
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <Container>
-      <Form onSubmit={updateList}>
+      <Form onSubmit={(e) => {
+        e.preventDefault();
+        dispatch({
+          type: 'ADD_ITEM_TO_LIST'
+        });
+      }}>
         <Label for="task">
           New task
         </Label>
         <Input
           required
-          value={value}
-          onChange={updateValue}
+          value={state.value}
+          onChange={(e) => dispatch({
+            type: 'UPDATE_VALUE',
+            value: e.target.value
+          })}
           name="task"
           id="task"
           type="text"
@@ -59,10 +69,10 @@ function App() {
         </AddButton>
       </Form>
 
-      {list.length > 0 && <>
+      {state.list.length > 0 && <>
         <List
-          list={list}
-          removeValueById={removeValueById} />
+          list={state.list}
+          dispatch={dispatch} />
       </>}
     </Container>
   );

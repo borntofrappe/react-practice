@@ -15,11 +15,11 @@ The only flair introduced in the project is in the form of the following SVG ele
 </svg>
 ```
 
-It describes the outline of a cat, sitting on the outline of a house. I've managed to create the illustration while `create-react-app` was setting up the website and I'd like to include it in the body's background, to reinforce the point of the application: a list for tomorrow'ss priorities. As I see it, I will use the application at the end of the day, to set the priorities of the day which follows.
+It describes the outline of a cat, comfortably sitting on the outline of a house. I've managed to create the illustration while `create-react-app` was setting up the website and I'd like to include it in the body's background.
 
 ## Style
 
-At first I decided to test out a popular framework in [material-ui](https://material-ui.com/). I'm sure it's more out of inexperience than anything, but I found the design rather cumbersome and incredibly inefficient, so I switched back to CSS and `styled-components`. In the **res** folder you find a basic idea behind the design of the application using HTML and CSS.
+At first I decided to test out a popular framework in [material-ui](https://material-ui.com/). I'm sure it's more out of inexperience than anything, but I found the design process rather cumbersome and incredibly inefficient, so I switched back to CSS and `styled-components`. In the **res** folder you find a basic idea behind the design of the application using HTML and CSS.
 
 ## useState
 
@@ -157,4 +157,148 @@ function removeValueById(id) {
 }
 ```
 
-<!-- ## useReducer -->
+## useReducer
+
+I've saved the two components in the **res** folder, but the exercise of the current project requires the code to be updated with `useReducer` instead of the `useState` hook.
+
+Following [this insightful workout](https://youtu.be/sf4spiPynBE), `useReducer` allows for a more expressive approach. Instead of updating the state directly, you dispatch an action with a given type and then accommodate the change to the state in the reducer function.
+
+This bit of code, while not functional, actually helps a lot.
+
+```js
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+- in the hook pass the reducer function (the one which will handle the different updates) and the initial state
+
+- the hook returns an array from which you can destructure the state, to use it throughout the application, and a method to dispatch actions.
+
+Think of it this way:
+
+- `reducer` handles the different updates
+
+```js
+function reducer(state, action) {
+  switch (action.type) {
+    case "DO_SOMETHING":
+      console.log(action.value);
+      return "";
+    default:
+      return null;
+  }
+}
+```
+
+- the `dispatch` function then specifies the necessary arguments
+
+```js
+dispatch({
+  type: "DO_SOMETHING",
+  value: "Hello world"
+});
+```
+
+I'll refer you back to [the workout](https://youtu.be/sf4spiPynBE) for a more clear explanation.
+
+Updating the project one step at a time.
+
+### initialState
+
+Nothing too extravagant here, but an object describing the value and list.
+
+```js
+const initialState = {
+  value: "",
+  list: []
+};
+```
+
+### reducer
+
+The function takes as argument the state and the action which updates the state.
+
+```js
+function reducer(state, action) {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
+```
+
+Picking up from the previous useState methods, I need to account for three actions:
+
+1. update value
+
+   ```js
+   function reducer(state, action) {
+     switch (action.type) {
+       case "UPDATE_VALUE":
+         return { ...state, value: action.value };
+       default:
+         return state;
+     }
+   }
+   ```
+
+   It doesn't take much to update the previous approach. You just need to remember to pass the appropriate type and value property in the `dispatch` function. More on that in a bit.
+
+1. add to list
+
+   ```js
+   function reducer(state, action) {
+     switch (action.type) {
+       case "ADD_ITEM_TO_LIST":
+         const item = {
+           id: Math.random(),
+           value: state.value
+         };
+         return { ...state, value: "", list: [item, ...state.list] };
+       default:
+         return state;
+     }
+   }
+   ```
+
+   I'm noticing how much ES6 can make life easier. Not only destructuring arrays, but objects as well, comes in very handy.
+
+1. remove from list
+
+   ```js
+   function reducer(state, action) {
+     switch (action.type) {
+       case "REMOVE_ITEM_FROM_LIST":
+         const { list } = state;
+         const index = list.findIndex(item => item.id === action.id);
+         return { ...state, list: [...list.slice(0, index), ...list.slice(index + 1)] };
+       default:
+         return state;
+     }
+   }
+   ```
+
+### useReducer
+
+The previous snippet is actually and now functional
+
+```js
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+Use the variables in the JSX like you would for any variable.
+
+```jsx
+<input value={state.value}>
+```
+
+Update the state dispatching the appropriate actions.
+
+```jsx
+<input
+  onChance={(e) => dispatch({
+    type: 'UPDATE_VALUE',
+    value: e.target.value
+  })}>
+```
+
+It's probably exaggerated for the simple application, but makes everything quite more clear. I can see the appeal as projects grow in complexity.
