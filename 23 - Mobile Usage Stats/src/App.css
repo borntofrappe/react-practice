@@ -1,4 +1,30 @@
 div {
   background: hsl(0, 0%, 100%);
-  color: hsl(0, 0%, 10%);
+  color: hsl(0, 0%, 20%);
+  max-width: 22rem;
+  width: 95vw;
+  margin: 1rem auto;
+  border-radius: 20px;
+}
+
+nav {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+nav h2 {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+nav > * + *,
+nav h2 > * + * {
+  margin-left: 0.5rem;
+}
+nav > *:last-of-type {
+  margin-left: auto;
+}
+.visually-hidden {
+  display: none;
 }
