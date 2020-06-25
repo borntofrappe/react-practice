@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -90 100 100" width="2em" height="2em">
+    <defs>
+        <rect id="signal" x="-7.5" width="15" y="-80" height="80"/>
+    </defs>
+    <g fill="currentColor" stroke="none">
+        <use x="-35" href="#signal" transform="scale(1 0.25)"/>
+        <use x="-12.5" href="#signal" transform="scale(1 0.5)"/>
+        <use x="12.5" href="#signal" transform="scale(1 0.75)"/>
+        <use x="35" href="#signal" transform="scale(1 1)"/>
+    </g>
+</svg>

@@ -10,3 +10,13 @@ const phone = {
   gigabytes, // integer in the 0-100 range describing the mobile data left
 };
 ```
+
+## SVG
+
+The most prominent vector graphic describes the gigabytes left in the plan. However, and in the `<nav>` at the top of the interface, data is mapped starting from the syntax of the following icons:
+
+- signal
+- wifi, wifi-unavailable
+- battery
+
+See the **res** folder for the actual syntax.
