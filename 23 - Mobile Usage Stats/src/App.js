@@ -2,40 +2,36 @@ import React, { useState } from 'react';
 import './App.css';
 import { getPercentage, getRandomInt, getRandomFloat, zeroPad } from './utils';
 import Signal from './Signal';
-import Battery from './Battery';
 import Wifi from './Wifi';
-import * as d3 from 'd3';
+import Battery from './Battery';
+import { arc } from 'd3';
 
 function App() {
   const maxSignal = 4;
   const maxGigabytes = 20;
 
-  const [date, setDate] = useState(new Date());
-  const [hasWifi, setHasWifi] = useState(Math.random() > 0.5);
-  const [signal, setSignal] = useState(
-    Math.floor((getPercentage() / 100) * maxSignal)
-  );
-  const [battery, setBattery] = useState(getPercentage());
-  const [gigabytes, setGigabytes] = useState(getRandomFloat(maxGigabytes));
+  const [date] = useState(new Date());
+  const [hasWifi] = useState(Math.random() > 0.5);
+  const [signal] = useState(Math.floor((getPercentage() / 100) * maxSignal));
+  const [battery] = useState(getPercentage());
+  const [gigabytes] = useState(getRandomFloat(maxGigabytes));
 
-  const [days, setDays] = useState(getRandomInt(30));
-  const [credit, setCredit] = useState(getRandomFloat(10));
+  const [days] = useState(getRandomInt(30));
+  const [credit] = useState(getRandomFloat(10));
 
   const minutes = date.getMinutes();
   const hours = date.getHours();
 
   const endAngle = (Math.PI * 8) / 4.75;
   const angle = (endAngle * gigabytes) / maxGigabytes;
-  const pathL = d3.arc().startAngle(0).innerRadius(44).outerRadius(44);
+  const pathL = arc().startAngle(0).innerRadius(44).outerRadius(44);
 
-  const pathM = d3
-    .arc()
+  const pathM = arc()
     .startAngle(0)
     .endAngle(endAngle)
     .innerRadius(32.5)
     .outerRadius(32.5);
-  const pathS = d3
-    .arc()
+  const pathS = arc()
     .startAngle(0)
     .endAngle(endAngle)
     .innerRadius(21)
@@ -69,7 +65,7 @@ function App() {
       </nav>
 
       <main>
-        <h1>Mobile Usage</h1>
+        <h1>Current plan</h1>
         <svg viewBox="-50 -50 100 100" width="200" height="200">
           <defs>
             <path id="path-l" d={pathL.endAngle(endAngle)()} />
@@ -94,10 +90,10 @@ function App() {
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <use href="#path-l" stroke="#1764BC" opacity="0.2" />
-            <use href="#path-lo" stroke="#1764BC" />
-            <use href="#path-m" stroke="#930096" />
-            <use href="#path-s" stroke="#CF00BC" />
+            <use href="#path-l" stroke="var(--gradient-end)" opacity="0.2" />
+            <use href="#path-lo" stroke="var(--gradient-end)" />
+            <use href="#path-m" stroke="var(--gradient-mid)" />
+            <use href="#path-s" stroke="var(--gradient-start)" />
           </g>
 
           <g fill="hsl(0, 0%, 100%)" textAnchor="start" fontSize="4.5">

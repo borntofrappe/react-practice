@@ -1,26 +1,17 @@
-# Mobile Usage Stats
+# [Mobile Usage Stats](https://codepen.io/borntofrappe/full/qBbXbJM)
 
-The idea is to map data in the form of statistics regarding an hypothetical data plan. The interface receives data in the form of a data structure similar to the following.
-
-```js
-const data = {
-  signal, // an integer in the [0, 4] range describing the strength of the signal
-  wifi, // boolean detailing the presence of wifi connection
-  battery, // integer in the 0-100 range describing the battery left
-  gigabytes, // integer in the 0-100 range describing the mobile data left
-};
-```
+The idea is highlight key statistics for an hypothetical, almost random cellphone plan.
 
 ## SVG
 
-The most prominent vector graphic describes the gigabytes left in the plan. However, and in the `<nav>` at the top of the interface, data is mapped starting from the syntax of the following icons:
+The most prominent vector graphic describes the gigabytes left in the plan. However, and in the `<nav>` at the top of the interface, data is mapped starting from the syntax of the icons created in the **res** folder.
 
-- signal
-- wifi, wifi-unavailable
-- battery
+## D3
 
-See the **res** folder for the actual syntax.
+The project uses the `arc` function from D3 library to draw the arcs at the center of the application.
 
-## Arcs & Strokes
+You can achieve a similar result using a `path` element together with the `stroke-dasharray` and `stroke-dashoffset` properties, but you need to weigh your options:
 
-The project uses the `arc` function from D3 library to draw the arcs at the center of the application. Now, you can achieve a similar result using a circle (or path element) alongside the `stroke-dasharray` and `stroke-dashoffset` properties. You have to weigh the pros and cons of each approach: D3 requires an additional library, but is more reliable. `stroke-dash` works with native web technology, but requires you to know the full length of the stroke.
+- d3: you need an additional library, but have a more reliable solution. You need to do less to ensure cross-browser compatibility
+
+- stroke-dash: you don't need a library, but you do need to know the length of the stroke. The `pathLength` attribute helps, but it's not supported across the board, which means you need JavaScript and a reference to the DOM element to retrieve the measure with the `getTotalLength` method.

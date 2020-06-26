@@ -9,31 +9,36 @@
 }
 
 nav {
-  padding: 0.25rem 0.25rem;
+  padding: 0.2rem 0.25rem;
   width: 100%;
   display: flex;
   align-items: center;
   color: hsl(0, 0%, 100%);
   background-image: linear-gradient(
     to right,
-    hsl(286, 48%, 40%),
-    hsl(204, 100%, 37%)
+    var(--gradient-start),
+    var(--gradient-mid),
+    var(--gradient-end)
   );
 }
+
 nav div {
   display: flex;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 400;
 }
+
 nav div svg {
-  width: 1.25em;
+  width: 1.3em;
   height: auto;
 }
+
 nav > * + *,
 nav div > * + * {
   margin-left: 0.25rem;
 }
+
 nav > *:nth-last-of-type(2) {
   margin: 0 auto;
 }
@@ -44,9 +49,11 @@ main {
   align-items: center;
   margin: 3rem 0;
 }
+
 main > * + * {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
+
 main h1 {
   text-transform: uppercase;
   font-size: 0.9rem;
@@ -59,6 +66,7 @@ main > svg {
   width: 100%;
   height: auto;
 }
+
 main > svg text {
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -70,6 +78,7 @@ footer {
   justify-content: space-evenly;
   width: 100%;
 }
+
 footer h2 {
   font-size: 0.8rem;
   font-weight: 400;
@@ -78,11 +87,14 @@ footer h2 {
   flex-direction: column;
   text-align: center;
 }
+
 footer h2 span {
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 600;
 }
+
 footer h2 span span {
   font-size: 1rem;
   margin-left: 0.25rem;
+  font-weight: 400;
 }

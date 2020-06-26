@@ -18,7 +18,7 @@ export default ({ signal, maxSignal }) => {
             <g key={i}>
               <g transform={`translate(${-40 + (80 / length) * i} 0)`}>
                 <use
-                  opacity={`${i < signal ? 1 : 0.25}`}
+                  opacity={`${i < signal ? 1 : 0.3}`}
                   href="#signal"
                   transform={`scale(1 ${1 - 0.25 * (length - i - 1)})`}
                 />
