@@ -9,14 +9,14 @@ export default ({ signal, maxSignal }) => {
       height="1em"
     >
       <defs>
-        <rect id="signal" x="-7.5" width="15" y="-80" height="80" />
+        <rect id="signal" x="-7.5" width="15" y="-75" height="75" />
       </defs>
       <g fill="currentColor" stroke="none">
         {Array(maxSignal)
           .fill()
           .map((v, i, { length }) => (
             <g key={i}>
-              <g transform={`translate(${-30 + 20 * i} 0)`}>
+              <g transform={`translate(${-40 + (80 / length) * i} 0)`}>
                 <use
                   opacity={`${i < signal ? 1 : 0.25}`}
                   href="#signal"

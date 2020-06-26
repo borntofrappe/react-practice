@@ -17,7 +17,7 @@ export default ({ battery }) => (
       strokeWidth="2"
       rx="10"
     />
-    <path d="M 84 -10 a 10 10 0 0 1 0 20" />
+    <path fill="currentColor" d="M 84 -10 a 10 10 0 0 1 0 20" />
     <g transform="translate(7 0)">
       <g transform={`scale(${battery / 100} 1)`}>
         <rect

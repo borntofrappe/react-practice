@@ -1,39 +1,48 @@
-div {
+#root > div {
   background: hsl(0, 0%, 100%);
   color: hsl(0, 0%, 20%);
   max-width: 20rem;
   width: 95vw;
   margin: 1rem auto;
   border-radius: 20px;
+  padding: 1rem 1rem 2.5rem;
 }
 
 nav {
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.25rem;
   width: 100%;
   display: flex;
   align-items: center;
+  color: hsl(0, 0%, 100%);
+  background-image: linear-gradient(
+    to right,
+    hsl(286, 48%, 40%),
+    hsl(204, 100%, 37%)
+  );
 }
-nav h2 {
+nav div {
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+nav div svg {
+  width: 1.25em;
+  height: auto;
 }
 nav > * + *,
-nav h2 > * + * {
-  margin-left: 0.5rem;
+nav div > * + * {
+  margin-left: 0.25rem;
 }
-nav > *:last-of-type {
-  margin-left: auto;
-}
-.visually-hidden {
-  display: none;
+nav > *:nth-last-of-type(2) {
+  margin: 0 auto;
 }
 
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2.5rem 0;
+  margin: 3rem 0;
 }
 main > * + * {
   margin-top: 1rem;
@@ -45,12 +54,35 @@ main h1 {
   letter-spacing: 2px;
 }
 
-main svg {
-  padding: 1rem;
-  width: 90%;
+main > svg {
+  padding: 1.5rem;
+  width: 100%;
   height: auto;
 }
-main svg text {
+main > svg text {
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+footer h2 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+footer h2 span {
+  font-size: 2rem;
+  font-weight: 500;
+}
+footer h2 span span {
+  font-size: 1rem;
+  margin-left: 0.25rem;
 }

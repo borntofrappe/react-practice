@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { getPercentage } from './utils';
+import { getPercentage, getRandomInt, getRandomFloat, zeroPad } from './utils';
 import Signal from './Signal';
 import Battery from './Battery';
 import Wifi from './Wifi';
@@ -10,14 +10,19 @@ function App() {
   const maxSignal = 4;
   const maxGigabytes = 20;
 
-  const [hasWifi, setHasWifi] = useState(true);
+  const [date, setDate] = useState(new Date());
+  const [hasWifi, setHasWifi] = useState(Math.random() > 0.5);
   const [signal, setSignal] = useState(
     Math.floor((getPercentage() / 100) * maxSignal)
   );
   const [battery, setBattery] = useState(getPercentage());
-  const [gigabytes, setGigabytes] = useState(
-    Math.floor((getPercentage() / 100) * maxGigabytes)
-  );
+  const [gigabytes, setGigabytes] = useState(getRandomFloat(maxGigabytes));
+
+  const [days, setDays] = useState(getRandomInt(30));
+  const [credit, setCredit] = useState(getRandomFloat(10));
+
+  const minutes = date.getMinutes();
+  const hours = date.getHours();
 
   const endAngle = (Math.PI * 8) / 4.75;
   const angle = (endAngle * gigabytes) / maxGigabytes;
@@ -39,24 +44,28 @@ function App() {
   return (
     <div>
       <nav>
-        <h2>
+        <div>
           <span className="visually-hidden">
             Signal: {signal} out of {maxSignal} bars
           </span>
           <Signal signal={signal} maxSignal={maxSignal} />
-        </h2>
-        <h2>
+        </div>
+        <div>
           <span className="visually-hidden">
             Wifi: {hasWifi ? 'available' : 'unavailable'}
           </span>
           <Wifi hasWifi={hasWifi} />
-        </h2>
+        </div>
 
-        <h2>
+        <div>
+          {zeroPad(hours)}:{zeroPad(minutes)}
+        </div>
+
+        <div>
           <span className="visually-hidden">Battery: </span>
           {battery}%
           <Battery battery={battery} />
-        </h2>
+        </div>
       </nav>
 
       <main>
@@ -68,7 +77,7 @@ function App() {
             <path id="path-m" d={pathM()} />
             <path id="path-s" d={pathS()} />
           </defs>
-          <g transform="translate(-7 -43.5)">
+          <g transform="translate(-7.5 -43.25)">
             <text textAnchor="end">
               <tspan fontSize="9" x="0">
                 {gigabytes}
@@ -104,6 +113,23 @@ function App() {
           </g>
         </svg>
       </main>
+
+      <footer>
+        <h2>
+          Next installment
+          <span>
+            {days}
+            <span>days</span>
+          </span>
+        </h2>
+        <h2>
+          Remaining credit
+          <span>
+            {credit}
+            <span>&euro;</span>
+          </span>
+        </h2>
+      </footer>
     </div>
   );
 }
