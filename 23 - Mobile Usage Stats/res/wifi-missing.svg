@@ -10,9 +10,6 @@
             <use href="#wifi" fill="hsl(0, 0%, 100%)" transform="scale(0.4)" />
 
             <use href="#bar" fill="none" stroke="hsl(0, 0%, 0%)" stroke-width="20" stroke-linecap="square" />
-
-            <path d="M -30 -5 l 70 -70" ill="none" stroke="currentColor" stroke-width="10" stroke-linecap="square" />
-
         </mask>
     </defs>
     <g fill="currentColor" stroke="none" mask="url(#mask-wifi)">

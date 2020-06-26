@@ -1,7 +1,7 @@
 div {
   background: hsl(0, 0%, 100%);
   color: hsl(0, 0%, 20%);
-  max-width: 22rem;
+  max-width: 20rem;
   width: 95vw;
   margin: 1rem auto;
   border-radius: 20px;
@@ -27,4 +27,30 @@ nav > *:last-of-type {
 }
 .visually-hidden {
   display: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 0;
+}
+main > * + * {
+  margin-top: 1rem;
+}
+main h1 {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+main svg {
+  padding: 1rem;
+  width: 90%;
+  height: auto;
+}
+main svg text {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }

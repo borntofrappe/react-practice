@@ -1,184 +1,109 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import { getPercentage } from './utils';
+import Signal from './Signal';
+import Battery from './Battery';
+import Wifi from './Wifi';
+import * as d3 from 'd3';
 
 function App() {
-  const data = {
-    signal: 3, // integer in the [0, 4] range
-    wifi: false, // boolean
-    battery: 80, // integer in the 0-100 range
-    gigabytes: 50, // integer in the 0-100 range describing the mobile data left
-  };
+  const maxSignal = 4;
+  const maxGigabytes = 20;
+
+  const [hasWifi, setHasWifi] = useState(true);
+  const [signal, setSignal] = useState(
+    Math.floor((getPercentage() / 100) * maxSignal)
+  );
+  const [battery, setBattery] = useState(getPercentage());
+  const [gigabytes, setGigabytes] = useState(
+    Math.floor((getPercentage() / 100) * maxGigabytes)
+  );
+
+  const endAngle = (Math.PI * 8) / 4.75;
+  const angle = (endAngle * gigabytes) / maxGigabytes;
+  const pathL = d3.arc().startAngle(0).innerRadius(44).outerRadius(44);
+
+  const pathM = d3
+    .arc()
+    .startAngle(0)
+    .endAngle(endAngle)
+    .innerRadius(32.5)
+    .outerRadius(32.5);
+  const pathS = d3
+    .arc()
+    .startAngle(0)
+    .endAngle(endAngle)
+    .innerRadius(21)
+    .outerRadius(21);
 
   return (
     <div>
       <nav>
         <h2>
-          <span className="visually-hidden">Signal: {data.signal}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="-50 -90 100 100"
-            width="1.25em"
-            height="1.25em"
-          >
-            <defs>
-              <rect id="signal" x="-7.5" width="15" y="-80" height="80" />
-            </defs>
-            <g fill="currentColor" stroke="none">
-              {Array(4)
-                .fill()
-                .map((v, i, { length }) => (
-                  <g key={i}>
-                    <g transform={`translate(${-30 + 20 * i} 0)`}>
-                      <use
-                        opacity={`${i < data.signal ? 1 : 0.25}`}
-                        href="#signal"
-                        transform={`scale(1 ${1 - 0.25 * (length - i - 1)})`}
-                      />
-                    </g>
-                  </g>
-                ))}
-            </g>
-          </svg>
+          <span className="visually-hidden">
+            Signal: {signal} out of {maxSignal} bars
+          </span>
+          <Signal signal={signal} maxSignal={maxSignal} />
         </h2>
         <h2>
           <span className="visually-hidden">
-            Wifi: {data.wifi ? 'available' : 'unavailable'}
+            Wifi: {hasWifi ? 'available' : 'unavailable'}
           </span>
-          {data.wifi ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="-50 -90 100 100"
-              width="1.25em"
-              height="1.25em"
-            >
-              <defs>
-                <path id="wifi" d="M 0 0 l -50 -50 a 60 60 0 0 1 100 0 z" />
-                <mask id="mask-wifi">
-                  <use href="#wifi" fill="hsl(0, 0%, 100%)" />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 0%)"
-                    transform="scale(0.85)"
-                  />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 100%)"
-                    transform="scale(0.7)"
-                  />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 0%)"
-                    transform="scale(0.55)"
-                  />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 100%)"
-                    transform="scale(0.4)"
-                  />
-                </mask>
-              </defs>
-              <g fill="currentColor" stroke="none" mask="url(#mask-wifi)">
-                <use href="#wifi" />
-              </g>
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="-50 -90 100 100"
-              width="1.25em"
-              height="1.25em"
-            >
-              <defs>
-                <path id="wifi" d="M 0 0 l -50 -50 a 60 60 0 0 1 100 0 z" />
-                <path id="bar" d="M -30 -5 l 70 -70" />
-                <mask id="mask-wifi">
-                  <use href="#wifi" fill="hsl(0, 0%, 100%)" />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 0%)"
-                    transform="scale(0.85)"
-                  />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 100%)"
-                    transform="scale(0.7)"
-                  />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 0%)"
-                    transform="scale(0.55)"
-                  />
-                  <use
-                    href="#wifi"
-                    fill="hsl(0, 0%, 100%)"
-                    transform="scale(0.4)"
-                  />
-
-                  <use
-                    href="#bar"
-                    fill="none"
-                    stroke="hsl(0, 0%, 0%)"
-                    stroke-width="20"
-                    stroke-linecap="square"
-                  />
-
-                  <path
-                    d="M -30 -5 l 70 -70"
-                    ill="none"
-                    stroke="currentColor"
-                    stroke-width="10"
-                    stroke-linecap="square"
-                  />
-                </mask>
-              </defs>
-              <g fill="currentColor" stroke="none" mask="url(#mask-wifi)">
-                <use href="#wifi" />
-              </g>
-              <use
-                href="#bar"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="10"
-                stroke-linecap="square"
-              />
-            </svg>
-          )}
+          <Wifi hasWifi={hasWifi} />
         </h2>
 
         <h2>
           <span className="visually-hidden">Battery: </span>
-          {data.battery}%
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="-3 -50 100 100"
-            width="1.25em"
-            height="1.25em"
-          >
-            <rect
-              width="75"
-              height="52"
-              x="1"
-              y="-26"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              rx="10"
-            />
-            <path d="M 84 -10 a 10 10 0 0 1 0 20" />
-            <g transform="translate(7 0)">
-              <g transform={`scale(${data.battery / 100} 1)`}>
-                <rect
-                  width="63"
-                  height="32"
-                  y="-16"
-                  fill="currentColor"
-                  stroke="none"
-                />
-              </g>
-            </g>
-          </svg>
+          {battery}%
+          <Battery battery={battery} />
         </h2>
       </nav>
+
+      <main>
+        <h1>Mobile Usage</h1>
+        <svg viewBox="-50 -50 100 100" width="200" height="200">
+          <defs>
+            <path id="path-l" d={pathL.endAngle(endAngle)()} />
+            <path id="path-lo" d={pathL.endAngle(angle)()} />
+            <path id="path-m" d={pathM()} />
+            <path id="path-s" d={pathS()} />
+          </defs>
+          <g transform="translate(-7 -43.5)">
+            <text textAnchor="end">
+              <tspan fontSize="9" x="0">
+                {gigabytes}
+              </tspan>
+              <tspan fontSize="5" x="0" y="5.5">
+                of {maxGigabytes}
+              </tspan>
+            </text>
+          </g>
+
+          <g
+            fill="none"
+            strokeWidth="11"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <use href="#path-l" stroke="#1764BC" opacity="0.2" />
+            <use href="#path-lo" stroke="#1764BC" />
+            <use href="#path-m" stroke="#930096" />
+            <use href="#path-s" stroke="#CF00BC" />
+          </g>
+
+          <g fill="hsl(0, 0%, 100%)" textAnchor="start" fontSize="4.5">
+            <text dy="1.75">
+              <textPath href="#path-l">GB</textPath>
+            </text>
+            <text dy="1.75">
+              <textPath href="#path-m">Unlimited minutes</textPath>
+            </text>
+            <text dy="1.75">
+              <textPath href="#path-s">Unlimited messages</textPath>
+            </text>
+          </g>
+        </svg>
+      </main>
     </div>
   );
 }

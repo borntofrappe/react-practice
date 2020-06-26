@@ -20,3 +20,7 @@ The most prominent vector graphic describes the gigabytes left in the plan. Howe
 - battery
 
 See the **res** folder for the actual syntax.
+
+## Arcs & Strokes
+
+The project uses the `arc` function from D3 library to draw the arcs at the center of the application. Now, you can achieve a similar result using a circle (or path element) alongside the `stroke-dasharray` and `stroke-dashoffset` properties. You have to weigh the pros and cons of each approach: D3 requires an additional library, but is more reliable. `stroke-dash` works with native web technology, but requires you to know the full length of the stroke.
