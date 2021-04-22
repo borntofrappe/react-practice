@@ -1,14 +1,16 @@
 # React Practice
 
-This repo was originally meant to produce 30+ projects using the React framework, in a bit more than a month. It is still scheduled to achieve the same goal, but with a much looser deadline.
+## Update Notice
 
-## Update - 19th October 2019
+> I am in the process of revisiting the React framework. Expect changes to the repository, with a review of existing projects and the possibility of removing demos altogether.
+>
+> 2021 04 22
 
-I started developing projects with the Svelte, and inevitably devoted most of my coding sessions with the specific framework. This does not change the intention of the specific repository, but influences the way projects are introduced and developed. In each new folder, starting with project number 10, you find the environment set up through the `create-react-app` utility. This should allow anybody to install the necessary dependencies and run the project locally.
+## Tutorial
 
-In the future I might revisit the first ten projects and update their structure accordingly. These describe the react application in a **React** folder, but show only the code developed in the **src** and **public** sub-folders.
+Recreate the demo from the [tutorial on reactjs.org](https://reactjs.org/tutorial/tutorial.html).
 
-## Projects
+## Previous Projects
 
 | Name                                                                         | Goal                                                                                                | Keyword                                      |
 | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------- |
