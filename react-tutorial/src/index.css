@@ -5,15 +5,47 @@
 }
 
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding: 0.5rem;
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to bottom,
+    hsl(0, 0%, 93%),
+    hsl(0, 0%, 89%)
+  );
+  color: hsl(0, 0%, 16%);
 }
 
-.app,
-.board {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+::selection {
+  /* color: hsl(0, 0%, 98%); */
+  background: hsla(0, 0%, 70%, 0.8);
+}
+
+h1,
+h2 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h1 {
+  font-size: 2.26rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+
+.app {
+  max-width: 800px;
+  width: 90vw;
+  margin: 1rem auto;
+  line-height: 1.5;
 }
 
 .app > * + * {
@@ -25,18 +57,59 @@ body {
 }
 
 .grid {
+  --grid-size: 5rem;
   display: grid;
-  grid-template-columns: repeat(3, 3rem);
-  grid-auto-rows: 3rem;
+  grid-template-columns: repeat(3, var(--grid-size, 3rem));
+  grid-auto-rows: var(--grid-size, 3rem);
+  --border-width: 0.5rem;
 }
 
 .square {
   width: 100%;
   height: 100%;
-  padding: 0.25rem;
   background: none;
-  font-family: inherit;
-  font-size: 2rem;
+  padding: 0.25rem;
   color: inherit;
-  border: 0.2rem inset currentColor;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease-out;
+}
+
+.square svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.square:empty:hover {
+  background: hsl(0, 0%, 82%);
+}
+
+.square:not(:empty) {
+  cursor: initial;
+}
+
+.square:nth-of-type(3n - 2),
+.square:nth-of-type(3n - 1) {
+  border-right: var(--border-width, 0.2rem) solid currentColor;
+}
+
+.square:nth-of-type(-n + 6) {
+  border-bottom: var(--border-width, 0.2rem) solid currentColor;
+}
+
+button:not([class]) {
+  color: hsl(0, 0%, 98%);
+  background: hsl(0, 0%, 28%);
+  padding: 0.5rem 0.85rem;
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px -2px hsl(0, 0%, 28%);
+  transition: opacity 0.2s ease-out;
+}
+
+button:not([class]):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

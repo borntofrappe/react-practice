@@ -15,7 +15,7 @@ export default class Board extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    const square = xIsNext ? 'X' : 'O';
+    const square = xIsNext ? 'x' : 'o';
     this.setState({
       squares: [...squares.slice(0, i), square, ...squares.slice(i + 1)],
       xIsNext: !xIsNext,
@@ -29,11 +29,11 @@ export default class Board extends React.Component {
     if (winner) {
       status = `Winner: ${winner}`;
     } else {
-      status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+      status = `Next player: ${xIsNext ? 'x' : 'o'}`;
     }
     return (
-      <div class="board">
-        <p>{status}</p>
+      <div className="board">
+        <h2>{status}</h2>
         <div className="grid">
           {squares.map((square, i) => (
             <Square
@@ -45,6 +45,7 @@ export default class Board extends React.Component {
         </div>
 
         <button
+          disabled={squares.every(d => !d)}
           onClick={() => {
             this.setState({ squares: Array(9).fill('') });
           }}
