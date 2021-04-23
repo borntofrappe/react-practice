@@ -1,5 +1,5 @@
 import React from 'react';
-import Board from './Board';
+import Grid from './Grid';
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -17,8 +17,6 @@ export default class Game extends React.Component {
 
   handleClick(i) {
     const { xIsNext, history, stepNumber } = this.state;
-    console.log(history);
-    console.log(stepNumber);
     const { squares } = history[stepNumber];
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -55,7 +53,7 @@ export default class Game extends React.Component {
     }
 
     return (
-      <div className="app">
+      <div className="game">
         <svg style={{ display: 'none' }} viewBox="0 0 100 100">
           <symbol id="x">
             <path
@@ -80,18 +78,17 @@ export default class Game extends React.Component {
 
         <h1>Tic Tac Toe</h1>
         <p>
-          Following the tutorial on{' '}
-          <a href="https://reactjs.org/tutorial/tutorial">reactjs.org</a>
+          Following the tutorial on <a href="https://reactjs.org/tutorial/tutorial">reactjs.org</a>
         </p>
         <div className="board">
           <h2>{status}</h2>
-          <Board
+          <Grid
             squares={squares}
             xIsNext={xIsNext}
             handleClick={i => this.handleClick(i)}
           />
           <div className="controls">
-            {history.slice(0).map(({ squares }, i) => (
+            {history.map(({ squares }, i) => (
               <button
                 onClick={() => this.jumpTo(i)}
                 key={squares.join('')}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Square from './Square.js';
 
-export default function Board({ squares, handleClick }) {
+export default function Grid({ squares, handleClick }) {
   return (
     <div className="grid">
       {squares.map((square, i) => (

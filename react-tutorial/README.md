@@ -1,6 +1,6 @@
-# React Tutorial
+# [React Tutorial](https://codepen.io/borntofrappe/pen/jOyXoqR)
 
-Recreate the demo from the [tutorial on reactjs.org](https://reactjs.org/tutorial/tutorial.html) to get aquainted with the React framework.
+Get acquainted with the React framework by following the [tutorial on reactjs.org](https://reactjs.org/tutorial/tutorial.html).
 
 ## Setup
 
@@ -14,27 +14,9 @@ cd ..
 
 The `src` folder is where the app is being developed:
 
-## React component class
+## React Component Class
 
-## ReactDOM
-
-```js
-import ReactDOM from 'react-dom';
-import Game from './Game';
-import './index.css';
-
-ReactDOM.render(<Game />, document.getElementById('root'));
-```
-
-## props
-
-## state
-
-## Function component
-
-## React.Component
-
-A React component class which takes in parameters, `props`, and returns a React element, detailing the HTML structure to display.
+Initialized with class syntax, a React component takes in parameters, `props`, and returns a React element, detailing the HTML structure to display.
 
 In the example, `index.js` is used to set up one of these components to first render arbitrary markup.
 
@@ -43,30 +25,57 @@ Define:
 ```jsx
 import React from 'react';
 
-class App extends React.Component {
+export default class Game extends React.Component {
   render() {
-    return <h1>React Tutorial</h1>;
+    return (
+      <div className="game">
+        <h1>Tic Tac Toe</h1>
+      </div>
+    );
   }
 }
 ```
 
-Render in the `#root` element:
+Use:
+
+```jsx
+import Game from './Game';
+
+<Game />;
+```
+
+## ReactDOM
+
+In the project the `<Game />` component is included in the `#root` element of the markup in the `public` folder. `react-dom` provides the necessary interface in the `render` method.
 
 ```jsx
 import ReactDOM from 'react-dom';
+import Game from './Game';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Game />, document.getElementById('root'));
 ```
 
-The code is all that is necessary to initialize the application on `http://localhost:3000/`.
+## Import Export
 
-```bash
-yarn start
+When working with multiple files it is necessary to export the components and later import them.
+
+```js
+// Game.js
+export default class Game extends React.Component {
+
+// index.js
+import Game from './Game';
 ```
 
-## props
+The stylesheet is also imported, directly referring to the stylesheet.
 
-`Square.js` is renders a single button.
+```js
+import './index.css';
+```
+
+## Props
+
+`Square.js` is rendered a single button.
 
 ```jsx
 class Square extends React.Component {
@@ -82,107 +91,62 @@ The content of the button is set through `props`, received when using the compon
 <Square value="Clickity click" />
 ```
 
-## import export
+## State
 
-`Board.js` renders a multitude of buttons through the `<Square />` component.
+The idea is to update the value of the button on click. This is achieved by having the class component maintain state.
 
-```js
-import React from 'react';
-// import component
-import Square from './Square.js';
-
-class Board extends React.Component {
-  render() {
-    return (
-      <div className="board">
-        <Square value="o" />
-        <Square value="x" />
-        {/* continues */}
-      </div>
-    );
-  }
-}
-```
-
-It is necessary to have `Square.js` actually export the component.
-
-```diff
+```jsx
 class Square extends React.Component {
-+ export default class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+    };
+  }
+}
 ```
 
-The same applies to the `<Board />` component, which is imported and included in `index.js`.
+The value is included through `this.state` in place of `this.props`.
 
 ```jsx
-import Board from './Board';
+class Square extends React.Component {
+  render() {
+    return <button className="square">{this.state.value}</button>;
+  }
+}
+```
 
-class App extends React.Component {
+The value is updated through the `this.setState` function. The function specifically receives an object describing the state to update.
+
+```jsx
+class Square extends React.Component {
   render() {
     return (
-      <div>
-        <h1>React Tutorial</h1>
-        <Board />
-      </div>
+      <button
+        className="square"
+        onClick={() =>
+          this.setState({
+            value: 'x',
+          })
+        }
+      >
+        {this.state.value}
+      </button>
     );
   }
 }
-```
-
-It is necessary to return one single element, hence the wrapping `<div>`.
-
-`index.css` is finally included to provide some basic style. Most importantly, CSS is used to display the buttons in a 3x3 grid.
-
-The file is imported in `index.js` and details property-value pairs applied to the project as a whole.
-
-```jsx
-import './index.css';
-```
-
-## state
-
-The idea is to update the value of the button on click.
-
-```jsx
-<button className="square" onClick={function () { /* update value */ }}>
-  {this.props.value}
-</button>
-
-// arrow syntax
-<button className="square" onClick={() => { /* update value */ }}>
-  {this.props.value}
-</button>
-```
-
-`state`
-
-```jsx
-constructor(props) {
-  super(props);
-  this.state = {
-    value: ''
-  }
-}
-```
-
-```diff
--{this.props.value}
-+{this.state.value}
-```
-
-```jsx
-<button className="square" onClick={() => {this.setState({ value : 'X'})}}>
 ```
 
 The state is updated and React updates the connected element.
 
-Through the React DevTools it is possible to highlight the state by selecting individual `<Square />` components.
+Through the React DevTools it is possible to highlight the state by selecting individual `<Square />` component.
 
-## Lifting state
+## State Management
 
-Store the state of the game in `<Board />` to include the values in the different `<Square />` components. The idea is to then update the state 'backwards', lifting the state from square to board.
+To manage the game it is useful to lift the state up. This allows to consider the moves of every `<Square />` to decipher if one of the players has won.
 
 ```jsx
-export default class Board extends React.Component {
+export default class Grid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -192,7 +156,24 @@ export default class Board extends React.Component {
 }
 ```
 
-To render one component the homepage for reactjs.org provides a better approach than calling a `renderSquare` function nine times. The example describing a todo list creates one `<li>` element for each item in the `items` array as follows.
+The square component then receives the value through `props`.
+
+```jsx
+export default class Grid extends React.Component {
+  const {squares} = this.state;
+  render() {
+    return (
+      <div className="grid">
+        <Square value={squares[0]} />
+        <Square value={squares[1]} />
+        <Square value={squares[2]} />
+      </div>
+    )
+  }
+}
+```
+
+The example describing a todo list [on reactjs.org](https://reactjs.org/) highlights one way to render multiple elements byb looping through an array.
 
 ```jsx
 <ul>
@@ -205,65 +186,53 @@ To render one component the homepage for reactjs.org provides a better approach 
 Adapted for the squares.
 
 ```jsx
-<div className="board">
-  {this.state.squares.map((square) => (
+<div className="grid">
+  {squares.map((square) => (
     <Square value={square} />
   ))}
 </div>
 ```
 
-The console prompts a unique `key` prop, which will be explained at a later stage.
+The console prompts a unique `key` prop, which allows React to manage changes to the DOM.
 
 ```jsx
-{
-  this.state.squares.map((square, i) => <Square value={square} key={i} />);
+<div className="grid">
+  {squares.map((square, i) => (
+    <Square key={i} value={square} />
+  ))}
+</div>
+```
+
+As the state is mainted by the parent component, it is necessary to update `handleClick`, so that the function updates a specific item in the array.
+
+```jsx
+handleClick(i) {
+  const { squares } = this.state;
+  this.setState({
+    squares: [...squares.slice(0, i), 'x', ...squares.slice(i + 1)],
+  });
 }
 ```
 
-Most importantly for the demo, the value passed through `props` is picked up from the component.
-
-```jsx
-<button className="square">{this.props.value}</button>
-```
-
-To update the value then, the idea is to initialize the components with a value and an updating function.
+The function receives an integer to refer to the desired index.
 
 ```jsx
 {
-  this.state.squares.map((square, i) => (
-    <Square value={square} onClick={() => this.handleClick(i)} />
+  squares.map((square, i) => (
+    <Square key={i} value={square} onClick={() => this.handleClick(i)} />
   ));
 }
 ```
 
-The function updates the state from the board component.
-
-```jsx
-handleClick(i) {
-  this.setState = {
-
-  }
-}
-```
-
-The function is then called in the individual square through `props`
+`<Square />` can then refer to the function, again through props.
 
 ```jsx
 <button className="square" onClick={() => this.props.onClick()}>
 ```
 
-In Board, update the state. _Immutability_: Instead of modifying the state directly, react prefers creating a copy and updating the state altogether.
+## Function Components
 
-```jsx
-const { squares } = this.state;
-this.setState({
-  squares: [...squares.slice(0, i), 'X', ...squares.slice(i + 1)],
-});
-```
-
-## Function components
-
-Update `<Square />` to be a function component. Simpler syntax for components that don't need their own state. Functions which return React elements.
+Functions provide an alternative syntax to classes. They are especially useful when the component just needs to render a React element.
 
 ```jsx
 export default function Square(props) {
@@ -273,35 +242,45 @@ export default function Square(props) {
 }
 ```
 
-Use `props` instead of `this.props`
+## Completing the Game
 
-```jsx
-<button className="square" onClick={() => props.onClick()}>
-  {props.value}
-</button>
-```
+To complete the game it is first necessary to toggle between values, between `x`s and `o`s. The value is then included in the `squares` array.
 
-It is possible to simplify the component further.
+To check for a victory, a utility function is created to return the winning side.
 
-```diff
--onClick={() => props.onClick()}
-+onClick={props.onClick}
-```
-
-```
-export default function Square(props) {
-  return {
-    <button className="square"></button>
-  }
+```js
+function calculateWinner(squares) {
+  //
 }
 ```
 
-## Completing the game
+`lines` describes the index of all the possible winning combinations.
 
-- alternate between `X` and `O`
+## SVG
 
-- calculate winner
+This is beyond the scope of the demo, but instead of adding `x`s and `o`s, the idea is to add an SVG elements.
 
-- clear board
+In the root component, an `<svg>` element defines the two possible shapes with `<symbol>` elements and a unique `id`.
 
-https://reactjs.org/tutorial/tutorial.html#adding-time-travel
+```jsx
+<svg style={{ display: 'none' }} viewBox="0 0 100 100">
+  <symbol id="x">
+    <path ... />
+  </symbol>
+  <symbol id="o">
+    <circle ... />
+  </symbol>
+</svg>
+```
+
+In the square component, the syntax is included with a `<use />` element.
+
+```jsx
+<svg viewBox="0 0 100 100">
+  <use href="#x" />
+</svg>
+```
+
+## Time Travel
+
+The state is further lifted up and modified so that `history` replaces `squares`. The idea is to have an array of arrays, each describing the state of the game at a specific point in time.

@@ -7,19 +7,17 @@
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  padding: 0.5rem;
   min-height: 100vh;
   background-image: linear-gradient(
     to bottom,
     hsl(0, 0%, 93%),
     hsl(0, 0%, 89%)
   );
-  color: hsl(0, 0%, 16%);
+  color: hsl(0, 0%, 15%);
 }
 
 ::selection {
-  /* color: hsl(0, 0%, 98%); */
-  background: hsla(0, 0%, 70%, 0.8);
+  background: hsla(0, 0%, 75%, 0.8);
 }
 
 h1,
@@ -41,14 +39,14 @@ a {
   border-bottom: 1px dotted currentColor;
 }
 
-.app {
+.game {
   max-width: 800px;
   width: 90vw;
   margin: 1rem auto;
   line-height: 1.5;
 }
 
-.app > * + * {
+.game > * + * {
   margin-top: 0.75em;
 }
 
@@ -99,23 +97,15 @@ a {
   border-bottom: var(--border-width, 0.2rem) solid currentColor;
 }
 
-button:not([class]) {
+.controls button {
+  display: block;
   color: hsl(0, 0%, 98%);
-  background: hsl(0, 0%, 28%);
+  background: hsl(0, 0%, 30%);
   padding: 0.5rem 0.85rem;
   border: none;
   border-radius: 0.25rem;
-  box-shadow: 0 2px 5px -2px hsl(0, 0%, 28%);
+  box-shadow: 0 2px 5px -2px hsl(0, 0%, 30%);
   transition: opacity 0.2s ease-out;
-}
-
-button:not([class]):disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.controls button {
-  display: block;
 }
 
 .controls > button + button {
