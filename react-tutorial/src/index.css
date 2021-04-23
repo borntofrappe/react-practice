@@ -113,3 +113,11 @@ button:not([class]):disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.controls button {
+  display: block;
+}
+
+.controls > button + button {
+  margin-top: 0.4em;
+}
