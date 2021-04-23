@@ -12,7 +12,25 @@ rm -f *
 cd ..
 ```
 
-The `src` folder is where the app is being developed.
+The `src` folder is where the app is being developed:
+
+## React component class
+
+## ReactDOM
+
+```js
+import ReactDOM from 'react-dom';
+import Game from './Game';
+import './index.css';
+
+ReactDOM.render(<Game />, document.getElementById('root'));
+```
+
+## props
+
+## state
+
+## Function component
 
 ## React.Component
 
