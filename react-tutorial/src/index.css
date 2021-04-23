@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  padding: 0.5rem;
+}
+
+.app,
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app > * + * {
+  margin-top: 0.75em;
+}
+
+.board > * + * {
+  margin-top: 0.5em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 3rem);
+  grid-auto-rows: 3rem;
+}
+
+.square {
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem;
+  background: none;
+  font-family: inherit;
+  font-size: 2rem;
+  color: inherit;
+  border: 0.2rem inset currentColor;
+}
