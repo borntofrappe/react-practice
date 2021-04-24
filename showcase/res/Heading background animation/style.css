@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,800');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: hsl(0, 0%, 100%);
+  background: hsl(0, 0%, 12%);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+h1 {
+  color: hsl(193, 95%, 68%);
+  font-size: 3.24rem;
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+}
+
+::selection {
+  background: hsl(193, 93%, 83%, 0.25);
+}
+
+@supports (-webkit-text-fill-color: transparent) and
+  ((background-clip: text) or (-webkit-background-clip: text)) {
+  h1 {
+    background: linear-gradient(
+      120deg,
+      hsl(193, 53%, 54%) 0,
+      hsl(193, 53%, 54%) 35%,
+      hsl(193, 95%, 68%) 35%,
+      hsl(193, 95%, 68%) 70%,
+      hsl(193, 93%, 83%) 70%,
+      hsl(193, 93%, 83%) 90%,
+      hsl(193, 53%, 54%) 90%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position-x: 0%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    h1 {
+      animation: translateBackgroundPosition infinite alternate ease-in-out 5s;
+    }
+  }
+
+  @keyframes translateBackgroundPosition {
+    to {
+      background-position-x: 100%;
+    }
+  }
+}

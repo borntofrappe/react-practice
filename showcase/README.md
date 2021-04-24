@@ -8,9 +8,7 @@ The concept of and design is blatantly inspired by [codevember's own website](ht
 
 ## Design
 
-- gradient border
-
-- background clip
+In the `res` folder I dedicate small projects to the design of important elements, like the animation in the background of the main heading.
 
 ## Development
 
