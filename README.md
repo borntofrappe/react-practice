@@ -10,11 +10,16 @@
 
 Recreate the demo from the [tutorial on reactjs.org](https://reactjs.org/tutorial/tutorial.html).
 
+## showcase
+
+Provide a container for the projects created in this repository.
+
+[_Link to previous demo_](https://codepen.io/borntofrappe/full/NELLxG/)
+
 ## Previous Projects
 
 | Name                                                                         | Goal                                                                                                | Keyword                                      |
 | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [Reactice Container](https://codepen.io/borntofrappe/full/NELLxG/)           | Frame future React applications                                                                     | codevember, react router                     |
 | 01 - [Who's That Pokemon?](https://codepen.io/borntofrappe/full/GwYLRw)      | Play a simple game inspired by the pokemon anime                                                    | styled-components, react-spring, API         |
 | 02 - [FreeCodeCamp Podcast App](https://codepen.io/borntofrappe/full/yGbpMm) | Listen to the freeCodeCamp podcast with style                                                       | styled-components, RSS                       |
 | 03 - [SVG Watch](https://codepen.io/borntofrappe/full/ebRVJd)                | Relate the current number of seconds, minutes and hours through vector graphics                     | svg                                          |

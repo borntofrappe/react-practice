@@ -21,7 +21,7 @@ As follows:
 ```css
 /* root variables */
 :root {
-  --font: "Montserrat", sans-serif;
+  --font: 'Montserrat', sans-serif;
   --color-text: #fff;
   --color-bg: #333;
   --gradient-s: #4daec8;
