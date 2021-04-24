@@ -42,3 +42,7 @@ To be exhaustive, media queries are included so that:
 1. the background is included only when it is possible to clip it
 
 2. the animation is performed when no particular preference is set
+
+## Calendar view
+
+The demo recreates the central portion of the landing page, where the projects are slotted in the frame of a calendar. `grid` properties are useful to create the rows and columns. Pseudo elements are useful to create the appearance of a border with a gradient which is introduced on hover.
