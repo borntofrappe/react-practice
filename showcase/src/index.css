@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,800');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: hsl(0, 0%, 100%);
+  background: hsl(0, 0%, 12%);
+  min-height: 100vh;
+}
+
+::selection {
+  background: hsl(193, 93%, 83%, 0.25);
+}
+
+#root {
+  max-width: 1000px;
+  width: 90vw;
+  margin: 1rem auto;
+}
+
+#root > * + * {
+  margin-top: 1em;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+header h1 {
+  color: hsl(193, 95%, 68%);
+  font-size: 1.8rem;
+  display: inline-block;
+}
+
+@supports (-webkit-text-fill-color: transparent) and
+  ((background-clip: text) or (-webkit-background-clip: text)) {
+  header h1 {
+    background: linear-gradient(
+      120deg,
+      hsl(193, 57%, 31%) 0%,
+      hsl(193, 57%, 31%) 35%,
+      hsl(193, 53%, 54%) 35%,
+      hsl(193, 53%, 54%) 70%,
+      hsl(193, 95%, 68%) 70%,
+      hsl(193, 95%, 68%) 90%,
+      hsl(193, 53%, 54%) 90%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position-x: 0%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    header h1 {
+      animation: translateBackgroundPosition infinite alternate ease-in-out 5s;
+    }
+  }
+
+  @keyframes translateBackgroundPosition {
+    to {
+      background-position-x: 100%;
+    }
+  }
+}
+
+main {
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(50px, 10vw));
+  grid-auto-rows: minmax(50px, 10vw);
+  font-feature-settings: 'tnum';
+}
+
+@media screen and (min-width: 1200px) {
+  main {
+    grid-template-columns: repeat(7, 120px);
+    grid-auto-rows: 120px;
+  }
+}
+
+@supports (grid-template-columns: repeat(7, clamp(50px, 10vw, 120px))) {
+  main {
+    display: grid;
+    grid-template-columns: repeat(7, clamp(50px, 10vw, 120px));
+    grid-auto-rows: clamp(50px, 10vw, 120px);
+  }
+}
+
+main a {
+  font-size: 1.4rem;
+  font-size: calc(0.7rem + 1.5vw);
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 800;
+  position: relative;
+  z-index: 5;
+  outline: none;
+}
+
+main a::before,
+main a::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+}
+
+main a::before {
+  background: linear-gradient(
+    to bottom right,
+    hsl(193, 100%, 66%),
+    hsl(193, 57%, 31%)
+  );
+}
+
+main a::after {
+  background: hsl(0, 0%, 12%);
+  transform-origin: 50% 50%;
+  transition: transform 0.25s ease-in-out;
+}
+
+main a:hover::after,
+main a:focus::after {
+  transform: scale(0.85);
+}
+
+header a,
+footer a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 800;
+  opacity: 0.3;
+  color: inherit;
+  transition: opacity 0.25s ease-out;
+  outline: none;
+}
+
+header a:hover,
+header a:focus,
+footer a:hover,
+footer a:focus {
+  opacity: 1;
+}
+
+@media screen and (min-width: 800px) {
+  header h1 {
+    font-size: 2.3rem;
+  }
+
+  main a {
+    font-size: 1.6rem;
+  }
+
+  header a,
+  footer a {
+    font-size: 1.52rem;
+  }
+}

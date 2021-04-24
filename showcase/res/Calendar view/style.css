@@ -47,6 +47,7 @@ body {
   font-weight: 800;
   position: relative;
   z-index: 5;
+  outline: none;
 }
 
 .grid a::before,
@@ -72,7 +73,8 @@ body {
   transition: transform 0.25s ease-in-out;
 }
 
-.grid a:hover::after {
+.grid a:hover::after,
+.grid a:focus::after {
   transform: scale(0.85);
 }
 
