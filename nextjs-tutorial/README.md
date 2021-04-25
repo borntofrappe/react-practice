@@ -168,3 +168,69 @@ import '../styles/global.css';
 
 // export ...
 ```
+
+## Pre-rendering and Data Fetching
+
+Pre-rendering means that node generates HTML for each page on the server side, serves the code and then hydrates the application on the client side to make the page fully interactive.
+
+There are technically two types of pre-rendering:
+
+1. static generation: HTML at build time
+
+2. server-side rendering: HTML on each request
+
+When the page doesn't need to change with multiple, staggered requests, consider for instance a blog post, it is a good sign that you need static generation.
+
+Concerning static generation, nextjs allows to perform data fetching before generating the necessary pages. Define an async function `getStaticProps`. nextjs knows to run this function at build time, and allows to pass data from the function to the page through `props`.
+
+```jsx
+export default function Home(props) {
+  // access data through props.
+}
+
+export async function getStaticProps() {
+  const data = //;
+  return {
+    props: data
+  }
+}
+```
+
+In the tutorial, the function is instructed to consider data in the form of articles stored in the `posts` folder.
+
+`gray-matter` is a package useful to retrieve metadata for each article, metatadata which is included in the frontmatter of the `.md` files with yaml syntax.
+
+In `lib/posts.js` create a small library to read the data from the `posts` folder and exporting a function which returns the posts (specifically their metadata) sorted by date.
+
+With this setup `getStaticProps` is able to fetch the data and return the information to the relevant component. For instance and for `index.js`, the function returns the entire collection so that it is possible to list the articles.
+
+```jsx
+export async function getStaticProps() {
+  const sortedPostData = getSortedPostData();
+  return {
+    props: {
+      sortedPostData,
+    },
+  };
+}
+
+export default function Home({ sortedPostData }) {}
+```
+
+`post.js` retrieves the data locally, but it could very well find the information from an API, or a database. `getStaticProps` runs only on the server, which mean the data-fetching operations are not executed on the client side.
+
+Concerning server-side rendering, `getServerSideProps` replaces `getStaticProps`
+
+```jsx
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      // data
+    },
+  };
+}
+```
+
+The function is run every time a request is performed and receives information regarding the request through the `context` parameter
+
+Outside of pre-rendering, it is finally possible to render data on the client side, client-side rendering, retrieving external data when the page loads. nextjs provides `swr` as a hook to fetch data on the client side.

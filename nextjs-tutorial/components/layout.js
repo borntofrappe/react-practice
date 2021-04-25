@@ -21,6 +21,7 @@ export default function Layout({ children }) {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
+          background: linear-gradient(hsl(220, 90%, 98%), hsl(220, 85%, 95%));
         }
 
         div > * + * {
