@@ -14,6 +14,10 @@ Recreate the demo from the [tutorial on reactjs.org](https://reactjs.org/tutoria
 
 Provide a container for the projects created in this repository (currently only in UI, awaiting for React demos to actually showcase).
 
+## nextjs-tutorial
+
+Recreate the demo from the [tutorial on nextjs.org](https://nextjs.org/learn).
+
 ## Previous Projects
 
 | Name                                                                         | Goal                                                                                                | Keyword                                      |
