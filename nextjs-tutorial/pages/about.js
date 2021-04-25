@@ -1,25 +1,24 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-export default function Home() {
+export default function About() {
   return (
     <div className="container">
       <Head>
-        <title>nextjs-tutorial</title>
-        <link rel="icon" href="/icon.svg" />
+        <title>About</title>
       </Head>
 
-
       <header>
-        <h1>nextjs-tutorial</h1>
+        <h1>About</h1>
         <nav>
-          <Link href="/about">About</Link>
+          <Link href="/">Home</Link>
         </nav>
       </header>
 
+
       <main>
-        <p>Learning about nextjs by following the <a href="https://nextjs.org/learn">official tutorial</a></p>
-      </main>     
+        <p>There's nothing very special about this page. Just a proof of concept to test out nextjs <a href="https://nextjs.org/docs/routing/introduction">router</a> based on file name.</p>
+      </main>
 
       <style jsx>{`
         .container {
@@ -55,7 +54,7 @@ export default function Home() {
         }
 
         a {
-          font-weight: bold;
+          font-style: italic;
         }
       `}</style>
 
@@ -67,6 +66,10 @@ export default function Home() {
           font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
             Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
             sans-serif;
+        }
+
+        * {
+          box-sizing: border-box;
         }
 
         * {
