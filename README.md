@@ -10,11 +10,9 @@
 
 Recreate the demo from the [tutorial on reactjs.org](https://reactjs.org/tutorial/tutorial.html).
 
-## showcase
+## [showcase](https://codepen.io/borntofrappe/pen/bGgzjaV)
 
-Provide a container for the projects created in this repository.
-
-[_Link to previous demo_](https://codepen.io/borntofrappe/full/NELLxG/)
+Provide a container for the projects created in this repository (currently only in UI, awaiting for React demos to actually showcase).
 
 ## Previous Projects
 
