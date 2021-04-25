@@ -4,7 +4,7 @@ import { zeroPad } from './utils';
 export default function Grid() {
   const demos = Array(31).fill().map((d, i) => ({
     id: Math.random(),
-    url: i,
+    url: '#',
     label: `${zeroPad(i + 1)}.`,
   }));
   return (

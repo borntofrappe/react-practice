@@ -90,7 +90,6 @@ main {
 
 @supports (grid-template-columns: repeat(7, clamp(50px, 10vw, 120px))) {
   main {
-    display: grid;
     grid-template-columns: repeat(7, clamp(50px, 10vw, 120px));
     grid-auto-rows: clamp(50px, 10vw, 120px);
   }
@@ -139,7 +138,6 @@ main a:focus::after {
   transform: scale(0.85);
 }
 
-header a,
 footer a {
   text-decoration: none;
   font-size: 1.3rem;
@@ -150,8 +148,6 @@ footer a {
   outline: none;
 }
 
-header a:hover,
-header a:focus,
 footer a:hover,
 footer a:focus {
   opacity: 1;
@@ -166,7 +162,6 @@ footer a:focus {
     font-size: 1.6rem;
   }
 
-  header a,
   footer a {
     font-size: 1.52rem;
   }

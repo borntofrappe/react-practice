@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from './Header';
 import Grid from './Grid';
 import Footer from './Footer';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <>

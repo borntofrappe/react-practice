@@ -31,7 +31,6 @@ body {
 
 @supports (grid-template-columns: repeat(7, clamp(50px, 10vw, 120px))) {
   .grid {
-    display: grid;
     grid-template-columns: repeat(7, clamp(50px, 10vw, 120px));
     grid-auto-rows: clamp(50px, 10vw, 120px);
   }
@@ -60,6 +59,7 @@ body {
   height: 100%;
   z-index: -5;
 }
+
 .grid a::before {
   background: linear-gradient(
     to bottom right,
@@ -67,6 +67,7 @@ body {
     hsl(193, 57%, 31%)
   );
 }
+
 .grid a::after {
   background: hsl(0, 0%, 12%);
   transform-origin: 50% 50%;
