@@ -1,9 +1,30 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;
-  border-bottom: 1px solid currentColor;
+  color: hsl(220, 98%, 68%);
+  border-bottom: 1px solid transparent;
 }
 
 a:hover {
-  color: hsl(220, 90%, 68%);
+  border-bottom-color: currentColor;
+}
+
+h1 {
+  font-size: 1.76rem;
+}
+
+h2 {
+  font-size: 1.47rem;
 }

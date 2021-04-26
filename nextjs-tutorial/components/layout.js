@@ -1,9 +1,10 @@
 import Link from 'next/link'
+import styles from '../components/utils.module.css';
 
 export default function Layout({ children }) {
   return (
     <div>
-      <nav>
+      <nav className={styles.container}>
         <Link href="/"><a>Home</a></Link>
         <Link href="/about"><a>About</a></Link>
       </nav>
@@ -21,54 +22,22 @@ export default function Layout({ children }) {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-          background: linear-gradient(hsl(220, 90%, 98%), hsl(220, 85%, 95%));
         }
 
         div > * + * {
           margin-top: 0.75em;
         }
 
-        nav {
-          padding: 0.5rem 0.75rem;
-          display: flex;
-          justify-content: flex-end;
-          flex-wrap: wrap;
-        }
         nav > * + * {
-          margin-left: 0.5rem;
+          margin-left: 0.5em;
         }
 
         footer {
           margin-top: auto;
           text-align: center;
-          padding: 0.5rem 1rem;
+          padding: 2rem 1rem;
           background: hsl(0, 0%, 12%);
           color: hsl(220, 90%, 97%);
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        h1 {
-          font-size: 1.96rem;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-          border-bottom: 1px dotted currentColor;
         }
       `}</style>
     </div>

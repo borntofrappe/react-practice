@@ -1,61 +1,70 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link';
 import Layout from '../components/layout'
 import Time from '../components/time'
-import styles from '../components/layout.module.css';
+import styles from '../components/utils.module.css';
 import {getSortedPostData} from '../lib/posts';
 
 export default function Home({sortedPostData}) {
   return (
     <Layout>
       <Head>
-        <title>nextjs-tutorial</title>
+        <title>Next.js Tutorial</title>
         <link rel="icon" href="/icon.svg" />
       </Head>
 
-      <main className={styles.container}>
-        <h1>nextjs-tutorial</h1>
-        <p>Learning about nextjs by following the <a href="https://nextjs.org/learn">official tutorial</a></p>
+      <div className={styles.container}>
+        <header>
+          <Image className={styles.round} src="/profile.png" width="136" height="136" alt="Profile picture"/>
+          <h1>Orville Righteous</h1>
+        </header>
 
-        <h2>Blog</h2>
-        <section>
-          {sortedPostData.map(({date, title, id}) => <article key={id}>
-            <Time dateString={date} />
-            <h3>{title}</h3>
-            <Link href={`/posts/${id}`}>Give it a read</Link>
-          </article>)}
-        </section>
+        <main>
+          <p>Hello, I'm <strong>Orville</strong>, a daring critter from <a href="https://bulbapedia.bulbagarden.net/wiki/Pudgy_Pidgey_Isle">Pudgy Pidgey Isle</a> with a liking for <cite>Alice in Wonderland</cite>.</p>
+          <p>(This is a sample website - you'll be building a site similar to this one in <a href="https://nextjs.org/learn">the official Next.js tutorial</a>)</p>
 
-      </main>     
+          <h2>Blog</h2>
+          <section>
+            {sortedPostData.map(({date, title, id}) => <article key={id}>
+              <Link href={`/posts/${id}`}>{title}</Link>
+              <Time dateString={date} />
+            </article>)}
+          </section>
+        </main>     
+      </div>
 
       <style jsx>{`
-        a {
-          font-weight: bold;
+        header,
+        section,
+        article {
+          display: flex;
+          flex-direction: column;
+        }
+
+        header {
+          text-align: center;
+          align-items: center;
+        }
+
+        h1 {
+          font-size: 1.98rem;
+          margin-top: 0.75em;
+        }
+
+        main > * + * {
+          margin-top: 1em;
+        }
+
+        header > * + *,
+        section > * + * {
+          margin-top: 1em;
         }
 
         section {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 0.5rem;
+          align-items: flex-start;
         }
 
-        article {
-          display: subgrid;
-          gap: 0.25rem;
-          padding: 1rem 0.75rem;
-          background: hsl(0, 0%, 100%);
-          box-shadow: 0 1px 5px -3px hsl(220, 60%, 5%);
-        }
-
-        article time {
-          padding: 0.25rem 0.5rem;
-          background: hsl(220, 60%, 5%);
-          color: hsl(220, 90%, 98%);
-        }
-
-        article h3 {
-          font-size: 1.25rem;
-        }
       `}</style>
     </Layout>
   )

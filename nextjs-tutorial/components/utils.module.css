@@ -1,0 +1,13 @@
+.container {
+  width: 90vw;
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.container > * + * {
+  margin-top: 0.75em;
+}
+
+.round {
+  clip-path: circle();
+}
