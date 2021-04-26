@@ -234,3 +234,155 @@ export async function getServerSideProps(context) {
 The function is run every time a request is performed and receives information regarding the request through the `context` parameter
 
 Outside of pre-rendering, it is finally possible to render data on the client side, client-side rendering, retrieving external data when the page loads. nextjs provides `swr` as a hook to fetch data on the client side.
+
+## Dynamic routes
+
+- pages with `pages/*.js` files
+
+- page content with external data and `getStaticProps`
+
+- pages with external data and dynamic URLs
+
+The idea is to generate pages for the posts in the `posts` folder.
+
+Create `pages/posts/[id].js`, square brackets describing nextjs concept for dynamic routes
+
+Write an exporting function for the page describing blog posts.
+
+```jsx
+export default function Post() {
+  return /**/;
+}
+```
+
+Export an async function, similar to `getStaticProps`, labeled `getStaticPaths()`. This is where it is possible to consider valid ids by looking at the posts in the folder bearing the same name.
+
+```jsx
+export async function getStaticPaths() {
+  // consider avaiable ids
+  return {
+    paths: // available paths
+  }
+}
+```
+
+Export `getStaticProps` then, to finally retrieve the `[id]` parameter and match it against the static paths.
+
+```jsx
+export async function getStaticProps({ params }) {
+  // consider params.id and the available paths
+}
+```
+
+In `libpost.js`
+
+1. create a function which provides all the available ids
+
+```js
+export function getAllPostIds() {
+  /* array of objects
+  [
+    {
+      params: {
+        id
+      }
+    },
+    
+  ]
+  */
+}
+```
+
+2. create a function which returns the data for the desired id (at first metatada, but later the markup using a parsing library)
+
+```js
+export function getPostData(id) {
+  const fullPath = path.join(postDirectory, `${id}.md`);
+  //
+}
+```
+
+It seems `getStaticProps` is called only with valid ids, so it's not necessary to consider if `params.id` is valid. The value is instead useful to retrieve the data for thhe individual post.
+
+```jsx
+export async function getStaticProps({ params }) {
+  const postData = getPostData(params.id);
+
+  return {
+    props: {
+      postData,
+    },
+  };
+}
+```
+
+`pages/posts/[id].js` can finally use the metadata in the function exporting jsx syntax.
+
+In `index.js` use the `id` to direct toward the individual pages.
+
+```jsx
+<Link href={`/posts/${id}`}>Give it a read</Link>
+```
+
+For markdown, nextjs suggests the remark library.
+
+```bash
+npm install remark remark-html
+```
+
+In `lib/posts.js` update `getPostData` so that the function returns the metadata as well as the markup for the content.
+
+```js
+import remark from 'remark';
+import html from 'remark-html';
+
+// in getPostData()
+
+const { data, content } = matter(fileContents);
+const processedontent = await remark().use(html).process(content);
+const contentHtml = processedContent.toString();
+
+return {
+  id,
+  ...data,
+  contentHtml,
+};
+```
+
+! make the function async to benefit from `await remark`
+
+```diff
+export function getPostData(id) {
++export async function getPostData(id) {
+```
+
+`[id].js` can finally use the content. Await for the value of the `getPostData` function.
+
+```diff
+const postData = getPostData(params.id);
++const postData = await getPostData(params.id);
+```
+
+Inject in the substance of the component.
+
+```jsx
+<div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+```
+
+To polish the page nextjs suggests:
+
+- add a `<title>` through the `<Head>` component
+
+- format the date with the `date-fns` library and a custom `<Date />` component in `components/date.js`
+
+- style the page with classes from `utils.module.css`
+
+Optionally:
+
+- provide a custom 404 page in `pages/404.js`. Generated at build time
+
+```jsx
+export default function Custom404() {
+  // custom jsx
+}
+```

@@ -1,5 +1,7 @@
 import Head from 'next/head'
+import Link from 'next/link';
 import Layout from '../components/layout'
+import Time from '../components/time'
 import styles from '../components/layout.module.css';
 import {getSortedPostData} from '../lib/posts';
 
@@ -18,8 +20,9 @@ export default function Home({sortedPostData}) {
         <h2>Blog</h2>
         <section>
           {sortedPostData.map(({date, title, id}) => <article key={id}>
-            <time dateTime={date}>{new Date(date).toDateString()}</time>
+            <Time dateString={date} />
             <h3>{title}</h3>
+            <Link href={`/posts/${id}`}>Give it a read</Link>
           </article>)}
         </section>
 
