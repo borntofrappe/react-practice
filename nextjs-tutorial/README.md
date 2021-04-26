@@ -386,3 +386,21 @@ export default function Custom404() {
   // custom jsx
 }
 ```
+
+## Creating API Routes
+
+In `pages/api/*.js` it is possible to set up functions which respond to a request.
+
+```js
+export default function handler(req, res) {}
+```
+
+With one small example it is possible to have the page respond with JSON data as follows.
+
+```js
+export default function handler(req, res) {
+  res.status(200).json({ text: 'Hello World' });
+}
+```
+
+Visit `api/hello-world` to attest the function.

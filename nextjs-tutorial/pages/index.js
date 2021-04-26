@@ -22,7 +22,7 @@ export default function Home({sortedPostData}) {
 
         <main>
           <p>Hello, I'm <strong>Orville</strong>, a daring critter from <a href="https://bulbapedia.bulbagarden.net/wiki/Pudgy_Pidgey_Isle">Pudgy Pidgey Isle</a> with a liking for <cite>Alice in Wonderland</cite>.</p>
-          <p>(This is a sample website - you'll be building a site similar to this one in <a href="https://nextjs.org/learn">the official Next.js tutorial</a>)</p>
+          <p>(This is a sample website - you'd be building a site similar to this one in <a href="https://nextjs.org/learn">the official Next.js tutorial</a>)</p>
 
           <h2>Blog</h2>
           <section>
