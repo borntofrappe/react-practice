@@ -1,13 +1,20 @@
-import Link from 'next/link'
+import Link from 'next/link';
+
 import styles from '../components/utils.module.css';
 
 export default function Layout({ children }) {
   return (
     <div>
       <nav className={styles.container}>
-        <Link href="/"><a>Home</a></Link>
-        <Link href="/about"><a>About</a></Link>
-        <Link href="/api/hello-world"><a>API</a></Link>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
+        <Link href="/about">
+          <a>About</a>
+        </Link>
+        <Link href="/api/hello-world">
+          <a>API</a>
+        </Link>
       </nav>
 
       {children}

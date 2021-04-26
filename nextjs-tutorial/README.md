@@ -1,18 +1,28 @@
 # nextjs-tutorial
 
-Here I jot down a few notes while going through [the official tutorial on nextjs.org](https://nextjs.org/learn). These are based on personal observations and the lessons taught by the tutorial itself.
+[The official tutorial on nextjs.org](https://nextjs.org/learn) provides an excellent guide to create an application with multiple pages.
+
+Set up a live environment on `http://localhost:3000` to confirm the working demo
+
+```bash
+npm run dev
+```
+
+That being said, here a few notes to document my journey through the tutorial.
 
 ## Create a Next.js App
+
+Set up the application with a few lines in the command line.
 
 ```bash
 npx create-next-app nextjs-tutorial --use-npm --example "https://github.com/vercel/next-learn-starter/tree/master/learn-starter"
 cd nextjs-tutorial
-npm run dev # runs the application on `http://localhost:3000`
+npm run dev
 ```
 
 Based on `pages/index.js`:
 
-- `Head` refers to a nextjs component which allows to change values in the `<head>` of the document, like the title and description
+- `Head` refers to a Next.js component which allows to change values in the `<head>` of the document, like the title and description
 
   ```jsx
   // import
@@ -25,9 +35,9 @@ Based on `pages/index.js`:
   </Head>;
   ```
 
-- `export default function Home` provides the structure of the page, the markup by returning jsx syntax
+- `export default function Home` returns jsx syntax to provide the structure of the page
 
-- to change the appearance of the HTML elements CSS is included in a particular format
+- style can be updated with a `<style>` tag and a flag of `jsx`
 
   ```jsx
   <style jsx>
@@ -37,7 +47,7 @@ Based on `pages/index.js`:
   </style>
   ```
 
-  I presume the property-value pairs are scoped to the component, since the page also includes another tag with a `global` flag
+  Property-value pairs are scoped to the component. To stretch past the individual file, for instance to affect components imported in the page, add a similar tag with a `global` flag
 
   ```jsx
   <style jsx global>
@@ -47,21 +57,17 @@ Based on `pages/index.js`:
   </style>
   ```
 
-  Small update: the values are global to the page being rendered. The style is applied to the page and likely every component included in the page.
-
 ## Navigation
 
-To create a page create a `.js` file in the `pages` directory which exports a React component.
-
-Nextjs associates a route based on file name.
+Every component in the `pages` directory creates a route in the application. Next.js associates a route based on file name.
 
 ```code
-pages/index.js         # /
-pages/about.js         # /about
-pages/demos/index.js   # /demos
+pages/index.js         -->  /
+pages/about.js         -->  /about
+pages/demos/index.js   -->  /demos
 ```
 
-To navigate between pages, nextjs provide a `<Link>` component.
+To navigate between pages, Next.js provide a `<Link>` component.
 
 ```jsx
 // import
@@ -71,9 +77,13 @@ import Link from 'next/link`
 <Link href="/about">About</Link>
 ```
 
-[The docs](https://nextjs.org/learn/basics/navigate-between-pages/client-side) explain how the component enables **client-side navigation**, meaning the navigation is handled by javascript, not the browser.
+[Here the docs](https://nextjs.org/learn/basics/navigate-between-pages/client-side) highlight a few of the important features of the framework:
 
-Further, the documentation explains how nextjs handles **code splitting**, meaning the code is served only when necessary (`pages/about.js` is not served until the page is requested), and **prefetching**, meaning the framework loads a page in the background to rapidly render the output when the page is actually requested (production only).
+- **client-side navigation**: the navigation is handled by javascript, not the browser
+
+- **code splitting**: the code is served only when necessary (`pages/about.js` is not served until the page is requested),
+
+- **prefetching**: the framework loads a page in the background to rapidly render the output when the page is indeed requested (production only)
 
 ## Assets, Metadata, and CSS
 
@@ -82,20 +92,24 @@ Files in the `public` folder can be accessed like routes in the `pages` folder.
 For images, next provides the `<Image />` component, a helpful conduit to optimize and resize images to the desired dimensions.
 
 ```jsx
+import Image from 'next/image';
 
+<Image src="./profile-pic" alt="Profile picture" width="136" height="136" />;
 ```
 
-The next two sections are slightly and already introduced by the observations devoted to `index.js`:
+The component optimizes and resizes the image to the desired dimensions.
 
-- or metadata nextjs provides the `<Head>` component.
+For metadata, Next.js provides the aforementioned `<Head />` component.
 
-  ```jsx
-  <Head>
-    <title>About</title>
-  </Head>
-  ```
+```jsx
+<Head>
+  <title>About</title>
+</Head>
+```
 
-- for styling nextjs relies on a library called `styled-jsx`, whereby CSS is directly included in a react component
+For CSS, there are actually a few options:
+
+- `styled-jsx`, a library working through the aforementioned `<style jsx>` tag
 
   ```jsx
   <style jsx>{`
@@ -103,9 +117,46 @@ The next two sections are slightly and already introduced by the observations de
   `}</style>
   ```
 
-  And yes, styles are scoped to the component
+  Style is scoped to the component rendered by React, but can be extended through the `global` flag
 
-In terms of styling, a helpful construct comes in the form of _layout components_. In `components/layout.js`, for instance, it is possible to include a default navigation and a footer.
+- CSS modules, a library which works through a class-based system
+
+  Define a stylesheet ending in `.modules.css`
+
+  ```css
+  .container {
+    max-width: 600px;
+    margin: 1rem auto;
+  }
+  ```
+
+  Import the stylesheet and attribute the styles by referencing the classes in the `className` attribute
+
+  ```jsx
+  import styles from './utils.module.css';
+
+  <div className={styles.container}></div>;
+  ```
+
+- a global stylesheet, imported in `pages/_app.js`
+
+  The `_app.js` file works as a top-level component common across all pages.
+
+  ```jsx
+  export default function App({ Component, pageProps }) {
+    return <Component {...pageProps} />;
+  }
+  ```
+
+  To include the global stylesheet created in `styles/global.css`, import it at the beginning of the file.
+
+  ```jsx
+  import '../styles/global.css';
+  ```
+
+  Importantly, the global stylesheet works **only** in `_app.js`
+
+CSS, but also HTML, can be included on every page also with layout components. In `components/layout.js`, for instance, it is possible to include a default navigation and a footer.
 
 ```jsx
 export default function Layout({ children }) {
@@ -119,7 +170,7 @@ export default function Layout({ children }) {
 }
 ```
 
-`children` refers to the markup of the pages using the layout.
+`children` refers to the markup of the pages using the layout, meaning the markup is included around the content of the importing components.
 
 ```jsx
 import Layout from '../components/layout';
@@ -129,59 +180,19 @@ export default function About() {
 }
 ```
 
-_CSS Modules_ offer another way to include CSS, and this time through a `.css` file. In `components/layout.module.css` add a few property-value pairs.
-
-```css
-.container {
-  width: 90vw;
-  margin: 2rem auto;
-  max-width: 1000px;
-}
-```
-
-Where needed, import the module.
-
-```jsx
-import styles from '../components//layout.module.css';
-```
-
-Use it accessing the selector.
-
-```jsx
-<div className={styles.container}></div>
-```
-
-Global styles are also supported by referencing a stylesheet in `pages/_app.js` (and only here).
-
-`_app.js` is a top-level component common across all pages.
-
-```jsx
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
-}
-```
-
-To include the global stylesheet created in `styles/global.css`, import it at the beginning of the file.
-
-```jsx
-import '../styles/global.css';
-
-// export ...
-```
-
 ## Pre-rendering and Data Fetching
 
-Pre-rendering means that node generates HTML for each page on the server side, serves the code and then hydrates the application on the client side to make the page fully interactive.
+Pre-rendering means that Next.js generates HTML for each page on the server side, serves the code and then hydrates the application on the client side to make the page fully interactive.
 
 There are technically two types of pre-rendering:
 
-1. static generation: HTML at build time
+1. **static generation**: HTML at build time
 
-2. server-side rendering: HTML on each request
+2. **server-side rendering**: HTML on each request
 
 When the page doesn't need to change with multiple, staggered requests, consider for instance a blog post, it is a good sign that you need static generation.
 
-Concerning static generation, nextjs allows to perform data fetching before generating the necessary pages. Define an async function `getStaticProps`. nextjs knows to run this function at build time, and allows to pass data from the function to the page through `props`.
+Concerning static generation, Next.js allows to perform data fetching before generating the necessary pages with an `async` function `getStaticProps`. The framework knows to run this function at build time, and allows to pass data from the function to the page through `props`.
 
 ```jsx
 export default function Home(props) {
@@ -198,9 +209,7 @@ export async function getStaticProps() {
 
 In the tutorial, the function is instructed to consider data in the form of articles stored in the `posts` folder.
 
-`gray-matter` is a package useful to retrieve metadata for each article, metatadata which is included in the frontmatter of the `.md` files with yaml syntax.
-
-In `lib/posts.js` create a small library to read the data from the `posts` folder and exporting a function which returns the posts (specifically their metadata) sorted by date.
+`lib/posts.js` defines a small library to read the data from the markdown files in the `posts` folder. The script relies on `gray-matter` to retrieve the metadata (and later content) for each article
 
 With this setup `getStaticProps` is able to fetch the data and return the information to the relevant component. For instance and for `index.js`, the function returns the entire collection so that it is possible to list the articles.
 
@@ -213,8 +222,6 @@ export async function getStaticProps() {
     },
   };
 }
-
-export default function Home({ sortedPostData }) {}
 ```
 
 `post.js` retrieves the data locally, but it could very well find the information from an API, or a database. `getStaticProps` runs only on the server, which mean the data-fetching operations are not executed on the client side.
@@ -231,23 +238,19 @@ export async function getServerSideProps(context) {
 }
 ```
 
-The function is run every time a request is performed and receives information regarding the request through the `context` parameter
+The function runs every time a request is performed and receives information regarding the request through the `context` parameter
 
-Outside of pre-rendering, it is finally possible to render data on the client side, client-side rendering, retrieving external data when the page loads. nextjs provides `swr` as a hook to fetch data on the client side.
+Outside of pre-rendering, it is finally possible to render data on the client side, client-side rendering, retrieving external data when the page loads. Next.js provides `swr` as a hook to fetch data on the client side (not explored in the demo).
 
 ## Dynamic routes
 
-- pages with `pages/*.js` files
+It is possible to create pages with components in the `pages` folder.
 
-- page content with external data and `getStaticProps`
+It is possible to fetch data through `getStaticProps`.
 
-- pages with external data and dynamic URLs
+It is also possible to generate pages based on data, for instance pages for every markdown file in the `posts` folder.
 
-The idea is to generate pages for the posts in the `posts` folder.
-
-Create `pages/posts/[id].js`, square brackets describing nextjs concept for dynamic routes
-
-Write an exporting function for the page describing blog posts.
+Create a component in `pages/posts/[id].js`.
 
 ```jsx
 export default function Post() {
@@ -255,7 +258,11 @@ export default function Post() {
 }
 ```
 
-Export an async function, similar to `getStaticProps`, labeled `getStaticPaths()`. This is where it is possible to consider valid ids by looking at the posts in the folder bearing the same name.
+Next.js manages the name in between square brackets by considering the actual URL: `/posts/getting-started` would result in `id` being equal to `getting-started`
+
+For the content of the component, it is first necessary to establish which `id` correspond to a valid page. In the demo, which `id` corresponds to one of the identifiers attributed to the blog posts.
+
+`getStaticPaths()` allows to consider valid ids by looking at the posts in the folder bearing the same name.
 
 ```jsx
 export async function getStaticPaths() {
@@ -266,43 +273,36 @@ export async function getStaticPaths() {
 }
 ```
 
-Export `getStaticProps` then, to finally retrieve the `[id]` parameter and match it against the static paths.
+`getStaticProps` then allows to finally retrieve the `[id]` parameter to serve the relevant page.
 
 ```jsx
 export async function getStaticProps({ params }) {
-  // consider params.id and the available paths
+  // serve the page with an id matching params.id
 }
 ```
 
-In `libpost.js`
-
-1. create a function which provides all the available ids
+To support the feature of dynamically generating pages, `lib/post.js` provides a few helper function to retrieve the relevant data. For instance, `getAllPostIds` examines the articles in the `posts` folder to create an array of objects with the following structure
 
 ```js
-export function getAllPostIds() {
-  /* array of objects
-  [
-    {
-      params: {
-        id
-      }
-    },
-    
-  ]
-  */
-}
+/*
+[
+  {
+    params: {
+      id
+    }
+  },
+  {
+    params: {
+      id
+    }
+  },
+]
+*/
 ```
 
-2. create a function which returns the data for the desired id (at first metatada, but later the markup using a parsing library)
+`getPostData`, on the other hand, returns the data for the post identified through input id
 
-```js
-export function getPostData(id) {
-  const fullPath = path.join(postDirectory, `${id}.md`);
-  //
-}
-```
-
-It seems `getStaticProps` is called only with valid ids, so it's not necessary to consider if `params.id` is valid. The value is instead useful to retrieve the data for thhe individual post.
+`getStaticProps` is called only when Next.js identifies a valid id. The value is then useful to retrieve the data for thhe individual post.
 
 ```jsx
 export async function getStaticProps({ params }) {
@@ -316,15 +316,19 @@ export async function getStaticProps({ params }) {
 }
 ```
 
-`pages/posts/[id].js` can finally use the metadata in the function exporting jsx syntax.
-
-In `index.js` use the `id` to direct toward the individual pages.
+With this setup `[id].js` can finally use the information (at first the metadata) in the function exporting jsx syntax.
 
 ```jsx
-<Link href={`/posts/${id}`}>Give it a read</Link>
+export async function Post({ postData }) {}
 ```
 
-For markdown, nextjs suggests the remark library.
+In `index.js`, add a link to the different posts to confirm that the pages are actually generated.
+
+```jsx
+<Link href={`/posts/${id}`}>{title}</Link>
+```
+
+`gray-matter` is useful to extract the metadata, and to differentiate said metadata from the actual content. `remark` is then useful as a parsing library to have the content result in the desired markup.
 
 ```bash
 npm install remark remark-html
@@ -349,43 +353,34 @@ return {
 };
 ```
 
-! make the function async to benefit from `await remark`
+The function is made into an `async` function to benefit from `await remark`
 
 ```diff
 export function getPostData(id) {
 +export async function getPostData(id) {
 ```
 
-`[id].js` can finally use the content. Await for the value of the `getPostData` function.
+`[id].js` can then use the content by `await`ing for the result
 
 ```diff
 const postData = getPostData(params.id);
 +const postData = await getPostData(params.id);
 ```
 
+Passed through `props`, the content is finally injected in the HTML through the `dangerouslySetInnerHTML` attribute.
 Inject in the substance of the component.
 
 ```jsx
 <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
 ```
 
-To polish the page nextjs suggests:
+## Polish and tweaks
 
-- add a `<title>` through the `<Head>` component
+- the demo is updated to provide meta information for every page and a bit of styling
 
-- format the date with the `date-fns` library and a custom `<Date />` component in `components/date.js`
+- a `<Time>` component is defined in `components/time.js` to receive a date string and return a `<time>` element with a human-readable format
 
-- style the page with classes from `utils.module.css`
-
-Optionally:
-
-- provide a custom 404 page in `pages/404.js`. Generated at build time
-
-```jsx
-export default function Custom404() {
-  // custom jsx
-}
-```
+- `pages/404.js` describes a page for any request not matching an available route. The page is generated at build time
 
 ## Creating API Routes
 

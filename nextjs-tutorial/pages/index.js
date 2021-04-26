@@ -1,12 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import { getSortedPostData } from '../lib/posts';
+import Head from 'next/head';
 import Link from 'next/link';
-import Layout from '../components/layout'
-import Time from '../components/time'
-import styles from '../components/utils.module.css';
-import {getSortedPostData} from '../lib/posts';
+import Image from 'next/image';
 
-export default function Home({sortedPostData}) {
+import Layout from '../components/layout';
+import Time from '../components/time';
+import styles from '../components/utils.module.css';
+
+export default function Home({ sortedPostData }) {
   return (
     <Layout>
       <Head>
@@ -16,22 +17,40 @@ export default function Home({sortedPostData}) {
 
       <div className={styles.container}>
         <header>
-          <Image className={styles.round} src="/profile.png" width="136" height="136" alt="Profile picture"/>
+          <Image
+            className={styles.round}
+            src="/profile.png"
+            width="136"
+            height="136"
+            alt="Profile picture for Orville Righteous"
+          />
           <h1>Orville Righteous</h1>
         </header>
 
         <main>
-          <p>Hello, I'm <strong>Orville</strong>, a daring critter from <a href="https://bulbapedia.bulbagarden.net/wiki/Pudgy_Pidgey_Isle">Pudgy Pidgey Isle</a> with a liking for <cite>Alice in Wonderland</cite>.</p>
-          <p>(This is a sample website - you'd be building a site similar to this one in <a href="https://nextjs.org/learn">the official Next.js tutorial</a>)</p>
+          <p>
+            Hello, I'm <strong>Orville</strong>, a daring critter from{' '}
+            <a href="https://bulbapedia.bulbagarden.net/wiki/Pudgy_Pidgey_Isle">
+              Pudgy Pidgey Isle
+            </a>{' '}
+            with a liking for <cite>Alice in Wonderland</cite>.
+          </p>
+          <p>
+            (This is a sample website - you'd be building a site similar to this
+            one in{' '}
+            <a href="https://nextjs.org/learn">the official Next.js tutorial</a>)
+          </p>
 
           <h2>Blog</h2>
           <section>
-            {sortedPostData.map(({date, title, id}) => <article key={id}>
-              <Link href={`/posts/${id}`}>{title}</Link>
-              <Time dateString={date} />
-            </article>)}
+            {sortedPostData.map(({ date, title, id }) => (
+              <article key={id}>
+                <Link href={`/posts/${id}`}>{title}</Link>
+                <Time dateString={date} />
+              </article>
+            ))}
           </section>
-        </main>     
+        </main>
       </div>
 
       <style jsx>{`
@@ -64,17 +83,16 @@ export default function Home({sortedPostData}) {
         section {
           align-items: flex-start;
         }
-
       `}</style>
     </Layout>
-  )
+  );
 }
 
 export async function getStaticProps() {
   const sortedPostData = getSortedPostData();
   return {
     props: {
-      sortedPostData
-    }
-  }
+      sortedPostData,
+    },
+  };
 }
